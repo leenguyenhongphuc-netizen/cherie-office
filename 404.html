@@ -662,6 +662,8 @@ function card(s){
   return '<a class="pc" href="#'+slugSp(s.id)+'"><div class="fr" style="background:var('+(l.ph||"--ph-1")+')">'+(a?'<img src="'+esc(a)+'" alt="'+esc(s.ten)+'" loading="lazy">':'<span class="cap">Ảnh: '+esc(s.ten)+'</span>')+(b?'<img class="b" src="'+esc(b)+'" alt="" loading="lazy">':'')+'</div>'+
     '<span class="br">'+esc(s.brand||"CHÉRIE Office")+'</span><span class="nm">'+esc(s.ten)+'</span><span class="in">'+esc([s.mau,s.nhom==="Phụ kiện"?"Phụ kiện thêm":"Gói "+s.loai].filter(Boolean).join(" · "))+'</span></a>'}
 function inLine(s,l){return l.mom?!!s.hopMe:s.loai===l.k}
+/* xếp xen kẽ thương hiệu để danh sách không dồn một hãng; trong mỗi hãng giữ thứ tự gốc */
+function mix(list){var g={},order=[];list.forEach(function(s){var b=s.brand||"";if(!g[b]){g[b]=[];order.push(b)}g[b].push(s)});var out=[],i=0,more=true;while(more){more=false;order.forEach(function(b){if(g[b][i]){out.push(g[b][i]);more=true}});i++}return out}
 function lineImg(l){var f=DATA.sp.filter(function(s){return inLine(s,l)&&pics(s.id).length})[0];return f?imgOf(f,0):""}
 
 /* ---------- khung chung ---------- */
@@ -676,7 +678,7 @@ function renderHome(){
   var hi=DATA.sp.filter(function(s){return pics(s.id).length>1})[3];var h=$("#heroImg");if(hi){h.src=imgOf(hi,0);h.hidden=false}
   $("#groupRail").innerHTML=LINES.map(function(l){var im=lineImg(l);return '<a class="tile" href="#nhom-'+l.slug+'"><div class="fr" style="background:var('+l.ph+')">'+(im?'<img src="'+esc(im)+'" alt="" loading="lazy">':'<span class="cap">'+esc(l.cap)+'</span>')+(l.mom?'<span class="tag">Cho mẹ</span>':'')+'</div><b>'+esc(l.k)+'</b><span class="w">'+esc(l.who)+'</span><span class="p">'+(l.from?"từ ":"")+vnd(l.price)+' '+esc(l.unit)+'</span></a>'}).join("");
   railInit("groupRail");
-  $("#homeGrid").innerHTML=DATA.sp.filter(function(s){return pics(s.id).length}).slice(0,8).map(card).join("");
+  $("#homeGrid").innerHTML=mix(DATA.sp.filter(function(s){return pics(s.id).length&&s.nhom!=="Phụ kiện"&&!/Mlee|Zanemom|Đồ Bầu/.test(s.brand||"")})).slice(0,8).map(card).join("");
   $("#plans").innerHTML=LINES.map(function(l){return '<div class="plan'+(l.mom?' mom':'')+'"><span class="k muted">'+esc(l.who)+'</span><h3>'+esc(l.k)+'</h3><span class="p num">'+(l.from?'<small>từ </small>':'')+vnd(l.price)+'<br><small>'+esc(l.unit)+'</small></span>'+(l.p5?'<span class="muted" style="font-size:14px">Gói 5 bộ (mặc lại mỗi tuần): <b class="num" style="color:var(--ink)">'+vnd(l.p5)+'</b>/tuần</span>':'')+'<button type="button" class="pill block" data-pick="'+esc(l.k)+'" style="margin-top:4px">Chọn gói này</button>'+'<a class="ul" href="#nhom-'+l.slug+'">Xem dòng '+esc(l.k)+'</a></div>'}).join("")+
     '<div class="plan" style="grid-column:1/-1;background:var(--soft)"><span class="k muted">Bắt đầu nhẹ hơn</span><h3>Chưa cần đủ 10 bộ?</h3><div class="plans" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">'+NHE.map(function(g){return '<div class="plan" style="background:var(--bg)"><h3 style="font-size:20px">'+esc(g.k)+'</h3><span class="p num">'+vnd(g.price)+'<br><small>'+esc(g.unit)+'</small></span><span class="muted" style="font-size:14px">'+esc(g.who)+'</span><button type="button" class="ul" data-pick="'+esc(g.k)+'" style="background:none;border:0;padding:0;text-align:left">Đăng ký gói này</button></div>'}).join("")+'</div></div>';
 }
@@ -692,7 +694,7 @@ function renderNhom(l){
     '<ul class="incl">'+l.incl.map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ul>'+
     '<div class="quizcard"><span class="k">'+(l.mom?"Bước đầu cho mẹ · 3 phút":"Bước đầu · 3 phút")+'</span><span>'+(l.mom?"Kể cho stylist nghe mẹ đang ở giai đoạn nào. Tụi mình vẽ lộ trình tủ đồ theo từng tháng.":"Trả lời vài câu để stylist hiểu gu, dáng và lịch làm việc của nàng.")+'</span><a class="pill block" href="'+qHref+'">'+qLabel+'</a></div></div></section>'+
     '<section class="sec"><div class="sh"><div><h2>Trong tủ '+esc(l.k)+'</h2><p class="sub muted">'+(items.length?items.length+" bộ đang có.":"Đồ dòng này đang được tuyển, ảnh thật sẽ cập nhật sớm.")+'</p></div>'+(items.length?'<a class="ul" href="#tu-do" data-filter="'+esc(l.k)+'">Xem tất cả</a>':'')+'</div>'+
-    (items.length?'<div class="grid">'+items.slice(0,8).map(card).join("")+'</div>':'')+'</section>'+
+    (items.length?'<div class="grid">'+mix(items).slice(0,8).map(card).join("")+'</div>':'')+'</section>'+
     '<section class="sec"><h2 style="margin-bottom:14px">Hay được hỏi</h2>'+faq(l).map(function(q){return '<details><summary>'+esc(q[0])+'</summary><p>'+esc(q[1])+'</p></details>'}).join("")+'</section>';
 }
 function faq(l){
@@ -1071,7 +1073,7 @@ function renderAll(){
   var keys=["Tất cả"].concat(LINES.map(function(l){return l.k}));if(filt==="Phụ kiện"){filt="Tất cả";loaiF="Phụ kiện"}
   $("#chips").innerHTML=keys.map(function(k){return '<button type="button" class="c" aria-pressed="'+(k===filt)+'">'+esc(k)+'</button>'}).join("");
   $("#chips2").innerHTML=LOAI.map(function(k){return '<button type="button" class="c c2" aria-pressed="'+(k===loaiF)+'">'+esc(k)+'</button>'}).join("");
-  var L=byKey(filt);var list=DATA.sp.filter(function(s){return (filt==="Tất cả"||(L&&inLine(s,L)))&&(loaiF==="Mọi loại"||s.nhom===loaiF||(loaiF==="Áo dài"&&s.nhom==="Quần áo dài"))});
+  var L=byKey(filt);var list=mix(DATA.sp).filter(function(s){return (filt==="Tất cả"||(L&&inLine(s,L)))&&(loaiF==="Mọi loại"||s.nhom===loaiF||(loaiF==="Áo dài"&&s.nhom==="Quần áo dài"))});
   $("#count").textContent=list.length+" MÓN";
   var shown=list.slice(0,showN);
   $("#allGrid").innerHTML=list.length?shown.map(card).join("")+(list.length>showN?'<p style="grid-column:1/-1;text-align:center"><button type="button" class="pill ghost" id="more">Xem thêm '+Math.min(24,list.length-showN)+' món</button></p>':''):'<p class="muted">Dòng này đang tuyển đồ. <a class="ul" href="#nhom-'+(byKey(filt)||{}).slug+'">Làm trắc nghiệm</a> để được giữ chỗ.</p>'}
