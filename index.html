@@ -260,6 +260,19 @@ details p{margin-top:8px;color:var(--muted)}
 .timeline .when{font-family:var(--f-m);font-size:11px;letter-spacing:.08em;color:var(--mom);text-transform:uppercase}
 .timeline b{display:block;margin-top:2px}
 .timeline p{font-size:14px;color:var(--muted)}
+.pc .fr.duo{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.pc .fr.duo>div{position:relative;overflow:hidden}
+.pc .fr.duo>div img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.anchor{margin-top:22px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.anchor>div{background:var(--soft);border-radius:var(--r);padding:14px 16px;display:grid;gap:2px;align-content:start}
+.anchor b{font-family:var(--f-d);font-size:24px;font-weight:500}
+.anchor b small{font-family:var(--f-b);font-size:13px;color:var(--muted)}
+.anchor>div:first-child b{text-decoration:line-through;text-decoration-thickness:1px;color:var(--muted)}
+@media (max-width:760px){.anchor{grid-template-columns:1fr}}
+.alts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+.alt{display:grid;gap:4px;border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;text-decoration:none;align-content:start}
+.alt:hover{border-color:var(--espresso)}
+@media (max-width:620px){.alts{grid-template-columns:1fr}}
 .cta-box{margin-top:26px;border:1px solid var(--line);border-radius:var(--r-l);padding:22px;display:grid;gap:12px}
 .cta-box .row{display:flex;flex-wrap:wrap;gap:10px}
 
@@ -755,12 +768,78 @@ function computeType(a){
 function finishQuiz(){
   var a=QZ.a,r=computeType(a),clean={};Object.keys(a).forEach(function(k){if(k.charAt(0)!=="_")clean[k]=a[k]});
   var res={line:QZ.l.k,slug:QZ.l.slug,type:r.key,mode:r.mode,a:clean,at:Date.now(),ten:a._ten||"",zalo:(a._zalo||"").replace(/\s/g,"")};
+  var cp=buildCapsule(QZ.l,clean);res.cap=cp.ids;res.a.tuDe=cp.ids;res.a.tuDeU=cp.u;
   ss("of-result",res);
   if(a._wantSave&&res.zalo){sendLead(res,"Trắc nghiệm")}
   location.hash="ket-qua"}
 function sendLead(r,loai){
   var T=TYPES[r.type]||{};
   try{fetch(API,{method:"POST",redirect:"follow",body:JSON.stringify({fn:"webDangKy",loai:loai,dong:r.line,ten:r.ten,zalo:r.zalo,kieu:(T.ten||r.type)+(r.mode?" · "+r.mode:""),size:r.mom?(r.a.sizeNay||r.a.sizeTruoc||""):(r.a.size||""),chieuCao:r.a.cao||"",duSinh:r.a.duSinh||"",traLoi:r.a})}).catch(function(){})}catch(e){}}
+/* ---------- tủ đồ đề xuất trọn gói (10 bộ / tháng) ----------
+   Chấm mỗi món theo sở thích (thả tim, màu, dáng, phong cách, điều tránh) cộng điểm lời (dl, từ tools/diem-loi.js),
+   rồi giữ chi phí trung bình mỗi lần mặc dưới mức để đạt biên lãi mục tiêu (u ≤ 1) khi có món thay thế. */
+var MAU_TU={"Trung tính":["be","kem","nâu","trắng","ngà","bò"],"Đen trắng":["đen","trắng","ghi","xám"],"Pastel":["hồng","xanh nhạt","tím","vàng nhạt","xô thơm"],"Màu đậm":["đỏ","xanh","rượu","tím than","đô"]};
+var PC_TU={"Quyền lực":["vest","blazer","đen","bút chì","ống đứng"],"Mềm mại":["bèo","phồng","xếp ly","hoa","nơ","voan"],"Hiện đại":["ống rộng","oversize","phối","cổ lạ","bất đối xứng"],"Thanh lịch":["sơ mi","cổ đức","trơn","suông","chữ a"]};
+var TRANH_TU={"Sát nách":["sát nách","hai dây","2 dây"],"Cổ sâu":["cổ v sâu","khoét","hở"],"Váy trên gối":["ngắn","mini"],"Vải mỏng":["voan","ren","mỏng"],"Họa tiết lớn":["họa tiết","hoa to","kẻ to"]};
+function boSize(l){return /4 bộ/.test(l.unit)?4:l.k==="Travel"?5:l.k==="Ngày quan trọng"?3:10}
+function prefScore(s,a){
+  var t=(String(s.tenGoc||"")+" "+s.ten+" "+(s.mau||"")).toLowerCase(),sc=0,liked=a.tim||[];
+  if(liked.indexOf(s.id)>-1)sc+=3;
+  if(liked.some(function(id){var x=DATA.sp.filter(function(y){return y.id===id})[0];return x&&x.nhom===s.nhom}))sc+=.5;
+  (MAU_TU[a.mau]||[]).forEach(function(w){if(t.indexOf(w)>-1)sc+=.5});
+  (PC_TU[a.anTuong]||[]).forEach(function(w){if(t.indexOf(w)>-1)sc+=.4});
+  if(a.form==="Suông"&&/suông|rộng/.test(t))sc+=.6;if(a.form==="Ôm sát"&&/ôm|bút chì|body/.test(t))sc+=.6;
+  var bad=false;(a.tranh||[]).forEach(function(k){(TRANH_TU[k]||[]).forEach(function(w){if(t.indexOf(w)>-1)bad=true})});
+  return bad?-99:sc}
+function buildCapsule(l,a){
+  var N=boSize(l);
+  var pool=DATA.sp.filter(function(s){return pics(s.id).length&&s.loai===l.k});
+  var muon=false;if(pool.length<N&&l.k!=="Áo dài"){pool=pool.concat(DATA.sp.filter(function(s){return pics(s.id).length&&s.loai==="Classic"&&s.loai!==l.k}));muon=true}
+  pool=pool.map(function(s){return {s:s,p:prefScore(s,a),sc:prefScore(s,a)+1.2*(+s.dl||.5)}}).filter(function(x){return x.p>-50});
+  var grp=function(g){return pool.filter(function(x){return x.s.nhom===g}).sort(function(x,y){return y.sc-x.sc})};
+  var dam=grp("Đầm"),ao=grp("Áo"),quan=grp("Quần"),cv=grp("Chân váy");
+  var rate=a.vayQuan==="Váy"?.5:a.vayQuan==="Quần"?.2:.4;var D=Math.min(dam.length,Math.round(N*rate));var P=N-D;
+  var T=Math.min(ao.length,Math.max(1,Math.ceil(P/1.6)));
+  var bot=(a.vayQuan==="Quần"?quan.concat(cv):a.vayQuan==="Váy"?cv.concat(quan):[]);
+  if(!bot.length){var i=0;while(quan[i]||cv[i]){if(cv[i])bot.push(cv[i]);if(quan[i])bot.push(quan[i]);i++}}
+  var B=Math.min(bot.length,Math.max(1,Math.ceil(P/1.6)));
+  if(!T||!B){D=Math.min(dam.length,N);P=0}
+  var pick={dam:dam.slice(0,D),ao:ao.slice(0,T),bot:bot.slice(0,B)};
+  /* giữ biên lãi: nếu trung bình u > 1 thì đổi món u cao nhất bằng món kế tiếp rẻ hơn cùng nhóm */
+  var all=function(){return pick.dam.concat(pick.ao,pick.bot)};
+  var avgU=function(){var x=all();return x.reduce(function(t,y){return t+(+y.s.u||1)},0)/(x.length||1)};
+  for(var g=0;g<12&&avgU()>1;g++){
+    var worst=all().sort(function(x,y){return (+y.s.u||1)-(+x.s.u||1)})[0];if(!worst)break;
+    var key=pick.dam.indexOf(worst)>-1?"dam":pick.ao.indexOf(worst)>-1?"ao":"bot";var src=key==="dam"?dam:key==="ao"?ao:bot;
+    var rep=src.filter(function(x){return pick[key].indexOf(x)<0&&(+x.s.u||1)<(+worst.s.u||1)&&x.p>=worst.p-1.5})[0];if(!rep)break;
+    pick[key][pick[key].indexOf(worst)]=rep}
+  var bo=pick.dam.map(function(x){return [x.s]});
+  var combos=[];pick.ao.forEach(function(t){pick.bot.forEach(function(b){combos.push({t:t,b:b,sc:t.sc+b.sc})})});combos.sort(function(x,y){return y.sc-x.sc});
+  var use={},lim=Math.ceil((N-bo.length)/Math.max(1,Math.min(pick.ao.length,pick.bot.length)))+1;
+  combos.forEach(function(c){if(bo.length>=N)return;if((use[c.t.s.id]||0)>=lim||(use[c.b.s.id]||0)>=lim)return;use[c.t.s.id]=(use[c.t.s.id]||0)+1;use[c.b.s.id]=(use[c.b.s.id]||0)+1;bo.push([c.t.s,c.b.s])});
+  combos.forEach(function(c){if(bo.length<N&&!bo.some(function(o){return o[0]===c.t.s&&o[1]===c.b.s}))bo.push([c.t.s,c.b.s])});
+  var mua=all().reduce(function(t,x){return t+(+x.s.giaNiemYet||0)},0);
+  return {bo:bo.slice(0,N),N:N,mua:mua,muon:muon,u:Math.round(avgU()*100)/100,ids:all().map(function(x){return x.s.id})}}
+function outfitCard(o,i){
+  var a=o[0],b=o[1],img=function(s){var p=imgOf(s,0);return p?'<img src="'+esc(p)+'" alt="'+esc(s.ten)+'" loading="lazy">':'<span class="cap">'+esc(s.ten)+'</span>'};
+  return '<div class="pc"><div class="fr'+(b?' duo':'')+'">'+(b?'<div>'+img(a)+'</div><div>'+img(b)+'</div>':img(a))+'</div><span class="br">Bộ '+(i+1)+'</span><span class="nm">'+esc(a.ten)+(b?' + '+esc(b.ten):'')+'</span><span class="in">'+esc(b?"Phối "+a.nhom.toLowerCase()+" với "+b.nhom.toLowerCase():a.nhom)+'</span></div>'}
+function capsuleHtml(l,cap){
+  if(!cap.bo.length)return '';
+  var weeks=cap.N===10?[["Tuần A","Mặc tuần 1 và tuần 3",cap.bo.slice(0,5)],["Tuần B","Mặc tuần 2 và tuần 4",cap.bo.slice(5)]]:[["",(cap.N===4?"4 bộ áo dài cho tháng":"Trọn bộ cho chuyến đi"),cap.bo]];
+  var perWear=l.monthly&&cap.N===10?Math.round(l.price/20/500)*500:0;
+  return '<section class="sec" style="padding-top:36px"><div class="sh"><div><span class="k" style="color:var(--gold)">Tủ đồ của nàng</span><h2 style="margin-top:6px">'+(cap.N===10?"Tủ tháng đầu: đủ 10 bộ":cap.N===4?"4 bộ áo dài tháng đầu":"Gợi ý cho nàng")+'</h2><p class="sub muted">Stylist chọn từ đồ đang có trong kho theo câu trả lời của nàng'+(cap.muon?", có mượn thêm từ tủ Classic":"")+'. Nàng đổi bộ nào cũng được trước ngày giao.</p></div></div>'+
+    weeks.map(function(w){return (w[0]?'<p class="k muted" style="margin:18px 0 12px">'+esc(w[0])+' · '+esc(w[1])+'</p>':'')+'<div class="grid">'+w[2].map(function(o){return outfitCard(o,cap.bo.indexOf(o))}).join("")+'</div>'}).join("")+
+    (cap.mua?'<div class="anchor"><div><span class="muted">Nếu mua '+(cap.N===10?"đủ tủ này":"những bộ này")+'</span><b class="num">'+vnd(cap.mua)+'</b></div><div><span class="muted">Thuê với CHÉRIE</span><b class="num">'+vnd(l.price)+'<small> '+esc(l.unit.replace(/ · .*/,""))+'</small></b></div>'+(perWear?'<div><span class="muted">Mỗi lần mặc chỉ khoảng</span><b class="num">'+vnd(perWear)+'</b><small class="muted">đã gồm giặt hấp, giao nhận</small></div>':'')+'</div>':'')+'</section>'}
+function offerHtml(l,a){
+  var alt=[];
+  alt.push(['Thuê thử 1 set trước','Ngày quan trọng · từ 199.000đ/set','Mặc thử chất lượng đồ và cách tụi mình giặt hấp cho một buổi họp, phỏng vấn. Thấy ổn rồi mở gói tháng.','#nhom-ngay-quan-trong']);
+  if(l.k!=="Áo dài"&&(a.nganh==="Ngân hàng, tài chính"||a.nganh==="Giáo viên, giảng viên"||a.nganh==="Cơ quan nhà nước"))alt.push(['Chỉ cần đồ thứ 2','Áo dài · 590.000đ/tháng · 4 bộ','Nơi làm mặc áo dài đầu tuần thì gói này nhẹ hơn nhiều.','#nhom-ao-dai']);
+  if((a.doiSong||[]).indexOf("Hay đi công tác")>-1)alt.push(['Chỉ cần cho chuyến công tác','Travel · 690.000đ/chuyến 5 ngày','Trọn vali cho một chuyến, trả lại khi về.','#nhom-travel']);
+  alt.push(['Rủ đồng nghiệp cùng tòa nhà','Nhóm 3 người · giảm 10% mỗi người','Một tuyến giao chung nên tụi mình bớt được chi phí. Nhắn Zalo để giữ suất nhóm.','https://zalo.me/0377159189']);
+  return '<div class="cta-box"><span class="k muted">Bước tiếp theo</span><h2>Giữ trọn tủ '+esc(l.k)+' này</h2><p class="muted">'+vnd(l.price)+' '+esc(l.unit)+(l.monthly?', trả trước 3 tháng. Tuần đầu giao đúng các bộ bên trên.':'.')+'</p>'+
+    '<div class="row"><a class="pill" href="#dang-ky">Giữ tủ này</a><button type="button" class="pill ghost" id="priceWorry" aria-expanded="false" aria-controls="altBox">Giá hơi cao với mình</button></div>'+
+    '<div id="altBox" hidden><p style="margin-top:6px">Tụi mình hiểu. Nàng có thể bắt đầu nhẹ hơn:</p><div class="alts">'+alt.map(function(x){return '<a class="alt" href="'+x[3]+'"'+(/^https/.test(x[3])?' target="_blank" rel="noopener"':'')+'><b>'+esc(x[0])+'</b><span class="k" style="color:var(--gold)">'+esc(x[1])+'</span><span class="muted">'+esc(x[2])+'</span></a>'}).join("")+'</div></div></div>'}
+
 /* nguyên tắc tủ đồ: động theo câu trả lời */
 function rulesOf(a){
   var R=[],n=a.bodyNote||{},tips=[];
@@ -780,18 +859,14 @@ function renderResult(){
   var r=ss("of-result");if(!r){location.hash="chon-nhom";return}
   if(r.mom)return renderMomResult(r);
   var T=TYPES[r.type]||TYPES["Thanh lịch"],l=byKey(r.line)||LINES[5];
-  /* gợi ý: đồ đã thả tim lên trước, sau đó đồ cùng nhóm đồ với món đã thích, rồi đồ cùng dòng */
-  var liked=r.a.tim||[],likedNhom={};DATA.sp.forEach(function(s){if(liked.indexOf(s.id)>-1&&s.nhom)likedNhom[s.nhom]=1});
-  var pool=DATA.sp.filter(function(s){return pics(s.id).length&&(s.loai===l.k||liked.indexOf(s.id)>-1)});
-  var score=function(s){return (liked.indexOf(s.id)>-1?3:0)+(likedNhom[s.nhom]?1:0)+(s.loai===l.k?1:0)};
-  pool.sort(function(x,y){return score(y)-score(x)});
   var hi=r.ten?esc(r.ten)+", nàng là":"Nàng là";
   var h='<div class="typecard" style="background:'+T.bg+'"><span class="k" style="color:rgba(255,255,255,.75)">Kết quả · dòng '+esc(l.k)+'</span><span class="fr-name">'+esc(T.fr)+' · '+esc(r.mode)+'</span><p style="font-size:15px;margin-bottom:-6px">'+hi+'</p><h1>'+esc(T.ten)+'</h1><p>'+esc(T.mo)+'</p>'+
     '<p style="font-size:14px">'+(r.mode==="Thích thử"?"Nàng sẵn sàng thử cái mới: mỗi tháng stylist cài vào 2 bộ khác gu thường ngày để nàng thử.":"Nàng thích sự ổn định: stylist giữ bảng màu quen, chỉ đổi kiểu dáng để tủ đồ không nhàm.")+'</p>'+
     '<div class="pal">'+T.pal.map(function(c){return '<i style="background:'+c+'"></i>'}).join("")+'</div></div>';
   h+='<div class="rules">'+rulesOf(r.a).map(function(x){return '<div class="rule"><span class="k">'+esc(x[0])+'</span><b>'+esc(x[1])+'</b></div>'}).join("")+'</div>';
-  if(pool.length)h+='<section class="sec" style="padding-top:36px"><div class="sh"><div><h2>Tủ đồ gợi ý cho nàng</h2><p class="sub muted">'+(liked.length?"Những bộ nàng thả tim và đồ cùng kiểu được xếp lên trước.":"Chọn từ đồ đang có trong kho dòng "+esc(l.k)+".")+'</p></div></div><div class="grid">'+pool.slice(0,8).map(card).join("")+'</div></section>';
-  h+='<div class="cta-box"><span class="k muted">Bước tiếp theo</span><h2>'+(l.monthly?"Mở tủ đồ "+esc(l.k)+" với hồ sơ này":"Đặt "+esc(l.k)+" với hồ sơ này")+'</h2><p class="muted">'+vnd(l.price)+' '+esc(l.unit)+'. Stylist dùng kết quả này để chọn đồ'+(r.zalo?" và đã giữ hồ sơ theo Zalo "+esc(r.zalo):"")+'.</p><div class="row"><a class="pill" href="#dang-ky">Gửi đăng ký</a><a class="pill ghost" href="#chan-doan-'+l.slug+'" data-redo="'+l.slug+'">Làm lại trắc nghiệm</a></div></div>';
+  h+=capsuleHtml(l,buildCapsule(l,r.a));
+  h+=offerHtml(l,r.a);
+  h+='<p style="margin-top:14px;text-align:center"><a class="ul muted" href="#chan-doan-'+l.slug+'" data-redo="'+l.slug+'">Làm lại trắc nghiệm</a></p>';
   $("#res").innerHTML=h}
 
 /* ---------- bản trò chuyện cho Mẹ bầu & Sau sinh ---------- */
@@ -882,6 +957,7 @@ function renderAll(){
   $("#count").textContent=list.length+" BỘ";
   $("#allGrid").innerHTML=list.length?list.map(card).join(""):'<p class="muted">Dòng này đang tuyển đồ. <a class="ul" href="#nhom-'+(byKey(filt)||{}).slug+'">Làm trắc nghiệm</a> để được giữ chỗ.</p>'}
 $("#chips").addEventListener("click",function(e){var b=e.target.closest(".c");if(!b)return;filt=b.textContent;renderAll()});
+$("#res").addEventListener("click",function(e){var w=e.target.closest("#priceWorry");if(!w)return;var box=$("#altBox"),open=box.hidden;box.hidden=!open;w.setAttribute("aria-expanded",String(open));if(open){box.scrollIntoView({behavior:"smooth",block:"nearest"});var r=ss("of-result");if(r&&r.zalo&&!r.ngaiGia){r.ngaiGia=1;ss("of-result",r)}}});
 function detail(id){
   var s=DATA.sp.filter(function(x){return x.id===id})[0];if(!s){location.hash="tu-do";return}
   var p=pics(id),l=byKey(s.loai)||LINES[5];var have=String(s.size||"").split(",").map(function(x){return x.trim()});
