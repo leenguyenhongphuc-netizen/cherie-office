@@ -448,12 +448,17 @@ function hostOf(u){try{return new URL(u).hostname.replace(/^www\./,"")}catch(e){
 /* ---------- Danh mục mẫu (681 mẫu trên website), Cần mua, Lãi lỗ ----------
    Danh mục đọc từ ../office-data.js (cùng nguồn với website). Giá nhập thật đọc tab GiaNhap; chưa có thì ước theo tỷ lệ [GĐ]. */
 var CAT=null,CATERR=null;
-function loadCat(){if(CAT||CAT===0)return;CAT=0;fetch("../office-data.js?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var d=JSON.parse(t.slice(t.indexOf("=")+1,t.lastIndexOf(";")));var im={};d.anh.forEach(function(a){(im[a.sp]=im[a.sp]||[]).push(a)});Object.keys(im).forEach(function(k){im[k].sort(function(x,y){return (+x.thuTu||0)-(+y.thuTu||0)})});CAT={sp:d.sp,im:im,by:{}};d.sp.forEach(function(x){CAT.by[x.id]=x});render()}).catch(function(e){CAT=null;CATERR=e;render()})}
+function loadCat(){if(CAT||CAT===0)return;CAT=0;fetch("../office-data.js?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var d=JSON.parse(t.slice(t.indexOf("=")+1,t.lastIndexOf(";")));var im={};d.anh.forEach(function(a){(im[a.sp]=im[a.sp]||[]).push(a)});Object.keys(im).forEach(function(k){im[k].sort(function(x,y){return (+x.thuTu||0)-(+y.thuTu||0)})});CAT={sp:d.sp,im:im,by:{},byLink:{}};d.sp.forEach(function(x){CAT.by[x.id]=x;CAT.byLink[linkKey(x.link)]=x.id});render()}).catch(function(e){CAT=null;CATERR=e;render()})}
 function catImg(id,i){var a=CAT&&CAT.im[id];a=a&&a[i||0];return a?(a.src||a.th):""}
 /* thông số chi phí đọc từ tab ThamSo trong Sheet riêng (không ghi trong mã nguồn công khai) */
 var TS_KEYS=["tyLeNhap","giat","giao","hanMac","lanTuan","mucTieu","giam"];
-function TS(){var o={};rows("ThamSo").forEach(function(r){if(TS_KEYS.indexOf(r.Khoa)>=0)o[r.Khoa]=N(r.GiaTri)});TS_KEYS.forEach(function(k){if(o[k]==null)o[k]=0});if(!o.hanMac)o.hanMac=1;if(!o.lanTuan)o.lanTuan=1;o.ok=rows("ThamSo").length>0;return o}
-function gnMap(){var m={};rows("GiaNhap").forEach(function(r){var k=r["MaDM (nhập)"]||r.MaDM,v=N(r["GiaNhap (nhập, đồng)"]||r.GiaNhap);if(k&&v)m[k]=v});return m}
+/* ưu tiên tab ThamSo (khi máy chủ đã đọc được), nếu chưa có thì dùng thông số lưu trên máy chủ tiệm (điện thoại) */
+function TS(){var o={},sh=rows("ThamSo"),loc=recall("of-thamso")||{};if(sh.length)sh.forEach(function(r){if(TS_KEYS.indexOf(r.Khoa)>=0)o[r.Khoa]=N(r.GiaTri)});else TS_KEYS.forEach(function(k){if(loc[k]!=null&&loc[k]!=="")o[k]=+loc[k]});
+  o.ok=TS_KEYS.every(function(k){return o[k]!=null});o.nguon=sh.length?"Sheet":"máy này";TS_KEYS.forEach(function(k){if(o[k]==null)o[k]=0});if(!o.hanMac)o.hanMac=1;if(!o.lanTuan)o.lanTuan=1;return o}
+var GOI_PUB={"Classic":[369000,319000],"Lead":[809000,649000],"Mẹ bầu & Sau sinh":[389000,349000],"Áo dài":[139000,139000]};
+function gnMap(){var m={};
+  if(CAT&&CAT.byLink)rows("NhapTuLink").forEach(function(r){var g=N(r.GiaMua),id=CAT.byLink[linkKey(r.Link)];if(g&&id&&r.TrangThai!=="Bỏ")m[id]=g});
+  rows("GiaNhap").forEach(function(r){var k=r["MaDM (nhập)"]||r.MaDM,v=N(r["GiaNhap (nhập, đồng)"]||r.GiaNhap);if(k&&v)m[k]=v});return m}
 function giaNhapOf(x,gm){gm=gm||gnMap();if(gm[x.id])return {v:gm[x.id],that:true};return {v:Math.round((+x.giaNiemYet||0)*TS().tyLeNhap/100),that:false}}
 function linkKey(u){return String(u||"").replace(/^https?:\/\/(www\.)?/,"").replace(/[?#].*$/,"").replace(/\/$/,"").toLowerCase()}
 function nhapByLink(){var m={};rows("NhapTuLink").forEach(function(r){if(r.TrangThai!=="Bỏ"&&r.Link){var k=linkKey(r.Link);(m[k]=m[k]||[]).push(r)}});return m}
@@ -493,7 +498,7 @@ function openDM(id){var x=CAT&&CAT.by[id];if(!x)return;var g=giaNhapOf(x),c=chon
     '<dt>Giá nhập dùng để tính</dt><dd class="num">'+money(g.v)+(g.that?' (thật)':' [GĐ '+ts.tyLeNhap+'% niêm yết]')+'</dd><dt>Khấu hao mỗi lần mặc</dt><dd class="num">'+money(Math.round(g.v/ts.hanMac))+' ('+ts.hanMac+' lần)</dd>'+
     '<dt>Khách</dt><dd>'+c.giu+' khách giữ tủ · '+c.goi+' tủ gợi ý'+(Object.keys(c.size).length?' · size '+Object.keys(c.size).map(function(k){return k+"×"+c.size[k]}).join(", "):'')+'</dd>'+(da.length?'<dt>Đã nhập</dt><dd>'+da.map(function(r){return esc(r.MaNhap)+' ('+esc(r.TrangThai||"Chờ AI")+')'}).join(", ")+'</dd>':'')+'</dl>'+
     '<p class="small"><a href="'+esc(x.link)+'" target="_blank" rel="noopener">Mở trang mẫu trên web '+esc(x.brand)+'</a></p>'+
-    '<h2 style="font-size:17px;margin-top:18px">Giá nhập thật</h2><form class="form" id="fGN" data-id="'+esc(id)+'"><div class="two">'+fld("gnGia","Giá mua mỗi chiếc",inp("gnGia",g.that?g.v:"","number",'min="0" inputmode="numeric" placeholder="Ví dụ 459000"'))+fld("gnNote","Mua ở đâu, đợt nào",inp("gnNote","","text",'placeholder="Sale 11/11, cửa hàng Lê Duẩn"'))+'</div><button class="btn ghost full" type="submit">Lưu giá nhập</button></form>'+
+    '<h2 style="font-size:17px;margin-top:18px">Giá nhập thật</h2>'+(S.data.GiaNhap?'':'<div class="small muted">Ghi giá ở ô “Giá mua mỗi chiếc” khi tạo bản nhập bên dưới, app tự dùng giá đó cho mẫu này.</div>')+'<form class="form" id="fGN"'+(S.data.GiaNhap?'':' hidden')+' data-id="'+esc(id)+'"><div class="two">'+fld("gnGia","Giá mua mỗi chiếc",inp("gnGia",g.that?g.v:"","number",'min="0" inputmode="numeric" placeholder="Ví dụ 459000"'))+fld("gnNote","Mua ở đâu, đợt nào",inp("gnNote","","text",'placeholder="Sale 11/11, cửa hàng Lê Duẩn"'))+'</div><button class="btn ghost full" type="submit">Lưu giá nhập</button></form>'+
     '<h2 style="font-size:17px;margin-top:18px">Nhập món này vào kho</h2><form class="form" id="fDMNhap" data-id="'+esc(id)+'"><div class="two">'+fld("dnSize","Size",sel("dnSize",sizes.length?sizes:LISTS.Size,szWant))+fld("dnSL","Số lượng",inp("dnSL",String(Math.max(1,c.giu?1:1)),"number",'min="1" inputmode="numeric"'))+'</div>'+
     fld("dnGia","Giá mua mỗi chiếc",inp("dnGia",g.that?g.v:"","number",'min="0" inputmode="numeric" placeholder="Để trống nếu chưa mua"'))+
     '<button class="btn full" type="submit">Tạo bản nhập hàng</button><div class="small muted">Bản nháp vào mục Nhập hàng với link, dòng, size của mẫu này. AI soạn mô tả, bạn duyệt là món vào kho với mã đồ riêng.</div></form>';
@@ -502,7 +507,7 @@ function submitGN(){var f=$("#fGN"),id=f.dataset.id,gia=N(val("gnGia"));if(!gia)
   run("Đang lưu giá nhập",function(){return api("giaNhap",{ma:id,gia:gia,ghiChu:val("gnNote")})},["GiaNhap"])}
 function submitDMNhap(){var f=$("#fDMNhap"),x=CAT.by[f.dataset.id];if(!x)return;var gia=N(val("dnGia"));
   var o={MaNhap:nextId("NhapTuLink","MaNhap","NH-",4),NgayTao:nowStr(),Link:x.link,Dong:dongList().indexOf(x.loai)>=0?x.loai:(dongList()[0]||x.loai),Size:val("dnSize"),SoLuong:Math.max(1,N(val("dnSL"))),GiaMua:gia||"",GhiChu:"Từ danh mục "+x.id+" · "+x.brand,TrangThai:"Chờ AI"};
-  run("Đang tạo bản nhập",function(){return appendRows("NhapTuLink",[o]).then(function(r){if(gia)return api("giaNhap",{ma:x.id,gia:gia,ghiChu:"Từ "+o.MaNhap});return r})},["NhapTuLink","GiaNhap"])}
+  run("Đang tạo bản nhập",function(){return appendRows("NhapTuLink",[o]).then(function(r){if(gia&&S.data.GiaNhap)return api("giaNhap",{ma:x.id,gia:gia,ghiChu:"Từ "+o.MaNhap});return r})},["NhapTuLink","GiaNhap"])}
 function canMuaList(){if(!CAT||!CAT.sp)return [];var cm=chonMap(),nb=nhapByLink(),gm=gnMap(),out=[];
   Object.keys(cm).forEach(function(id){var c=cm[id],x=CAT.by[id];if(!x||!c.giu)return;var da=(nb[linkKey(x.link)]||[]).reduce(function(s,r){return s+Math.max(1,N(r.SoLuong))},0);
     var sizes=Object.keys(c.size),can=Math.max(1,sizes.length||1);var thieu=Math.max(0,can-da);if(!thieu)return;var g=giaNhapOf(x,gm);out.push({x:x,c:c,da:da,thieu:thieu,g:g,tien:g.v*thieu})});
@@ -517,7 +522,7 @@ function vCanMua(){
   h+='<div class="list">'+L.map(function(r){var x=r.x;return '<button class="item wrap" type="button" data-dm="'+esc(x.id)+'">'+thumb(catImg(x.id,0),x.ten)+'<div style="min-width:0"><div class="t1">'+esc(x.ten)+'</div><div class="t2">'+esc(x.brand)+' · <span class="mono">'+esc(x.id)+'</span></div><div class="t2">'+r.c.giu+' khách · size '+(Object.keys(r.c.size).join(", ")||"chưa rõ")+(r.da?' · đã nhập '+r.da:'')+'</div></div><div class="r"><span class="small num">'+r.thieu+' chiếc</span><span class="small num">'+money(r.tien)+(r.g.that?'':' [GĐ]')+'</span></div></button>'}).join("")+'</div>';
   return h}
 /* lãi lỗ dự kiến từng khách giữ tủ trên website */
-function goiGia(dong,nam){var g=rows("Goi").filter(function(r){return r.Dong===dong&&(nam?/5 bộ/.test(r.TenGoi):!/5 bộ/.test(r.TenGoi))})[0]||rows("Goi").filter(function(r){return r.Dong===dong})[0];return g?{gia:N(g.GiaTuan),don:g.DonVi||"",ten:g.TenGoi}:null}
+function goiGia(dong,nam){if(!rows("Goi").length){var p=GOI_PUB[dong];return p?{gia:nam?p[1]:p[0],don:"/tuần",ten:nam?"Gói 5 bộ":"Gói 10 bộ"}:null}var g=rows("Goi").filter(function(r){return r.Dong===dong&&(nam?/5 bộ/.test(r.TenGoi):!/5 bộ/.test(r.TenGoi))})[0]||rows("Goi").filter(function(r){return r.Dong===dong})[0];return g?{gia:N(g.GiaTuan),don:g.DonVi||"",ten:g.TenGoi}:null}
 function plKhach(r,gm){var ts=TS(),nam=/Gói 5 bộ/.test(r.GhiChu||""),gg=goiGia(r.Dong,nam);if(!gg||!/tuần/.test(gg.don))return null;
   var bo=String(r.BoTu||"").split(";").filter(Boolean);if(!bo.length||!CAT||!CAT.sp)return null;
   var per=bo.map(function(o){return o.split("+").reduce(function(s,id){var x=CAT.by[id.trim()];return s+(x?giaNhapOf(x,gm).v:0)},0)/ts.hanMac});
@@ -529,13 +534,14 @@ function vLaiLo(){
   var ts=TS(),gm=gnMap(),L=rows("DangKyWeb").filter(function(r){return r.TrangThai!=="Bỏ"&&r.Loai==="Đăng ký"&&r.BoTu}).map(function(r){return {r:r,p:plKhach(r,gm)}}).filter(function(x){return x.p});
   var cp=rows("ChiPhi").reduce(function(s,r){return s+N(r.PhanBoThang||r.SoTien)},0),cpTuan=Math.round(cp*12/52);
   var tongLai=L.reduce(function(s,x){return s+x.p.lai},0),tb=L.length?tongLai/L.length:0;
-  if(!ts.ok)return '<h2>Lãi lỗ dự kiến</h2><div class="empty">Chưa đọc được tab ThamSo. Bấm Tải lại.</div>';
+  if(!ts.ok)return '<h2>Lãi lỗ dự kiến</h2><div class="panel"><div class="small">Chưa có thông số chi phí. Mở link thông số Claude gửi trong chat, hoặc điền tay bên dưới.</div>'+tsForm(ts)+'</div>';
   var h='<h2>Lãi lỗ dự kiến</h2><div class="panel"><div class="small muted" style="margin-bottom:8px">Mỗi tuần, theo tủ khách đã giữ trên website. Doanh thu đã trừ '+ts.giam+'% trả trước. Chi phí: khấu hao đồ (giá nhập ÷ '+ts.hanMac+' lần × '+ts.lanTuan+' lần/tuần), giặt '+money(ts.giat)+'/bộ [GĐ], giao '+money(ts.giao)+'/khách [GĐ].</div>';
   h+='<div class="kpis"><div><span class="small muted">Khách giữ tủ</span><b class="num">'+L.length+'</b></div><div><span class="small muted">Lãi gộp/tuần</span><b class="num" style="color:'+(tongLai<0?'var(--bad)':'inherit')+'">'+money(tongLai)+'</b></div><div><span class="small muted">Chi phí cố định/tuần</span><b class="num">'+(cp?money(cpTuan):'chưa nhập')+'</b></div><div><span class="small muted">Hoà vốn</span><b class="num">'+(cp&&tb>0?Math.ceil(cpTuan/tb)+' khách':'—')+'</b></div></div>';
   if(L.length)h+='<div class="list" style="margin-top:10px">'+L.map(function(x){var p=x.p,bad=p.bien*100<ts.mucTieu;return '<button class="item noimg wrap" type="button" data-web="'+esc(x.r.MaWeb)+'"><div style="min-width:0"><div class="t1">'+esc(x.r.Ten||x.r.MaWeb)+'</div><div class="t2">'+esc(x.r.Dong)+' · '+esc(p.gg.ten)+' · '+money(p.gg.gia)+'/tuần</div><div class="t2 num">thu '+money(p.dt)+' − đồ '+money(p.kh)+' − giặt '+money(p.giat)+' − giao '+money(p.giao)+'</div></div><div class="r"><b class="num" style="color:'+(bad?'var(--bad)':'inherit')+'">'+money(p.lai)+'</b><span class="small '+(bad?'':'muted')+'" style="'+(bad?'color:var(--bad)':'')+'">'+Math.round(p.bien*100)+'%'+(bad?' · dưới mục tiêu':'')+'</span></div></button>'}).join("")+'</div>';
   else h+='<div class="empty" style="margin-top:10px">Chưa có khách giữ tủ. Số liệu hiện khi khách gửi đăng ký kèm tủ đồ trên website.</div>';
-  h+='<details style="margin-top:10px"><summary class="small">Thông số giả định [GĐ], sửa khi có số thật</summary><form class="form" id="fTS" style="margin-top:8px"><div class="two">'+fld("tsNhap","Giá nhập ước, % niêm yết",inp("tsNhap",ts.tyLeNhap,"number",'inputmode="numeric"'))+fld("tsGiat","Giặt mỗi bộ (đồng)",inp("tsGiat",ts.giat,"number",'inputmode="numeric"'))+'</div><div class="two">'+fld("tsGiao","Chi phí giao mỗi khách/tuần",inp("tsGiao",ts.giao,"number",'inputmode="numeric"'))+fld("tsHan","Số lần mặc tối đa",inp("tsHan",ts.hanMac,"number",'inputmode="numeric"'))+'</div><div class="two">'+fld("tsMuc","Biên lãi mục tiêu (%)",inp("tsMuc",ts.mucTieu,"number",'inputmode="numeric"'))+fld("tsLan","Lần mặc mỗi tuần",inp("tsLan",ts.lanTuan,"number",'inputmode="numeric"'))+'</div><button class="btn ghost full" type="submit">Lưu thông số</button><div class="small muted">Lưu vào tab ThamSo của Sheet Office. Giá nhập thật nhập ở Kho đồ → Danh mục mẫu, chi phí cố định nhập ở tab ChiPhi.</div></form></details></div>';
+  h+='<details style="margin-top:10px"><summary class="small">Thông số giả định [GĐ], đang lấy từ '+ts.nguon+'</summary>'+tsForm(ts)+'</details></div>';
   return h}
+function tsForm(ts){return '<form class="form" id="fTS" style="margin-top:8px"><div class="two">'+fld("tsNhap","Giá nhập ước, % niêm yết",inp("tsNhap",(ts.ok?ts.tyLeNhap:""),"number",'inputmode="numeric"'))+fld("tsGiat","Giặt mỗi bộ (đồng)",inp("tsGiat",(ts.ok?ts.giat:""),"number",'inputmode="numeric"'))+'</div><div class="two">'+fld("tsGiao","Chi phí giao mỗi khách/tuần",inp("tsGiao",(ts.ok?ts.giao:""),"number",'inputmode="numeric"'))+fld("tsHan","Số lần mặc tối đa",inp("tsHan",(ts.ok?ts.hanMac:""),"number",'inputmode="numeric"'))+'</div><div class="two">'+fld("tsMuc","Biên lãi mục tiêu (%)",inp("tsMuc",(ts.ok?ts.mucTieu:""),"number",'inputmode="numeric"'))+fld("tsLan","Lần mặc mỗi tuần",inp("tsLan",(ts.ok?ts.lanTuan:""),"number",'inputmode="numeric"'))+'</div><button class="btn ghost full" type="submit">Lưu thông số</button><div class="small muted">'+(rows("ThamSo").length?'Lưu vào tab ThamSo của Sheet Office.':'Lưu trên điện thoại này (máy chủ chưa đọc tab ThamSo).')+' Chi phí cố định nhập ở tab ChiPhi.</div></form>'}
 function vKho(){
   if(S.f.khoSeg==="dm")return vDanhMuc();
   if(S.f.khoSeg==="mua")return vCanMua();
@@ -881,6 +887,7 @@ document.addEventListener("click",function(ev){
 });
 document.addEventListener("submit",function(ev){ev.preventDefault();var id=ev.target.id;
   if(id==="fGN")submitGN();else if(id==="fDMNhap")submitDMNhap();else if(id==="fTS"){var nv={tyLeNhap:N(val("tsNhap")),giat:N(val("tsGiat")),giao:N(val("tsGiao")),hanMac:N(val("tsHan")),mucTieu:N(val("tsMuc")),lanTuan:N(val("tsLan"))};
+    if(!rows("ThamSo").length){var cur=recall("of-thamso")||{};Object.keys(nv).forEach(function(k){cur[k]=nv[k]});if(cur.giam==null)cur.giam=7;store("of-thamso",cur);toast("Đã lưu trên máy này");render();return}
     run("Đang lưu thông số",function(){var ch=Promise.resolve();rows("ThamSo").forEach(function(r){if(nv[r.Khoa]!=null&&String(nv[r.Khoa])!==String(N(r.GiaTri))){ch=ch.then(function(){return setCells("ThamSo",r._r,"Khoa",r.Khoa,{GiaTri:nv[r.Khoa]})})}});return ch},["ThamSo"])}else if(id==="fLogin")submitLogin();else if(id==="fLink")submitLink();else if(id==="fKH")submitKH();else if(id==="fDK")submitDK();else if(id==="fXep")submitXep();else if(id==="fTrip")submitTrip()});
 document.addEventListener("input",function(ev){if(ev.target.id==="q"){S.f.q=ev.target.value;render()}if(ev.target.id==="dmQ"){S.f.dmQ=ev.target.value;S.f.dmN=40;clearTimeout(window.__dmT);window.__dmT=setTimeout(function(){render();var e=$("#dmQ");if(e){e.focus();e.setSelectionRange(e.value.length,e.value.length)}},250)}if(ev.target.closest&&ev.target.closest("#fDK"))calcDK()});
 document.addEventListener("change",function(ev){var t=ev.target;
@@ -891,7 +898,8 @@ document.addEventListener("keydown",function(e){if(e.key==="Escape"&&$("#sheetRo
 $("#reload").addEventListener("click",function(){loadAll()});
 
 var VIEWS=["tong-quan","nhap","kho","khach","giao"];
-function route(){var h=(location.hash||"").slice(1);S.view=VIEWS.indexOf(h)>=0?h:"tong-quan";closeSheet();render();window.scrollTo(0,0)}
+function route(){var h=(location.hash||"").slice(1);
+  var tm=h.match(/^ts=([\d.,]+)$/);if(tm){var v=tm[1].split(",");var o={};TS_KEYS.forEach(function(k,i){if(v[i]!=null&&v[i]!=="")o[k]=+v[i]});store("of-thamso",o);history.replaceState(null,"","#tong-quan");h="tong-quan";setTimeout(function(){toast("Đã nạp thông số chi phí vào máy này")},300)}S.view=VIEWS.indexOf(h)>=0?h:"tong-quan";closeSheet();render();window.scrollTo(0,0)}
 window.addEventListener("hashchange",route);
 
 /* boot */

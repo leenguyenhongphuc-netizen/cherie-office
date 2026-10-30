@@ -16,15 +16,17 @@ const T={
  SanPham:[['MaSP','TenMau','Dong','Loai','Size','TrangThai','SoLanMac','HanMac','GiaVon'],['OF-CL-001-M','Veste Croisée','Classic','Vest','M','Sẵn sàng','0','40','2098000']],
  NhapTuLink:[['MaNhap','Link','TrangThai','SoLuong'],['NH-0001','https://www.pantio.vn/products/x','Đã đăng','1']],
  KhachHang:[['MaKH','Ten']],DangKy:[['MaDK','MaKH','TrangThai']],TuDo:[['MaTD']],GiaoNhan:[['MaChuyen']]};
+if(process.env.OLD){delete T.ThamSo;delete T.GiaNhap;delete T.Goi;delete T.ChiPhi;T.NhapTuLink.push(['NH-0002',CAT.sp.find(x=>x.id===ids[1]).link,'Chờ AI','1'])}
+T.NhapTuLink[0].push('');T.NhapTuLink[0][4]='GiaMua';if(T.NhapTuLink[2])T.NhapTuLink[2][4]='500000';
 (async()=>{const b=await chromium.launch(),p=await (await b.newContext({viewport:{width:390,height:844}})).newPage();const errs=[];p.on('pageerror',e=>errs.push(e.message));
  await p.route(/script\.google\.com/,async r=>{const q=JSON.parse(r.request().postData()||'{}');let o={ok:true};if(q.fn==='me')o={me:{ten:'Phúc',vaiTro:'Admin',quyen:{}}};if(q.fn==='load')o={me:{ten:'Phúc',vaiTro:'Admin',quyen:{}},tabs:T};if(q.fn==='staff')o={staff:[]};console.log('API',q.fn,q.tab||'',q.ma||'');await r.fulfill({contentType:'application/json',body:JSON.stringify(o)})});
  await p.goto(BASE+'admin/');await p.evaluate(()=>{localStorage.setItem('of-admin-token','t');localStorage.setItem('of-admin-me',JSON.stringify({ten:'Phúc',vaiTro:'Admin',quyen:{}}))});await p.reload();
  let n=0;const shot=async(nm,full)=>{await p.waitForTimeout(900);await p.screenshot({path:`${OUT}/${String(++n).padStart(2,'0')}-${nm}.png`,fullPage:!!full})};
- await p.goto(BASE+'admin/#tong-quan');await p.waitForTimeout(1500);await shot('tong-quan',1);
+ await p.goto(BASE+'admin/#tong-quan');await p.waitForTimeout(1500);await shot('tong-quan',1);if(process.env.OLD){await p.goto(BASE+'admin/#ts=1,2,3,4,5,6,7');await p.waitForTimeout(1500);await shot('sau-nap-thong-so',1)}
  await p.goto(BASE+'admin/#kho');await shot('kho-dang-co');
  await p.click('[data-kseg=dm]');await shot('danh-muc');await p.click('[data-dmh="IVY moda"]').catch(()=>p.click('[data-dmh]:nth-child(3)'));await shot('danh-muc-ivy');
  await p.click('[data-dmh="Tất cả"]');await p.click('[data-dm]');await shot('chi-tiet-mau',1);
- await p.fill('#gnGia','399000');await p.click('#fGN button[type=submit]');await p.waitForTimeout(800);
+ if(await p.isVisible('#gnGia')){await p.fill('#gnGia','399000');await p.click('#fGN button[type=submit]')}await p.waitForTimeout(800);
  await p.goto(BASE+'admin/#kho');await p.waitForTimeout(500);await p.click('[data-kseg=mua]');await shot('can-mua');
  await p.goto(BASE+'admin/#khach');await p.waitForTimeout(500);await p.click('[data-ks=web]');await p.click('[data-web]');await shot('khach-web',1);
  console.log('Lỗi JS:',errs.length?errs:'không');await b.close()})();
