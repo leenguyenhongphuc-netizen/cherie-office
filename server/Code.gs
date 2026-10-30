@@ -33,6 +33,7 @@ function handle(q) {
     case "webDangKy": return webDangKy(q);
     case "webKetQua": return webKetQua(q);
     case "webSuKien": return webSuKien(q);
+    case "webXemTu": return webXemTu(q);
     case "staff": return { staff: staffList() };
     case "login": return login(q.nv, q.pin);
     case "logout": props().deleteProperty("tk_" + q.token); return { ok: true };
@@ -179,7 +180,7 @@ function dangXuatTatCa() {
 }
 
 /* ---------- đăng ký và trắc nghiệm từ website (công khai, không cần đăng nhập) ---------- */
-var WEB_HEAD = ["MaWeb", "NgayTao", "Loai", "Dong", "Ten", "Zalo", "NoiLam", "DiaChi", "GiaoTai", "Size", "ChieuCao", "NgayDuSinh", "KieuPhongCach", "TamTinh", "GhiChu", "TraLoi", "TrangThai", "XuLy"];
+var WEB_HEAD = ["MaWeb", "NgayTao", "Loai", "Dong", "Ten", "Zalo", "NoiLam", "DiaChi", "GiaoTai", "Size", "ChieuCao", "NgayDuSinh", "KieuPhongCach", "TamTinh", "GhiChu", "TraLoi", "TrangThai", "XuLy", "MaKQ", "BoTu", "LinkTu"];
 function txt(v, n) { v = v == null ? "" : String(v).replace(/[\u0000-\u001f]/g, " ").trim(); return v.slice(0, n || 200); }
 function webDangKy(q) {
   var zalo = txt(q.zalo, 15).replace(/\s/g, "");
@@ -193,12 +194,13 @@ function webDangKy(q) {
   try {
     var book = ss(), sh = book.getSheetByName("DangKyWeb");
     if (!sh) { sh = book.insertSheet("DangKyWeb"); sh.getRange(1, 1, 1, WEB_HEAD.length).setValues([WEB_HEAD]).setFontWeight("bold"); sh.setFrozenRows(1); }
+    headOk(sh, WEB_HEAD);
     var last = sh.getLastRow(), mx = 0;
     if (last > 1) sh.getRange(2, 1, last - 1, 1).getValues().forEach(function (r) { var m = String(r[0]).match(/(\d+)/); if (m && +m[1] > mx) mx = +m[1]; });
     var ma = "WEB-" + ("000" + (mx + 1)).slice(-4);
     var now = Utilities.formatDate(new Date(), "Asia/Ho_Chi_Minh", "yyyy-MM-dd HH:mm");
     var tl = ""; try { tl = JSON.stringify(q.traLoi || {}).slice(0, 4000); } catch (e) {}
-    var row = [ma, now, loai, txt(q.dong, 40), txt(q.ten, 80), "'" + zalo, txt(q.noiLam, 120), txt(q.diaChi, 200), txt(q.giaoTai, 20), txt(q.size, 10), txt(q.chieuCao, 20), txt(q.duSinh, 20), txt(q.kieu, 60), +q.tamTinh || "", txt(q.ghiChu, 500), tl, "Mới", ""];
+    var row = [ma, now, loai, txt(q.dong, 40), txt(q.ten, 80), "'" + zalo, txt(q.noiLam, 120), txt(q.diaChi, 200), txt(q.giaoTai, 20), txt(q.size, 10), txt(q.chieuCao, 20), txt(q.duSinh, 20), txt(q.kieu, 60), +q.tamTinh || "", txt(q.ghiChu, 500), tl, "Mới", "", /^KQ-\d{5}$/.test(txt(q.maKQ, 12)) ? txt(q.maKQ, 12) : "", boOk(q.bo), /^[a-z0-9]{8}$/.test(txt(q.xem, 12)) && /^KQ-\d{5}$/.test(txt(q.maKQ, 12)) ? SITE_OF + "#tu-" + txt(q.maKQ, 12) + "-" + txt(q.xem, 12) : ""];
     row = row.map(function (v) { return typeof v === "string" && /^[=+\-@]/.test(v) ? "'" + v : v; });
     sh.getRange(sh.getLastRow() + 1, 1, 1, row.length).setValues([row]);
     return { ok: true, ma: ma };
@@ -208,13 +210,17 @@ function webDangKy(q) {
 /* ---------- dữ liệu khách từ website (nền CDP) ----------
    Mỗi lần làm xong trắc nghiệm hoặc trò chuyện mẹ đều lưu 1 dòng, kể cả khi khách không để Zalo (ẩn danh theo MaKhachWeb).
    Tên, Zalo chỉ lưu khi khách đồng ý. Hành vi sau đó (ngại giá, giữ tủ, đăng ký) ghi ở SuKienWeb và đánh dấu lên dòng kết quả. */
-var KQ_HEAD = ["MaKQ", "NgayTao", "MaKhachWeb", "Zalo", "Ten", "DongY", "Loai", "Dong", "KieuPhongCach", "CheDo", "GiaiDoan", "Size", "ChieuCao", "NgayDuSinh", "VayQuan", "MauThich", "PhongCach", "Tranh", "SoTim", "TimMa", "TuDeXuat", "ChiSoLoiTu", "NgaiGia", "BamGiuTu", "DaDangKy", "MaWeb", "Nguon", "KenhPhu", "ChienDich", "TrangGioiThieu", "ThietBi", "GiayLam", "LanThu", "TraLoi"];
+var KQ_HEAD = ["MaKQ", "NgayTao", "MaKhachWeb", "Zalo", "Ten", "DongY", "Loai", "Dong", "KieuPhongCach", "CheDo", "GiaiDoan", "Size", "ChieuCao", "NgayDuSinh", "VayQuan", "MauThich", "PhongCach", "Tranh", "SoTim", "TimMa", "TuDeXuat", "ChiSoLoiTu", "NgaiGia", "BamGiuTu", "DaDangKy", "MaWeb", "Nguon", "KenhPhu", "ChienDich", "TrangGioiThieu", "ThietBi", "GiayLam", "LanThu", "TraLoi", "MaXem", "BoTu", "LinkTu", "DaLuu"];
 var SK_HEAD = ["Luc", "MaKhachWeb", "MaKQ", "SuKien", "GiaTri", "Trang"];
 function tabOf(name, head) {
   var book = ss(), sh = book.getSheetByName(name);
   if (!sh) { sh = book.insertSheet(name); sh.getRange(1, 1, 1, head.length).setValues([head]).setFontWeight("bold"); sh.setFrozenRows(1); }
   return sh;
 }
+function headOk(sh, head) { if (sh.getLastColumn() < head.length) sh.getRange(1, 1, 1, head.length).setValues([head]).setFontWeight("bold"); return sh; }
+var SITE_OF = "https://office.cherie.io.vn/";
+function boOk(v) { v = txt(v, 2000); return /^[A-Za-z0-9\-+;]*$/.test(v) ? v : ""; }
+function maXem() { var c = "abcdefghjkmnpqrstuvwxyz23456789", x = ""; for (var i = 0; i < 8; i++) x += c.charAt(Math.floor(Math.random() * c.length)); return x; }
 function vidOk(v) { v = txt(v, 24); if (!/^V-[A-Za-z0-9]{6,20}$/.test(v)) fail("Mã khách không hợp lệ", "bad_request"); return v; }
 function webRate(key, perVid, all) {
   var c = CacheService.getScriptCache(), n1 = +(c.get(key) || 0), n0 = +(c.get("web_all2") || 0);
@@ -228,7 +234,7 @@ function webKetQua(q) {
   if (zalo && !/^0\d{9}$/.test(zalo)) zalo = "";
   var lock = LockService.getScriptLock(); lock.waitLock(20000);
   try {
-    var sh = tabOf("KetQuaWeb", KQ_HEAD), last = sh.getLastRow(), mx = 0, lan = 1;
+    var sh = headOk(tabOf("KetQuaWeb", KQ_HEAD), KQ_HEAD), last = sh.getLastRow(), mx = 0, lan = 1;
     if (last > 1) sh.getRange(2, 1, last - 1, 3).getValues().forEach(function (r) { var m = String(r[0]).match(/(\d+)/); if (m && +m[1] > mx) mx = +m[1]; if (r[2] === vid) lan++; });
     var ma = "KQ-" + ("0000" + (mx + 1)).slice(-5);
     var now = Utilities.formatDate(new Date(), "Asia/Ho_Chi_Minh", "yyyy-MM-dd HH:mm:ss");
@@ -239,11 +245,29 @@ function webKetQua(q) {
       txt(a.giaiDoan, 40), txt(a.size || a.sizeNay || a.sizeTruoc, 12), txt(a.cao, 20), txt(a.duSinh, 20), txt(a.vayQuan, 20), txt(a.mau, 30), txt(a.anTuong, 30), arr(a.tranh),
       (a.tim || []).length || 0, arr(a.tim), arr(q.tuDe), +q.tuDeU || "", "", "", "", "",
       txt(u.source, 60), txt(u.medium, 60), txt(u.campaign, 80), txt(q.ref, 200), txt(q.thietBi, 20), Math.round(+q.giay || 0) || "", lan, tl];
+    var xem = maXem(), bo = boOk(q.bo);
+    row = row.concat([xem, bo, SITE_OF + "#tu-" + ma + "-" + xem, ""]);
     sh.getRange(sh.getLastRow() + 1, 1, 1, row.length).setValues([row.map(safe)]);
-    return { ok: true, ma: ma };
+    return { ok: true, ma: ma, xem: xem };
   } finally { lock.releaseLock(); }
 }
-var SK_COT = { ngai_gia: "NgaiGia", giu_tu: "BamGiuTu", dang_ky: "DaDangKy" };
+var SK_COT = { ngai_gia: "NgaiGia", giu_tu: "BamGiuTu", dang_ky: "DaDangKy", luu_tu: "DaLuu" };
+/* Mở lại tủ đồ đã lưu: cần đủ mã KQ và mã xem ngẫu nhiên. Chỉ trả về dòng, kiểu, các bộ đồ. Không trả tên, Zalo, câu trả lời. */
+function webXemTu(q) {
+  var vid = vidOk(q.vid); webRate("xt_" + vid, 60, 3000);
+  var ma = txt(q.ma, 12), xem = txt(q.xem, 12);
+  if (!/^KQ-\d{5}$/.test(ma) || !/^[a-z0-9]{8}$/.test(xem)) fail("Link tủ đồ chưa đúng", "bad_request");
+  var sh = ss().getSheetByName("KetQuaWeb"); if (!sh) fail("Không tìm thấy tủ đồ", "not_found");
+  var last = sh.getLastRow(); if (last < 2) fail("Không tìm thấy tủ đồ", "not_found");
+  var col = function (k) { return KQ_HEAD.indexOf(k) + 1; };
+  var ids = sh.getRange(2, 1, last - 1, 1).getValues();
+  for (var i = ids.length - 1; i >= 0; i--) if (ids[i][0] === ma) {
+    var r = sh.getRange(i + 2, 1, 1, KQ_HEAD.length).getValues()[0];
+    if (String(r[col("MaXem") - 1]) !== xem) break;
+    return { ok: true, ma: ma, ngay: String(r[1]).slice(0, 10), loai: r[col("Loai") - 1], dong: r[col("Dong") - 1], kieu: r[col("KieuPhongCach") - 1], cheDo: r[col("CheDo") - 1], bo: String(r[col("BoTu") - 1] || ""), tuDe: String(r[col("TuDeXuat") - 1] || "") };
+  }
+  fail("Không tìm thấy tủ đồ", "not_found");
+}
 function webSuKien(q) {
   var vid = vidOk(q.vid);
   var ds = Array.isArray(q.ds) ? q.ds.slice(0, 30) : [{ su: q.su, giaTri: q.giaTri, trang: q.trang, maKQ: q.maKQ }];
@@ -254,7 +278,7 @@ function webSuKien(q) {
     var maKQ = /^KQ-\d{5}$/.test((d && d.maKQ) || q.maKQ || "") ? (d.maKQ || q.maKQ) : "";
     var luc = d && +d.luc > 1.7e12 && +d.luc < Date.now() + 864e5 ? new Date(+d.luc) : new Date();
     rows.push([Utilities.formatDate(luc, "Asia/Ho_Chi_Minh", "yyyy-MM-dd HH:mm:ss"), vid, maKQ, su, txt(d.giaTri, 120), txt(d.trang, 60)].map(safe));
-    if (SK_COT[su] && maKQ) marks.push({ col: SK_COT[su], maKQ: maKQ, v: su === "dang_ky" ? txt(d.giaTri, 20) || "Có" : "Có" });
+    if (SK_COT[su] && maKQ) marks.push({ col: SK_COT[su], maKQ: maKQ, v: (su === "dang_ky" || su === "luu_tu") ? txt(d.giaTri, 20) || "Có" : "Có" });
   });
   if (!rows.length) return { ok: true, n: 0 };
   var lock = LockService.getScriptLock(); lock.waitLock(20000);

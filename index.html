@@ -255,6 +255,20 @@ details p{margin-top:8px;color:var(--muted)}
 .typecard h1{color:#FFF}
 .typecard p{color:rgba(255,255,255,.9);max-width:34em}
 .typecard .pal{display:flex;gap:8px;margin-top:6px}
+.savebar{margin-top:16px;border:1px solid var(--line);border-radius:var(--r-l);padding:clamp(18px,3vw,26px);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px 24px;align-items:center;background:var(--bg)}
+.savebar .k{color:var(--gold)}
+.savebar b{display:block;font-family:var(--f-d);font-size:22px;font-weight:400;margin-top:4px}
+.savebar p{margin:6px 0 0;font-size:14px;max-width:34em}
+.savebar .row{display:grid;gap:8px;min-width:230px}
+.savebar .row .pill{width:100%}
+.savebar .msg{grid-column:1/-1;margin:0;font-size:14px;color:var(--gold)}
+.savebar .msg:empty{display:none}
+@media (max-width:700px){.savebar{grid-template-columns:1fr}.savebar .row{min-width:0}}
+.saved{display:grid;gap:12px;margin-top:18px}
+.saved a{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 14px;align-items:center;border:1px solid var(--line);border-radius:var(--r);padding:16px 18px}
+.saved a:hover{border-color:var(--espresso)}
+.saved a b{font-family:var(--f-d);font-weight:400;font-size:20px}
+.saved a .go{grid-row:1/3;grid-column:2;font-size:14px;text-decoration:underline}
 .typecard .pal i{width:34px;height:34px;border-radius:50%;border:2px solid rgba(255,255,255,.7)}
 .rules{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:20px}
 .rule{background:var(--soft);border-radius:var(--r);padding:16px;display:grid;gap:4px}
@@ -598,11 +612,60 @@ function ls(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorag
 var VID=(function(){var v=ls("of-vid");if(!v||!/^V-[A-Za-z0-9]{6,20}$/.test(v)){var c="ABCDEFGHJKLMNPQRSTUVWXYZ23456789",x="";for(var i=0;i<10;i++)x+=c.charAt(Math.floor(Math.random()*c.length));v="V-"+x;ls("of-vid",v)}return v})();
 var UTM=(function(){var u=ss("of-utm");if(u)return u;var q=new URLSearchParams(location.search);u={source:q.get("utm_source")||"",medium:q.get("utm_medium")||"",campaign:q.get("utm_campaign")||"",ref:(document.referrer&&document.referrer.indexOf(location.host)<0)?document.referrer.slice(0,200):""};if(!u.source&&!u.ref)u.source="trực tiếp";ss("of-utm",u);return u})();
 function post(o){try{return fetch(API,{method:"POST",redirect:"follow",body:JSON.stringify(o)}).then(function(x){return x.json()})}catch(e){return Promise.reject(e)}}
+/* ---------- tủ đồ đã lưu: mã KQ + mã xem ngẫu nhiên, mở lại trên máy nào cũng được ---------- */
+var SITE="https://office.cherie.io.vn/",ZALO="https://zalo.me/0377159189",CUR=null;
+function boStr(bo){return (bo||[]).map(function(o){return o.map(function(x){return x.id}).join("+")}).join(";")}
+function boParse(str){var m={};DATA.sp.forEach(function(x){m[x.id]=x});return String(str||"").split(";").map(function(o){return o.split("+").map(function(id){return m[id]}).filter(Boolean)}).filter(function(o){return o.length})}
+function tuLink(ma,xem){return SITE+"#tu-"+ma+"-"+xem}
+function savedList(){try{var L=JSON.parse(ls("of-tu")||"[]");return Array.isArray(L)?L:[]}catch(e){return []}}
+function remember(c){if(!c||!c.ma||!c.xem)return;var L=savedList().filter(function(x){return x.ma!==c.ma});L.unshift({ma:c.ma,xem:c.xem,dong:c.dong,kieu:c.kieu,at:Date.now()});ls("of-tu",JSON.stringify(L.slice(0,12)));drawerSaved()}
+function drawerSaved(){var d=$("#drawerLinks");if(!d)return;var o=$("#dSaved");if(o)o.remove();var n=savedList().length;if(!n)return;var a=document.createElement("a");a.id="dSaved";a.href="#tu-da-luu";a.textContent="Tủ đồ đã lưu ("+n+")";var c=d.querySelector(".dcta");d.insertBefore(a,c)}
+function saveBarHtml(c){
+  return '<div class="savebar" id="saveBar"><div><span class="k">Lưu tủ đồ này</span><b>'+(c.ma?'Mã <span class="num">'+esc(c.ma)+'</span>':'Đang tạo mã tủ đồ…')+'</b><p class="muted">Lưu ảnh vào máy hoặc giữ link để mở lại bất cứ lúc nào. Gửi mã cho stylist qua Zalo để được tư vấn và giữ đúng những bộ này.</p></div>'+
+    '<div class="row"><button type="button" class="pill" data-save="anh">Lưu ảnh tủ đồ</button><button type="button" class="pill ghost" data-save="zalo"'+(c.ma?'':' disabled')+'>Gửi stylist qua Zalo</button><button type="button" class="pill ghost" data-save="link"'+(c.ma?'':' disabled')+'>Sao chép link tủ đồ</button></div><p class="msg" role="status" aria-live="polite"></p></div>'}
+function paintSave(){var b=$("#saveBar");if(b&&CUR)b.outerHTML=saveBarHtml(CUR)}
+function saveMsg(t){var m=document.querySelector("#saveBar .msg");if(m)m.textContent=t}
+function copyText(t){if(navigator.clipboard&&navigator.clipboard.writeText)return navigator.clipboard.writeText(t);return new Promise(function(ok,no){var x=document.createElement("textarea");x.value=t;x.style.position="fixed";x.style.opacity="0";document.body.appendChild(x);x.select();try{document.execCommand("copy");ok()}catch(e){no(e)}x.remove()})}
+function loadImg(u){return new Promise(function(ok){if(!u)return ok(null);var tries=[u,"https://wsrv.nl/?url="+encodeURIComponent(u.replace(/^https?:\/\//,""))+"&w=640&output=jpg"],i=0;
+  function nx(){if(i>=tries.length)return ok(null);var im=new Image(),done=false;im.crossOrigin="anonymous";var t=setTimeout(function(){if(done)return;done=true;i++;nx()},8000);
+    im.onload=function(){if(done)return;done=true;clearTimeout(t);ok(im)};im.onerror=function(){if(done)return;done=true;clearTimeout(t);i++;nx()};im.src=tries[i]}nx()})}
+function wrapTxt(g,t,x,y,w,lh,max){var words=String(t).split(" "),line="",n=0;for(var i=0;i<words.length;i++){var test=line?line+" "+words[i]:words[i];if(g.measureText(test).width>w&&line){if(++n>=max){while(g.measureText(line+"…").width>w&&line.length)line=line.slice(0,-1);g.fillText(line+"…",x,y);return y+lh}g.fillText(line,x,y);y+=lh;line=words[i]}else line=test}if(line){g.fillText(line,x,y);y+=lh}return y}
+function makeTuImage(c){
+  var bo=c.bo||[],W=1080,P=60,G=28,cw=(W-P*2-G)/2,ih=Math.round(cw/2*4/3),th=ih+96,rows=Math.ceil(bo.length/2),H=330+rows*(th+G)+130;
+  var cv=document.createElement("canvas");cv.width=W;cv.height=H;var g=cv.getContext("2d");
+  var srcs=[];bo.forEach(function(o){o.forEach(function(x){srcs.push(imgOf(x,0))})});
+  var fl=document.fonts&&document.fonts.load?Promise.all(['400 56px "Playfair Display"','400 24px "Be Vietnam Pro"','600 24px "Be Vietnam Pro"'].map(function(f){return document.fonts.load(f).catch(function(){})})):Promise.resolve();
+  return Promise.all([fl,Promise.all(srcs.map(loadImg))]).then(function(r){
+    var ims=r[1],k=0,D='"Playfair Display",Georgia,serif',B='"Be Vietnam Pro",system-ui,sans-serif',ink="#2A2224",mut="#6E6266",esp="#4E3B31";
+    g.fillStyle="#FAF7F3";g.fillRect(0,0,W,H);g.textAlign="center";g.fillStyle=esp;
+    g.font="400 34px "+D;try{g.letterSpacing="10px"}catch(e){}g.fillText("CHÉRIE",W/2+5,88);g.font="500 15px "+B;try{g.letterSpacing="6px"}catch(e){}g.fillStyle="#7E5F31";g.fillText("OFFICE",W/2+3,116);try{g.letterSpacing="0px"}catch(e){}
+    g.fillStyle=ink;g.font="400 54px "+D;g.fillText("Tủ đồ của "+(c.ten||"nàng"),W/2,200);
+    g.fillStyle=mut;g.font="400 24px "+B;g.fillText([c.kieu,c.dong?"Dòng "+c.dong:"",bo.length+" bộ"].filter(Boolean).join(" · "),W/2,244);
+    if(c.ma){g.fillStyle=esp;g.font="600 22px "+B;g.fillText("Mã tủ đồ "+c.ma,W/2,284)}
+    g.textAlign="left";
+    bo.forEach(function(o,i){var x=P+(i%2)*(cw+G),y=330+Math.floor(i/2)*(th+G);
+      g.save();g.beginPath();if(g.roundRect)g.roundRect(x,y,cw,ih,16);else g.rect(x,y,cw,ih);g.clip();
+      var n=o.length,w=cw/n;o.forEach(function(s,j){var im=ims[k++],dx=x+j*w;g.fillStyle="#E9E1D8";g.fillRect(dx,y,w,ih);
+        if(im){var sr=im.width/im.height,dr=w/ih,sw=im.width,sh=im.height,sx=0,sy=0;if(sr>dr){sw=im.height*dr;sx=(im.width-sw)/2}else{sh=im.width/dr;sy=(im.height-sh)*0.15}g.drawImage(im,sx,sy,sw,sh,dx,y,w,ih)}
+        else{g.fillStyle=mut;g.font="400 20px "+B;wrapTxt(g,s.ten,dx+16,y+ih/2,w-32,26,3)}
+        if(j)g.fillStyle="#FAF7F3",g.fillRect(dx-1,y,2,ih)});
+      g.restore();
+      g.fillStyle=esp;g.font="600 22px "+B;g.fillText("Bộ "+(i+1)+(bo.length===10?(i<5?" · Tuần A":" · Tuần B"):""),x,y+ih+34);
+      g.fillStyle=mut;g.font="400 19px "+B;wrapTxt(g,o.map(function(s){return s.ten}).join(" + "),x,y+ih+64,cw,26,2)});
+    g.textAlign="center";g.fillStyle=esp;g.font="italic 400 28px "+D;g.fillText("Mỗi lần, một chiếc mới.",W/2,H-78);
+    g.fillStyle=mut;g.font="400 20px "+B;g.fillText("office.cherie.io.vn · Zalo 0377 159 189",W/2,H-42);
+    return new Promise(function(ok){cv.toBlob(function(b){ok(b)},"image/jpeg",0.9)})})}
+function saveTuImage(c){
+  saveMsg("Đang tạo ảnh tủ đồ…");
+  return makeTuImage(c).then(function(b){if(!b)throw new Error("no blob");var name="CHERIE-Office-"+(c.ma||"tu-do")+".jpg",f;try{f=new File([b],name,{type:"image/jpeg"})}catch(e){}
+    if(f&&navigator.canShare&&navigator.canShare({files:[f]}))return navigator.share({files:[f],title:"Tủ đồ CHÉRIE Office"}).then(function(){saveMsg("Xong. Trên iPhone chọn “Lưu hình ảnh” để vào Ảnh.")},function(e){saveMsg(e&&e.name==="AbortError"?"":"Chưa lưu được, thử lại giúp tụi mình.")});
+    var u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},4000);saveMsg("Đã tải ảnh tủ đồ về máy.")})
+  .catch(function(){saveMsg("Chưa tạo được ảnh. Nàng chụp màn hình hoặc sao chép link tủ đồ nhé.")})}
 function saveKQ(res,loai,giay,dongY){
   var T=TYPES[res.type]||{};
-  post({fn:"webKetQua",vid:VID,loai:loai,dong:res.line,kieu:T.ten||res.type,cheDo:res.mode||"",a:res.a,tuDe:res.cap||[],tuDeU:res.a&&res.a.tuDeU,u:UTM,ref:UTM.ref,
+  post({fn:"webKetQua",vid:VID,loai:loai,dong:res.line,kieu:T.ten||res.type,cheDo:res.mode||"",a:res.a,tuDe:res.cap||[],tuDeU:res.a&&res.a.tuDeU,bo:res.bo||"",u:UTM,ref:UTM.ref,
     thietBi:matchMedia("(max-width:760px)").matches?"Điện thoại":"Máy tính",giay:giay,dongY:!!dongY,ten:res.ten,zalo:res.zalo})
-  .then(function(x){if(x&&x.ma){var r=ss("of-result");if(r&&r.at===res.at){r.maKQ=x.ma;ss("of-result",r)}}}).catch(function(){})}
+  .then(function(x){if(x&&x.ma){var r=ss("of-result");if(r&&r.at===res.at){r.maKQ=x.ma;r.xem=x.xem||"";ss("of-result",r)}if(CUR&&CUR.at===res.at){CUR.ma=x.ma;CUR.xem=x.xem||"";paintSave()}}}).catch(function(){})}
 var EVQ=[];
 function track(su,giaTri){try{var r=ss("of-result")||{};EVQ.push({su:su,giaTri:String(giaTri==null?"":giaTri).slice(0,120),trang:location.hash.slice(1,40),maKQ:r.maKQ||"",luc:Date.now()});if(EVQ.length>=25)flushEv()}catch(e){}}
 function flushEv(beacon){if(!EVQ.length)return;var ds=EVQ.splice(0,30),body=JSON.stringify({fn:"webSuKien",vid:VID,ds:ds});
@@ -682,7 +745,7 @@ function lineImg(l){var f=DATA.sp.filter(function(s){return inLine(s,l)&&pics(s.
 /* ---------- khung chung ---------- */
 function renderChrome(){
   $("#catNav").innerHTML='<a href="#tu-do" data-nav="tu-do">Tủ đồ</a>'+LINES.map(function(l){return '<a href="#nhom-'+l.slug+'" data-nav="nhom-'+l.slug+'"'+(l.mom?' class="mom"':'')+'>'+esc(l.k)+'</a>'}).join("")+'<a href="#goi-va-gia" data-nav="goi-va-gia">Gói và giá</a>';
-  $("#drawerLinks").innerHTML='<a href="#">Trang chủ</a>'+$("#catNav").innerHTML+'<a href="#cach-hoat-dong">Cách hoạt động</a><a href="#chinh-sach">Dữ liệu của nàng</a><div class="dcta"><a class="pill" href="#chon-nhom">Tìm tủ đồ của nàng</a><a class="pill ghost" href="https://zalo.me/0377159189" target="_blank" rel="noopener">Nhắn Zalo 0377 159 189</a></div>';
+  $("#drawerLinks").innerHTML='<a href="#">Trang chủ</a>'+$("#catNav").innerHTML+'<a href="#cach-hoat-dong">Cách hoạt động</a><a href="#chinh-sach">Dữ liệu của nàng</a><div class="dcta"><a class="pill" href="#chon-nhom">Tìm tủ đồ của nàng</a><a class="pill ghost" href="https://zalo.me/0377159189" target="_blank" rel="noopener">Nhắn Zalo 0377 159 189</a></div>';drawerSaved();
   $("#footLines").innerHTML=LINES.map(function(l){return '<a href="#nhom-'+l.slug+'">'+esc(l.k)+'</a>'}).join("");
   var words=["Giặt hấp hằng tuần","Giao văn phòng miễn phí","Đổi size trong 48 giờ","Tag đếm số lần mặc","Stylist chọn theo gu","Mỗi lần, một chiếc mới"];
   var one=words.map(function(w){return '<span>'+esc(w)+'</span><i>·</i>'}).join("");$("#marq").innerHTML=one+one;
@@ -894,7 +957,7 @@ function computeType(a){
 function finishQuiz(){
   var a=QZ.a,r=computeType(a),clean={};Object.keys(a).forEach(function(k){if(k.charAt(0)!=="_")clean[k]=a[k]});
   var res={line:QZ.l.k,slug:QZ.l.slug,type:r.key,mode:r.mode,a:clean,at:Date.now(),ten:a._ten||"",zalo:(a._zalo||"").replace(/\s/g,"")};
-  var cp=buildCapsule(QZ.l,clean);res.cap=cp.ids;res.a.tuDe=cp.ids;res.a.tuDeU=cp.u;
+  var cp=buildCapsule(QZ.l,clean);res.cap=cp.ids;res.bo=boStr(cp.bo);res.a.tuDe=cp.ids;res.a.tuDeU=cp.u;
   ss("of-result",res);
   saveKQ(res,"Trắc nghiệm",(Date.now()-QZ.t0)/1000,!!(a._wantSave&&a._dongY&&res.zalo));
   if(a._wantSave&&res.zalo){sendLead(res,"Trắc nghiệm")}
@@ -994,8 +1057,10 @@ function renderResult(){
   var h='<div class="typecard" style="background:'+T.bg+'"><span class="k" style="color:rgba(255,255,255,.75)">Kết quả · dòng '+esc(l.k)+'</span><span class="fr-name">'+esc(T.fr)+' · '+esc(r.mode)+'</span><p style="font-size:15px;margin-bottom:-6px">'+hi+'</p><h1>'+esc(T.ten)+'</h1><p>'+esc(T.mo)+'</p>'+
     '<p style="font-size:14px">'+(r.mode==="Thích thử"?"Nàng sẵn sàng thử cái mới: cứ 2 tuần stylist cài vào 1 bộ khác gu thường ngày để nàng thử.":"Nàng thích sự ổn định: stylist giữ bảng màu quen, chỉ đổi kiểu dáng để tủ đồ không nhàm.")+'</p>'+
     '<div class="pal">'+T.pal.map(function(c){return '<i style="background:'+c+'"></i>'}).join("")+'</div></div>';
+  var cap0=buildCapsule(l,r.a);CUR={at:r.at,ma:r.maKQ||"",xem:r.xem||"",ten:r.ten||"",dong:l.k,kieu:T.ten,bo:cap0.bo};
+  if(cap0.bo.length)h+=saveBarHtml(CUR);
   h+='<div class="rules">'+rulesOf(r.a).map(function(x){return '<div class="rule"><span class="k">'+esc(x[0])+'</span><b>'+esc(x[1])+'</b></div>'}).join("")+'</div>';
-  h+=capsuleHtml(l,buildCapsule(l,r.a));
+  h+=capsuleHtml(l,cap0);
   h+=offerHtml(l,r.a);
   h+='<p style="margin-top:14px;text-align:center"><a class="ul muted" href="#chan-doan-'+l.slug+'" data-redo="'+l.slug+'">Làm lại trắc nghiệm</a></p>';
   $("#res").innerHTML=h}
@@ -1052,7 +1117,7 @@ $("#repliesIn").addEventListener("click",function(e){
 function finishChat(){
   var p=PERSONA.filter(function(x){return x.b===CH.a.anTuong})[0];
   var a={};Object.keys(CH.a).forEach(function(k){if(k!=="lienHe")a[k]=CH.a[k]});
-  var res={mom:1,line:MOM,slug:"me-bau-sau-sinh",type:p?p.v:"Mềm mại",a:a,at:Date.now(),ten:CH.ten||"",zalo:CH.zalo||""};try{res.cap=buildCapsule(LINES.filter(function(x){return x.mom})[0],a).ids}catch(e){}ss("of-result",res);saveKQ(res,"Trò chuyện mẹ",(Date.now()-CH.t0)/1000,!!res.zalo);
+  var res={mom:1,line:MOM,slug:"me-bau-sau-sinh",type:p?p.v:"Mềm mại",a:a,at:Date.now(),ten:CH.ten||"",zalo:CH.zalo||""};try{var mc0=buildCapsule(LINES.filter(function(x){return x.mom})[0],a);res.cap=mc0.ids;res.bo=boStr(mc0.bo)}catch(e){}ss("of-result",res);saveKQ(res,"Trò chuyện mẹ",(Date.now()-CH.t0)/1000,!!res.zalo);
   if(res.zalo)sendLead(res,"Trò chuyện mẹ");location.hash="ket-qua"}
 function fmtD(d){return ("0"+d.getDate()).slice(-2)+"/"+("0"+(d.getMonth()+1)).slice(-2)+"/"+d.getFullYear()}
 function momPlan(a){
@@ -1073,11 +1138,28 @@ function momPlan(a){
     out.push(["Tháng 2 – 3","Về dần size cũ","Đổi size miễn phí. Khi sẵn sàng, chuyển sang Classic hoặc Lead cùng giá gốc."]);
   }
   return out}
+function renderSavedList(){
+  var L=savedList();
+  $("#res").innerHTML='<span class="k muted">Tủ đồ đã lưu</span><h1 style="margin-top:6px">Tủ đồ của nàng</h1>'+(L.length?'<p class="muted">Lưu trên máy này. Muốn mở trên máy khác, dùng link tủ đồ hoặc gửi mã cho stylist.</p><div class="saved">'+L.map(function(x){return '<a href="#tu-'+esc(x.ma)+'-'+esc(x.xem)+'"><b>'+esc(x.kieu||"Tủ đồ")+'</b><span class="go">Mở tủ</span><span class="muted" style="font-size:14px">Dòng '+esc(x.dong||"")+' · Mã '+esc(x.ma)+' · '+fmtD(new Date(x.at))+'</span></a>'}).join("")+'</div>':'<p class="muted">Chưa có tủ đồ nào được lưu trên máy này.</p><p style="margin-top:16px"><a class="pill" href="#chon-nhom">Tìm tủ đồ của nàng</a></p>')}
+function openSaved(ma,xem){
+  $("#res").innerHTML='<p class="muted" style="padding:40px 0;text-align:center">Đang mở tủ đồ '+esc(ma)+'…</p>';
+  post({fn:"webXemTu",vid:VID,ma:ma,xem:xem}).then(function(x){
+    if(!x||x.err)throw new Error(x&&x.err||"lỗi");
+    var l=byKey(x.dong)||LINES[0],bo=boParse(x.bo);
+    if(!bo.length&&x.tuDe)bo=boParse(String(x.tuDe).split(/,\s*/).join(";"));
+    CUR={at:0,ma:x.ma,xem:xem,ten:"",dong:l.k,kieu:x.kieu||"",bo:bo};remember(CUR);
+    var mua=0;bo.forEach(function(o){o.forEach(function(s){mua+=+s.giaNiemYet||0})});
+    var h='<div class="typecard" style="background:'+(l.mom?"#8E432B":"var(--espresso)")+'"><span class="k" style="color:rgba(255,255,255,.75)">Tủ đồ đã lưu · dòng '+esc(l.k)+'</span><h1>'+esc(x.kieu||"Tủ đồ của nàng")+'</h1><p>Mã '+esc(x.ma)+(x.ngay?' · tạo ngày '+esc(x.ngay.split("-").reverse().join("/")):'')+'. Đồ trong kho thay đổi theo tuần, stylist sẽ báo nếu có món cần đổi.</p></div>';
+    h+=saveBarHtml(CUR);
+    h+=bo.length?capsuleHtml(l,{bo:bo,N:boSize(l)===10&&bo.length===10?10:bo.length,mua:mua,muon:false,pk:[]}):'<p class="muted" style="margin-top:20px">Những món trong tủ này không còn trong kho. Nhắn stylist để chọn lại nhé.</p>';
+    h+='<div class="cta-box"><span class="k muted">Bước tiếp theo</span><h2>Giữ tủ '+esc(l.k)+' này</h2><div class="row"><a class="pill" href="#dang-ky" data-su="giu_tu" data-pick="'+esc(l.k)+'">Giữ tủ này</a><a class="pill ghost" href="#chan-doan-'+(l.mom?"me":l.slug)+'">Làm lại trắc nghiệm</a></div></div>';
+    $("#res").innerHTML=h})
+  .catch(function(e){$("#res").innerHTML='<h1>Chưa mở được tủ đồ</h1><p class="muted">'+esc(e.message||"Mạng chậm")+'. Thử tải lại trang, hoặc nhắn Zalo 0377 159 189 kèm mã '+esc(ma)+'.</p><p style="margin-top:16px"><a class="pill" href="'+ZALO+'" target="_blank" rel="noopener">Nhắn Zalo</a></p>'})}
 function renderMomResult(r){
   var T=TYPES[r.type]||TYPES["Mềm mại"],a=r.a,plan=momPlan(a);
   var h='<div class="typecard" style="background:#8E432B"><span class="k" style="color:rgba(255,255,255,.75)">Lộ trình tủ đồ · Mẹ bầu &amp; Sau sinh</span><span class="fr-name">'+esc(T.fr)+'</span><h1>'+esc(a.giaiDoan==="Đang mang bầu"?"Tủ đồ đi cùng mẹ suốt thai kỳ":"Tủ đồ cho ngày mẹ quay lại công sở")+'</h1><p>Phong cách mẹ chọn: '+esc(T.ten.replace("Nàng","nàng").toLowerCase())+'. '+esc(T.mo.split(":")[0])+'.</p><div class="pal">'+T.pal.map(function(c){return '<i style="background:'+c+'"></i>'}).join("")+'</div></div>';
   h+='<section class="sec" style="padding-top:30px"><h2>Từng giai đoạn, tủ đồ thay theo</h2><div class="timeline">'+plan.map(function(p){return '<div class="it"><span class="when">'+esc(p[0])+'</span><b>'+esc(p[1])+'</b><p>'+esc(p[2])+'</p></div>'}).join("")+'</div></section>';
-  var ml=LINES.filter(function(x){return x.mom})[0],mc=buildCapsule(ml,a);r.cap=mc.ids;if(mc.bo.length)h+=capsuleHtml(ml,mc).replace("Stylist chọn từ đồ đang có trong kho","Phối từ những món trong kho mặc được khi bầu và sau sinh: dáng suông, cạp chun, sơ mi mở khuy");
+  var ml=LINES.filter(function(x){return x.mom})[0],mc=buildCapsule(ml,a);r.cap=mc.ids;CUR={at:r.at,ma:r.maKQ||"",xem:r.xem||"",ten:r.ten||"",dong:MOM,kieu:T.ten,bo:mc.bo};if(mc.bo.length)h+=saveBarHtml(CUR);if(mc.bo.length)h+=capsuleHtml(ml,mc).replace("Stylist chọn từ đồ đang có trong kho","Phối từ những món trong kho mặc được khi bầu và sau sinh: dáng suông, cạp chun, sơ mi mở khuy");
   h+='<div class="cta-box"><span class="k muted">Bước tiếp theo</span><h2>Mở tủ đồ cho mẹ</h2><p class="muted">389.000đ/tuần cho 10 bộ, hoặc 349.000đ/tuần cho 5 bộ. Trả trước 12 tuần, giảm 7%. Stylist dùng lộ trình này, mẹ không phải kể lại.</p><div class="row"><a class="pill" href="#dang-ky" style="background:#8E432B;border-color:#8E432B">Gửi đăng ký</a><a class="pill ghost" href="#chan-doan-me">Trò chuyện lại</a></div></div>';
   $("#res").innerHTML=h}
 
@@ -1094,7 +1176,12 @@ function renderAll(){
 $("#chips").addEventListener("click",function(e){var b=e.target.closest(".c");if(!b)return;filt=b.textContent;showN=24;renderAll()});
 $("#chips2").addEventListener("click",function(e){var b=e.target.closest(".c");if(!b)return;loaiF=b.textContent;showN=24;track("loc_loai",loaiF);renderAll()});
 $("#allGrid").addEventListener("click",function(e){if(e.target.id==="more"){showN+=24;renderAll()}});
-$("#res").addEventListener("click",function(e){if(e.target.closest("[data-su=giu_tu]"))suKien("giu_tu");var w=e.target.closest("#priceWorry");if(!w)return;var box=$("#altBox"),open=box.hidden;box.hidden=!open;w.setAttribute("aria-expanded",String(open));if(open){suKien("ngai_gia");box.scrollIntoView({behavior:"smooth",block:"nearest"});var r=ss("of-result");if(r&&r.zalo&&!r.ngaiGia){r.ngaiGia=1;ss("of-result",r)}}});
+$("#res").addEventListener("click",function(e){var sv=e.target.closest("[data-save]");if(sv&&CUR){var k=sv.dataset.save,c=CUR,sk=function(v){post({fn:"webSuKien",vid:VID,maKQ:c.ma||"",su:"luu_tu",giaTri:v,trang:location.hash.slice(1,40)}).catch(function(){})};
+    if(k==="anh"){saveTuImage(c);remember(c);sk("Ảnh")}
+    else if(k==="link"){copyText(tuLink(c.ma,c.xem)).then(function(){saveMsg("Đã sao chép link. Dán vào Ghi chú hoặc gửi cho chính mình qua Zalo để mở lại.")},function(){saveMsg(tuLink(c.ma,c.xem))});remember(c);sk("Link")}
+    else if(k==="zalo"){var t="Chào CHÉRIE, mình vừa có tủ đồ mã "+c.ma+" (dòng "+c.dong+"). Nhờ stylist tư vấn giúp mình: "+tuLink(c.ma,c.xem);var w=window.open(ZALO,"_blank","noopener");copyText(t).then(function(){saveMsg("Đã chép sẵn lời nhắn kèm mã "+c.ma+". Mở Zalo rồi dán vào khung chat là xong.")},function(){saveMsg("Nhắn Zalo 0377 159 189 kèm mã "+c.ma+".")});remember(c);sk("Zalo")}
+    return}
+  if(e.target.closest("[data-su=giu_tu]")){suKien("giu_tu");if(CUR&&CUR.ma)ss("of-tu-chon",{ma:CUR.ma,xem:CUR.xem,dong:CUR.dong,bo:boStr(CUR.bo)})}var w=e.target.closest("#priceWorry");if(!w)return;var box=$("#altBox"),open=box.hidden;box.hidden=!open;w.setAttribute("aria-expanded",String(open));if(open){suKien("ngai_gia");box.scrollIntoView({behavior:"smooth",block:"nearest"});var r=ss("of-result");if(r&&r.zalo&&!r.ngaiGia){r.ngaiGia=1;ss("of-result",r)}}});
 function detail(id){track("xem_mon",id);
   var s=DATA.sp.filter(function(x){return x.id===id})[0];if(!s){location.hash="tu-do";return}
   var p=pics(id),l=byKey(s.loai)||LINES[5];var have=String(s.size||"").split(",").map(function(x){return x.trim()});
@@ -1136,6 +1223,7 @@ function submit(){
   var c=calc(),r=ss("of-result");var useR=r&&r.line===c.l.k;
   var body={fn:"webDangKy",dong:c.l.k,ten:val("fName"),zalo:val("fZalo").replace(/\s/g,""),noiLam:val("fWork"),diaChi:val("fAddr"),giaoTai:picked("ship"),size:val("fSize"),chieuCao:val("fH"),duSinh:val("fDue"),ghiChu:(c.ten!==c.l.k?"["+c.ten+"] ":"")+val("fNote"),
     kieu:useR?((TYPES[r.type]||{}).ten||"")+(r.mode?" · "+r.mode:""):"",traLoi:useR?r.a:{},tamTinh:c.tot,loai:"Đăng ký"};
+  var tc=ss("of-tu-chon");if(tc&&tc.dong===c.l.k){body.maKQ=tc.ma;body.xem=tc.xem;body.bo=tc.bo}else if(useR&&r.maKQ){body.maKQ=r.maKQ;body.xem=r.xem||"";body.bo=r.bo||""}
   next.disabled=true;next.textContent="Đang gửi…";
   fetch(API,{method:"POST",redirect:"follow",body:JSON.stringify(body)}).then(function(x){return x.json()}).then(function(x){
     if(x&&x.err)throw new Error(x.err);
@@ -1180,6 +1268,8 @@ function route(){
   if(h==="chan-doan-me"){view("chat");startChat();window.scrollTo(0,0);return}
   if(h.indexOf("chan-doan-")===0){var q=bySlug(h.slice(10));if(q&&!q.mom){view("quiz");startQuiz(q);return}}
   if(h==="ket-qua"){view("ket-qua");renderResult();window.scrollTo(0,0);return}
+  if(h==="tu-da-luu"){view("ket-qua");renderSavedList();window.scrollTo(0,0);return}
+  var tm=h.match(/^tu-(KQ-\d{5})-([a-z0-9]{8})$/);if(tm){view("ket-qua");openSaved(tm[1],tm[2]);window.scrollTo(0,0);return}
   if(h.indexOf("sp-")===0){view("sp");detail(h.slice(3).toUpperCase());window.scrollTo(0,0);return}
   if(h==="tu-do"){view("tu-do");renderAll();window.scrollTo(0,0);return}
   if(h==="goi-va-gia"){view("goi-va-gia");window.scrollTo(0,0);return}
