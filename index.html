@@ -462,6 +462,13 @@ footer .base{margin-top:36px;padding-top:18px;border-top:1px solid #3A3033;font-
 
 <!-- ============ CHI TIẾT ============ -->
 <main id="v-sp" class="view" hidden><div class="wrap"><div class="pd" id="pd"></div></div></main>
+<main id="v-chinh-sach" class="view" hidden><div class="wrap" style="max-width:720px;padding-block:40px 64px">
+<span class="k" style="color:var(--gold)">Dữ liệu của nàng</span><h1 style="margin:8px 0 16px">Tụi mình lưu gì, để làm gì</h1>
+<p>Khi nàng làm trắc nghiệm hay xem tủ đồ, CHÉRIE Office ghi lại câu trả lời và các thao tác trên trang (xem món nào, dừng ở câu nào, bấm nút nào). Phần này lưu ẩn danh bằng một mã ngẫu nhiên trên trình duyệt, không có tên hay số điện thoại.</p>
+<p style="margin-top:12px">Tụi mình dùng nó để chọn tủ đồ hợp với nàng hơn, biết món nào cần mua thêm, câu hỏi nào khó hiểu, và giá gói nào hợp lý.</p>
+<p style="margin-top:12px">Tên và số Zalo chỉ được lưu khi nàng tự để lại và đồng ý, hoặc khi đăng ký gói. Tụi mình không bán hay chia sẻ dữ liệu cho bên ngoài, và không gửi tin nhắn tự động khi chưa có người của tiệm xem.</p>
+<p style="margin-top:12px">Dữ liệu ẩn danh được giữ tối đa 24 tháng. Muốn xem hoặc xoá dữ liệu của mình, nhắn Zalo 0377 159 189 hoặc email hello@cherie.io.vn.</p>
+</div></main>
 
 <!-- ============ GÓI VÀ GIÁ ============ -->
 <main id="v-goi-va-gia" class="view" hidden>
@@ -516,7 +523,7 @@ footer .base{margin-top:36px;padding-top:18px;border-top:1px solid #3A3033;font-
     <div class="cols">
       <div class="c"><a class="logo" href="#" style="align-items:flex-start"><span class="w" style="color:#F2ECEE">CHÉRIE</span><span class="s" style="color:#C9AE7E">OFFICE</span></a><p style="color:#B3A8AC;max-width:28em;margin-top:8px">Tủ đồ đi làm theo tháng ở Đà Nẵng. Mỗi lần, một chiếc mới.</p></div>
       <div class="c"><span class="k">Các dòng</span><div id="footLines" style="display:grid;gap:9px"></div></div>
-      <div class="c"><span class="k">Office</span><a href="#tu-do">Tủ đồ</a><a href="#goi-va-gia">Gói và giá</a><a href="#cach-hoat-dong">Cách hoạt động</a></div>
+      <div class="c"><span class="k">Office</span><a href="#tu-do">Tủ đồ</a><a href="#goi-va-gia">Gói và giá</a><a href="#cach-hoat-dong">Cách hoạt động</a><a href="#chinh-sach">Dữ liệu của nàng</a></div>
       <div class="c"><span class="k">Liên hệ</span><span class="num">Zalo 0377 159 189</span><span>hello@cherie.io.vn</span><a href="https://cherie.io.vn" target="_blank" rel="noopener">CHÉRIE Closet · thuê đầm</a></div>
     </div>
     <div class="base">© 2026 CHÉRIE · Hộ kinh doanh tại Đà Nẵng</div>
@@ -538,6 +545,22 @@ function saveKQ(res,loai,giay,dongY){
   post({fn:"webKetQua",vid:VID,loai:loai,dong:res.line,kieu:T.ten||res.type,cheDo:res.mode||"",a:res.a,tuDe:res.cap||[],tuDeU:res.a&&res.a.tuDeU,u:UTM,ref:UTM.ref,
     thietBi:matchMedia("(max-width:760px)").matches?"Điện thoại":"Máy tính",giay:giay,dongY:!!dongY,ten:res.ten,zalo:res.zalo})
   .then(function(x){if(x&&x.ma){var r=ss("of-result");if(r&&r.at===res.at){r.maKQ=x.ma;ss("of-result",r)}}}).catch(function(){})}
+var EVQ=[];
+function track(su,giaTri){try{var r=ss("of-result")||{};EVQ.push({su:su,giaTri:String(giaTri==null?"":giaTri).slice(0,120),trang:location.hash.slice(1,40),maKQ:r.maKQ||"",luc:Date.now()});if(EVQ.length>=25)flushEv()}catch(e){}}
+function flushEv(beacon){if(!EVQ.length)return;var ds=EVQ.splice(0,30),body=JSON.stringify({fn:"webSuKien",vid:VID,ds:ds});
+  try{if(beacon&&navigator.sendBeacon&&navigator.sendBeacon(API,new Blob([body],{type:"text/plain"})))return}catch(e){}
+  try{fetch(API,{method:"POST",redirect:"follow",body:body,keepalive:body.length<60000}).catch(function(){})}catch(e){}}
+setInterval(function(){flushEv(false)},15000);
+document.addEventListener("visibilitychange",function(){if(document.visibilityState==="hidden"){leaveStep(true);flushEv(true)}});
+window.addEventListener("pagehide",function(){leaveStep(true);flushEv(true)});
+var STEP=null;/* bước đang xem trong trắc nghiệm hoặc trò chuyện: {k, t} */
+function enterStep(k){leaveStep(false);STEP={k:k,t:Date.now()};track("buoc",k)}
+function leaveStep(roi){if(!STEP)return;var s=Math.round((Date.now()-STEP.t)/1000);track(roi?"bo_ngang":"xong_buoc",STEP.k+"|"+s+"s");if(roi)STEP=null;else STEP=null}
+document.addEventListener("click",function(e){var a=e.target.closest("a,button");if(!a)return;
+  if(a.matches('a[href*="zalo.me"]'))track("bam_zalo",location.hash.slice(1,40));
+  else if(a.classList.contains("alt"))track("chon_goi_thay",(a.querySelector("b")||a).textContent);
+  else if(a.id==="more")track("xem_them",filt);
+  else if(a.classList.contains("c")&&a.closest("#chips"))track("loc_tu_do",a.textContent)},true);
 function suKien(su,giaTri){var r=ss("of-result")||{};post({fn:"webSuKien",vid:VID,maKQ:r.maKQ||"",su:su,giaTri:giaTri||"",trang:location.hash.slice(1,40)}).catch(function(){})}
 var MOM="Mẹ bầu & Sau sinh";
 /* 6 dòng. slug dùng cho đường dẫn #nhom-<slug> và #chan-doan-<slug> */
@@ -706,7 +729,7 @@ function partOk(p){var v=QZ.a[p.id];if(p.opt)return true;if(p.t==="hearts"||p.t=
 function answered(q){if(!q.parts)return q.t!=="done"||doneOk();return parts(q).every(partOk)}
 function autoAdvance(q){var ps=parts(q);return ps.length===1&&ps[0].t==="single"}
 function drawQ(){
-  var q=cur(),l=QZ.l,n=realCount(),k=idxReal(),h="";
+  var q=cur(),l=QZ.l,n=realCount(),k=idxReal(),h="";if(q.t!=="done")enterStep(l.slug+"|Q"+QZ.i+"|"+(q.id||q.t||""));else leaveStep(false);
   h+='<div class="qbar" aria-hidden="true"><i style="width:'+(q.t==="intro"?0:q.t==="done"?100:Math.round(k*100/(n+1)))+'%"></i></div><div class="qmeta"><span>'+esc(l.k.toUpperCase())+'</span><span>'+(q.t==="intro"?"KHOẢNG 2 PHÚT":q.t==="done"?"HOÀN TẤT":k+" / "+n)+'</span></div>';
   if(q.t==="intro"){
     h+='<div class="stylist"><div class="av" aria-hidden="true">C</div><span class="k" style="color:var(--gold)">Stylist CHÉRIE Office</span><h1 style="font-size:clamp(24px,3.4vw,34px)">Chào nàng, mình là stylist dòng '+esc(l.k)+'.</h1><p>'+n+' màn ngắn, trả lời theo cảm giác đầu tiên. Xong là có kiểu phong cách và tủ đồ gợi ý từ đồ đang có trong kho.</p></div>';
@@ -926,6 +949,7 @@ var MOM_FLOW={
 function startChat(){CH={a:{},node:"start",t0:Date.now()};$("#chat").innerHTML='<h1 class="sr">Trò chuyện với stylist Mẹ bầu &amp; Sau sinh</h1><div class="top"><div class="av" aria-hidden="true">C</div><div><b>Stylist Mẹ bầu &amp; Sau sinh</b><small>CHÉRIE Office · thường trả lời ngay</small></div></div>';runNode("start")}
 function bubble(t,who){var d=document.createElement("div");d.className="msg "+who;d.textContent=t;$("#chat").appendChild(d);d.scrollIntoView({block:"end",behavior:"smooth"});return d}
 function runNode(id){
+  if(id==="end")leaveStep(false);else enterStep("me|"+id);
   CH.node=id;var n=MOM_FLOW[id];$("#repliesIn").innerHTML="";var i=0;
   var typing=bubble("","bot typing");typing.innerHTML="<i></i><i></i><i></i>";typing.setAttribute("aria-label","Stylist đang trả lời");
   (function step(){
@@ -993,7 +1017,7 @@ function renderAll(){
 $("#chips").addEventListener("click",function(e){var b=e.target.closest(".c");if(!b)return;filt=b.textContent;showN=24;renderAll()});
 $("#allGrid").addEventListener("click",function(e){if(e.target.id==="more"){showN+=24;renderAll()}});
 $("#res").addEventListener("click",function(e){if(e.target.closest("[data-su=giu_tu]"))suKien("giu_tu");var w=e.target.closest("#priceWorry");if(!w)return;var box=$("#altBox"),open=box.hidden;box.hidden=!open;w.setAttribute("aria-expanded",String(open));if(open){suKien("ngai_gia");box.scrollIntoView({behavior:"smooth",block:"nearest"});var r=ss("of-result");if(r&&r.zalo&&!r.ngaiGia){r.ngaiGia=1;ss("of-result",r)}}});
-function detail(id){
+function detail(id){track("xem_mon",id);
   var s=DATA.sp.filter(function(x){return x.id===id})[0];if(!s){location.hash="tu-do";return}
   var p=pics(id),l=byKey(s.loai)||LINES[5];var have=String(s.size||"").split(",").map(function(x){return x.trim()});
   var shots=p.length?p.slice(0,4).map(function(a){return frame(a.src||a.th,"",l.ph)}).join(""):[frame("","Ảnh chính diện",l.ph),frame("","Ảnh sau lưng",l.ph)].join("");
@@ -1048,6 +1072,8 @@ $("#drawerX").addEventListener("click",function(){dr.hidden=true;mb.setAttribute
 document.addEventListener("click",function(e){var a=e.target.closest("[data-filter]");if(a)filt=a.dataset.filter;var rd=e.target.closest("[data-redo]");if(rd){try{sessionStorage.removeItem("of-quiz-"+rd.dataset.redo)}catch(x){}}});
 function view(id){document.querySelectorAll(".view").forEach(function(v){v.hidden=v.id!=="v-"+id});var f=(id==="quiz"||id==="chat");document.querySelector("footer.site").hidden=f;document.body.classList.toggle("focus",f)}
 function route(){
+  try{track("xem_trang",decodeURIComponent((location.hash||"#home").slice(1)).slice(0,40)||"home")}catch(e){}
+  if(!/^#(chan-doan-|bau$)/.test(location.hash))leaveStep(true);
   dr.hidden=true;mb.setAttribute("aria-expanded","false");
   var h=decodeURIComponent((location.hash||"").slice(1));
   document.querySelectorAll("#catNav a").forEach(function(a){a.classList.toggle("on",a.dataset.nav===h)});
@@ -1058,6 +1084,7 @@ function route(){
   if(h.indexOf("sp-")===0){view("sp");detail(h.slice(3).toUpperCase());window.scrollTo(0,0);return}
   if(h==="tu-do"){view("tu-do");renderAll();window.scrollTo(0,0);return}
   if(h==="goi-va-gia"){view("goi-va-gia");window.scrollTo(0,0);return}
+  if(h==="chinh-sach"){view("chinh-sach");window.scrollTo(0,0);return}
   if(h==="dang-ky"){view("dang-ky");show(1);prefill();return}
   view("home");
   if(h==="chon-nhom"||h==="cach-hoat-dong"){var el=document.getElementById(h);if(el)setTimeout(function(){el.scrollIntoView({behavior:"smooth"})},30);return}

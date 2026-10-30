@@ -4,16 +4,16 @@
    Đăng nhập và phân quyền RIÊNG của Office (tab NhanSu, PhanQuyen), không dùng chung với cherie.io.vn. */
 
 var SHEET_ID = "1_o3wqoBTCaTwD3WKa7QmPcK3pcrG7-ka1ae3FX8l0aM";
-var DATA_TABS = ["NhapTuLink", "SanPham", "Anh", "Dong", "KhachHang", "DangKy", "TuDo", "GiaoNhan", "DangKyWeb", "KetQuaWeb", "SuKienWeb"];
+var DATA_TABS = ["NhapTuLink", "SanPham", "Anh", "Dong", "KhachHang", "DangKy", "TuDo", "GiaoNhan", "DangKyWeb", "KetQuaWeb", "SuKienWeb", "InsightAI"];
 /* mục quyền đọc của từng tab */
 var READ_SEC = { NhapTuLink: ["NhapHang"], Anh: ["NhapHang", "Kho"], SanPham: ["Kho", "NhapHang", "KhachGoi", "TongQuan"],
   Dong: null, KhachHang: ["KhachGoi", "GiaoNhan", "TongQuan"], DangKy: ["KhachGoi", "GiaoNhan", "TongQuan"],
   TuDo: ["KhachGoi", "Kho", "TongQuan"], GiaoNhan: ["GiaoNhan", "TongQuan"], DangKyWeb: ["KhachGoi", "TongQuan"],
-  KetQuaWeb: ["KhachGoi", "TongQuan"], SuKienWeb: ["KhachGoi", "TongQuan"] };
+  KetQuaWeb: ["KhachGoi", "TongQuan", "Insight"], SuKienWeb: ["Insight"], InsightAI: ["Insight"] };
 /* mục cần quyền Sửa để ghi từng tab (một trong các mục) */
 var WRITE_SEC = { NhapTuLink: ["NhapHang"], Anh: ["NhapHang", "Kho"], SanPham: ["Kho", "NhapHang", "KhachGoi"],
-  KhachHang: ["KhachGoi"], DangKy: ["KhachGoi"], TuDo: ["KhachGoi"], GiaoNhan: ["GiaoNhan", "KhachGoi"], DangKyWeb: ["KhachGoi"] };
-var SECS = ["TongQuan", "NhapHang", "Kho", "KhachGoi", "GiaoNhan", "HoSoRieng"];
+  KhachHang: ["KhachGoi"], DangKy: ["KhachGoi"], TuDo: ["KhachGoi"], GiaoNhan: ["GiaoNhan", "KhachGoi"], DangKyWeb: ["KhachGoi"] , InsightAI: ["Insight"] };
+var SECS = ["TongQuan", "NhapHang", "Kho", "KhachGoi", "GiaoNhan", "HoSoRieng", "Insight"];
 var TOKEN_DAYS = 30;
 
 function doGet() { return out({ ok: true, app: "CHÉRIE Office" }); }
@@ -245,23 +245,31 @@ function webKetQua(q) {
 }
 var SK_COT = { ngai_gia: "NgaiGia", giu_tu: "BamGiuTu", dang_ky: "DaDangKy" };
 function webSuKien(q) {
-  var vid = vidOk(q.vid), su = txt(q.su, 30); webRate("sk_" + vid, 60, 4000);
-  if (!/^[a-z_]{3,30}$/.test(su)) fail("Sự kiện không hợp lệ", "bad_request");
-  var maKQ = /^KQ-\d{5}$/.test(q.maKQ || "") ? q.maKQ : "";
-  var now = Utilities.formatDate(new Date(), "Asia/Ho_Chi_Minh", "yyyy-MM-dd HH:mm:ss");
+  var vid = vidOk(q.vid);
+  var ds = Array.isArray(q.ds) ? q.ds.slice(0, 30) : [{ su: q.su, giaTri: q.giaTri, trang: q.trang, maKQ: q.maKQ }];
+  webRate("sk_" + vid, 600, 20000);
+  var rows = [], marks = [];
+  ds.forEach(function (d) {
+    var su = txt(d && d.su, 30); if (!/^[a-z_]{3,30}$/.test(su)) return;
+    var maKQ = /^KQ-\d{5}$/.test((d && d.maKQ) || q.maKQ || "") ? (d.maKQ || q.maKQ) : "";
+    var luc = d && +d.luc > 1.7e12 && +d.luc < Date.now() + 864e5 ? new Date(+d.luc) : new Date();
+    rows.push([Utilities.formatDate(luc, "Asia/Ho_Chi_Minh", "yyyy-MM-dd HH:mm:ss"), vid, maKQ, su, txt(d.giaTri, 120), txt(d.trang, 60)].map(safe));
+    if (SK_COT[su] && maKQ) marks.push({ col: SK_COT[su], maKQ: maKQ, v: su === "dang_ky" ? txt(d.giaTri, 20) || "Có" : "Có" });
+  });
+  if (!rows.length) return { ok: true, n: 0 };
   var lock = LockService.getScriptLock(); lock.waitLock(20000);
   try {
     var sk = tabOf("SuKienWeb", SK_HEAD);
-    sk.getRange(sk.getLastRow() + 1, 1, 1, 6).setValues([[now, vid, maKQ, su, txt(q.giaTri, 120), txt(q.trang, 60)].map(safe)]);
-    var col = SK_COT[su];
-    if (col && maKQ) {
-      var sh = tabOf("KetQuaWeb", KQ_HEAD), last = sh.getLastRow(), c = KQ_HEAD.indexOf(col) + 1;
+    sk.getRange(sk.getLastRow() + 1, 1, rows.length, 6).setValues(rows);
+    if (marks.length) {
+      var sh = tabOf("KetQuaWeb", KQ_HEAD), last = sh.getLastRow();
       if (last > 1) {
         var ids = sh.getRange(2, 1, last - 1, 3).getValues();
-        for (var i = ids.length - 1; i >= 0; i--) if (ids[i][0] === maKQ && ids[i][2] === vid) {
-          sh.getRange(i + 2, c).setValue(su === "dang_ky" ? txt(q.giaTri, 20) || "Có" : "Có"); break; }
+        marks.forEach(function (m) {
+          for (var i = ids.length - 1; i >= 0; i--) if (ids[i][0] === m.maKQ && ids[i][2] === vid) { sh.getRange(i + 2, KQ_HEAD.indexOf(m.col) + 1).setValue(m.v); break; }
+        });
       }
     }
-    return { ok: true };
+    return { ok: true, n: rows.length };
   } finally { lock.releaseLock(); }
 }
