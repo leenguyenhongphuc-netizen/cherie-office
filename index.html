@@ -314,6 +314,19 @@ details p{margin-top:8px;color:var(--muted)}
 @media (max-width:860px){.pd{grid-template-columns:1fr}.pinfo{position:static}}
 .plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 .plan{border:1px solid var(--line);border-radius:var(--r-l);padding:22px;display:grid;gap:10px;align-content:start}
+.plans.main{grid-auto-rows:auto}
+.plan.r6{grid-row:span 5;grid-template-rows:subgrid;row-gap:10px}
+.plan.r6 .k{line-height:1.5;align-self:start}
+.plan.r6 .act{display:grid;gap:12px;align-self:end}
+.plan.r6 .p5{font-size:14px;align-self:start}
+.ptop.split{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);align-items:end;column-gap:clamp(20px,5vw,64px)}
+.ptop.split h1{margin:6px 0 0}
+.pin{display:grid;gap:12px}
+.pin p{margin:0}
+.incl{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.incl li{border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:13px;background:var(--soft)}
+@media (max-width:760px){.ptop.split{grid-template-columns:1fr;row-gap:12px}}
+@media (max-width:560px){.plan.r6{grid-row:auto;grid-template-rows:none;display:grid}.plan.r6 .p5:empty{display:none}}
 .plan.mom{border-color:var(--mom)}
 .plan .p{font-family:var(--f-d);font-size:28px;line-height:1.1}
 .plan .p small{font-family:var(--f-b);font-size:13px;color:var(--muted)}
@@ -517,7 +530,7 @@ footer .base{margin-top:36px;padding-top:18px;border-top:1px solid #3A3033;font-
 <!-- ============ GÓI VÀ GIÁ ============ -->
 <main id="v-goi-va-gia" class="view" hidden>
   <div class="wrap">
-    <div class="ptop"><span class="k muted">Gói và giá</span><h1>Giá theo tuần, rõ từng đồng</h1><p class="muted" style="max-width:36em">Mọi gói tuần đã gồm giặt hấp sau mỗi lần mặc, giao nhận văn phòng và stylist chọn đồ theo gu. Nàng trả trước 12 tuần và được giảm 7%. Travel và Ngày quan trọng thuê theo chuyến, theo lần.</p></div>
+    <div class="ptop split"><div><span class="k muted">Gói và giá</span><h1>Giá theo tuần, rõ từng đồng</h1></div><div class="pin"><p class="muted">Mọi gói tuần đã gồm sẵn ba thứ dưới đây. Trả trước 12 tuần được giảm 7%. Travel và Ngày quan trọng thuê theo chuyến, theo lần.</p><ul class="incl"><li>Giặt hấp sau mỗi lần mặc</li><li>Giao nhận văn phòng miễn phí</li><li>Stylist chọn đồ theo gu</li></ul></div></div>
     <div class="plans" id="plans"></div>
     <section class="sec" style="padding-top:44px">
       <h2>Giao nhận và cọc</h2>
@@ -679,7 +692,7 @@ function renderHome(){
   $("#groupRail").innerHTML=LINES.map(function(l){var im=lineImg(l);return '<a class="tile" href="#nhom-'+l.slug+'"><div class="fr" style="background:var('+l.ph+')">'+(im?'<img src="'+esc(im)+'" alt="" loading="lazy">':'<span class="cap">'+esc(l.cap)+'</span>')+(l.mom?'<span class="tag">Cho mẹ</span>':'')+'</div><b>'+esc(l.k)+'</b><span class="w">'+esc(l.who)+'</span><span class="p">'+(l.from?"từ ":"")+vnd(l.price)+' '+esc(l.unit)+'</span></a>'}).join("");
   railInit("groupRail");
   $("#homeGrid").innerHTML=mix(DATA.sp.filter(function(s){return pics(s.id).length&&s.nhom!=="Phụ kiện"&&!/Mlee|Zanemom|Đồ Bầu/.test(s.brand||"")})).slice(0,8).map(card).join("");
-  $("#plans").innerHTML=LINES.map(function(l){return '<div class="plan'+(l.mom?' mom':'')+'"><span class="k muted">'+esc(l.who)+'</span><h3>'+esc(l.k)+'</h3><span class="p num">'+(l.from?'<small>từ </small>':'')+vnd(l.price)+'<br><small>'+esc(l.unit)+'</small></span>'+(l.p5?'<span class="muted" style="font-size:14px">Gói 5 bộ (mặc lại mỗi tuần): <b class="num" style="color:var(--ink)">'+vnd(l.p5)+'</b>/tuần</span>':'')+'<button type="button" class="pill block" data-pick="'+esc(l.k)+'" style="margin-top:4px">Chọn gói này</button>'+'<a class="ul" href="#nhom-'+l.slug+'">Xem dòng '+esc(l.k)+'</a></div>'}).join("")+
+  $("#plans").innerHTML='<div class="plans main" style="grid-column:1/-1">'+LINES.map(function(l){return '<div class="plan r6'+(l.mom?' mom':'')+'"><span class="k muted">'+esc(l.who)+'</span><h3>'+esc(l.k)+'</h3><span class="p num">'+(l.from?'<small>từ </small>':'')+vnd(l.price)+'<br><small>'+esc(l.unit)+'</small></span><span class="muted p5">'+(l.p5?'Gói 5 bộ (mặc lại mỗi tuần): <b class="num" style="color:var(--ink)">'+vnd(l.p5)+'</b>/tuần':'')+'</span><div class="act"><button type="button" class="pill block" data-pick="'+esc(l.k)+'">Chọn gói này</button>'+'<a class="ul" href="#nhom-'+l.slug+'">Xem dòng '+esc(l.k)+'</a></div></div>'}).join("")+'</div>'+
     '<div class="plan" style="grid-column:1/-1;background:var(--soft)"><span class="k muted">Bắt đầu nhẹ hơn</span><h3>Chưa cần đủ 10 bộ?</h3><div class="plans" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">'+NHE.map(function(g){return '<div class="plan" style="background:var(--bg)"><h3 style="font-size:20px">'+esc(g.k)+'</h3><span class="p num">'+vnd(g.price)+'<br><small>'+esc(g.unit)+'</small></span><span class="muted" style="font-size:14px">'+esc(g.who)+'</span><button type="button" class="ul" data-pick="'+esc(g.k)+'" style="background:none;border:0;padding:0;text-align:left">Đăng ký gói này</button></div>'}).join("")+'</div></div>';
 }
 
