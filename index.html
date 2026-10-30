@@ -796,9 +796,9 @@ function prefScore(s,a){
 function buildCapsule(l,a){
   var N=boSize(l);
   var pool=DATA.sp.filter(function(s){return pics(s.id).length&&(inLine(s,l)||s.nhom==="Phụ kiện")});
-  var muon=false,coDuoi=pool.some(function(s){return s.nhom==="Quần"||s.nhom==="Chân váy"}),coAo=pool.some(function(s){return s.nhom==="Áo"});if(l.k!=="Áo dài"&&(pool.length<N*1.5||!coDuoi||!coAo)){pool=pool.concat(DATA.sp.filter(function(s){return pics(s.id).length&&s.loai==="Classic"&&!inLine(s,l)}));muon=true}
+  var muon=false,coDuoi=pool.some(function(s){return s.nhom==="Quần"||s.nhom==="Chân váy"}),coAo=pool.some(function(s){return s.nhom==="Áo"});if(l.k!=="Áo dài"&&!l.mom&&(pool.length<N*1.5||!coDuoi||!coAo)){pool=pool.concat(DATA.sp.filter(function(s){return pics(s.id).length&&s.loai==="Classic"&&!inLine(s,l)}));muon=true}
   pool=pool.map(function(s){return {s:s,p:prefScore(s,a),sc:prefScore(s,a)+1.2*(+s.dl||.5)}}).filter(function(x){return x.p>-50});
-  var grp=function(g){var seen={};return pool.filter(function(x){return x.s.nhom===g}).map(function(x){if(g==="Vest"&&(l.k==="Lead"||l.k==="Ngày quan trọng"))x.sc+=1.5;if(x.s.ngan&&(a.tranh||[]).indexOf("Váy trên gối")>-1)x.sc-=3;return x}).sort(function(x,y){return y.sc-x.sc}).filter(function(x){var k=x.s.ten.toLowerCase();if(seen[k])return false;seen[k]=1;return true})};
+  var grp=function(g){var seen={};return pool.filter(function(x){return x.s.nhom===g}).map(function(x){if(g==="Vest"&&(l.k==="Lead"||l.k==="Ngày quan trọng"))x.sc+=1.5;if(x.s.ngan&&(a.tranh||[]).indexOf("Váy trên gối")>-1)x.sc-=3;if(l.mom&&/^Có/.test(a.hutSua||"")&&/sơ mi|khuy|nút|cardigan|cổ v/i.test(x.s.ten))x.sc+=1.5;return x}).sort(function(x,y){return y.sc-x.sc}).filter(function(x){var k=x.s.ten.toLowerCase();if(seen[k])return false;seen[k]=1;return true})};
   /* Office không có đầm: mỗi bộ = áo (hoặc vest, áo khoác tuỳ dòng) + quần hoặc chân váy. Riêng Áo dài là bộ trọn. */
   var dam=l.k==="Áo dài"?grp("Áo dài"):[],ao=grp("Áo").concat(l.k==="Lead"||l.k==="Ngày quan trọng"?grp("Vest"):[]).concat(l.k==="Travel"?grp("Áo khoác"):[]).sort(function(x,y){return y.sc-x.sc}),quan=grp("Quần"),cv=grp("Chân váy");
   var D=l.k==="Áo dài"?Math.min(dam.length,N):0;var P=N-D;
@@ -949,6 +949,7 @@ function renderMomResult(r){
   var T=TYPES[r.type]||TYPES["Mềm mại"],a=r.a,plan=momPlan(a);
   var h='<div class="typecard" style="background:#8E432B"><span class="k" style="color:rgba(255,255,255,.75)">Lộ trình tủ đồ · Mẹ bầu &amp; Sau sinh</span><span class="fr-name">'+esc(T.fr)+'</span><h1>'+esc(a.giaiDoan==="Đang mang bầu"?"Tủ đồ đi cùng mẹ suốt thai kỳ":"Tủ đồ cho ngày mẹ quay lại công sở")+'</h1><p>Phong cách mẹ chọn: '+esc(T.ten.replace("Nàng","nàng").toLowerCase())+'. '+esc(T.mo.split(":")[0])+'.</p><div class="pal">'+T.pal.map(function(c){return '<i style="background:'+c+'"></i>'}).join("")+'</div></div>';
   h+='<section class="sec" style="padding-top:30px"><h2>Từng giai đoạn, tủ đồ thay theo</h2><div class="timeline">'+plan.map(function(p){return '<div class="it"><span class="when">'+esc(p[0])+'</span><b>'+esc(p[1])+'</b><p>'+esc(p[2])+'</p></div>'}).join("")+'</div></section>';
+  var ml=LINES.filter(function(x){return x.mom})[0],mc=buildCapsule(ml,a);r.cap=mc.ids;if(mc.bo.length)h+=capsuleHtml(ml,mc).replace("Stylist chọn từ đồ đang có trong kho","Phối từ những món trong kho mặc được khi bầu và sau sinh: dáng suông, cạp chun, sơ mi mở khuy");
   h+='<div class="cta-box"><span class="k muted">Bước tiếp theo</span><h2>Mở tủ đồ cho mẹ</h2><p class="muted">1.290.000đ/tháng · 10 bộ, trả trước 3 tháng. Stylist dùng lộ trình này, mẹ không phải kể lại.</p><div class="row"><a class="pill" href="#dang-ky" style="background:#8E432B;border-color:#8E432B">Gửi đăng ký</a><a class="pill ghost" href="#chan-doan-me">Trò chuyện lại</a></div></div>';
   $("#res").innerHTML=h}
 
