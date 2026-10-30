@@ -565,11 +565,11 @@ function suKien(su,giaTri){var r=ss("of-result")||{};post({fn:"webSuKien",vid:VI
 var MOM="Mẹ bầu & Sau sinh";
 /* 6 dòng. slug dùng cho đường dẫn #nhom-<slug> và #chan-doan-<slug> */
 var LINES=[
-  {k:MOM,slug:"me-bau-sau-sinh",who:"Từ tháng thứ 4 thai kỳ đến ngày đi làm lại",price:1290000,unit:"/tháng · 10 bộ",monthly:1,ph:"--ph-4",cap:"Ảnh: mẹ bầu 6 tháng, sơ mi suông, cửa sổ văn phòng",mom:1,
+  {k:MOM,slug:"me-bau-sau-sinh",who:"Từ tháng thứ 4 thai kỳ đến ngày đi làm lại",price:1690000,unit:"/tháng · 10 bộ",monthly:1,ph:"--ph-4",cap:"Ảnh: mẹ bầu 6 tháng, sơ mi suông, cửa sổ văn phòng",mom:1,
     lead:"Chỉn chu suốt thai kỳ, tự tin ngày đi làm lại.",
     intro:"10 bộ công sở mỗi tháng. Lúc bầu: áo suông, quần và chân váy cạp chun co giãn, đổi size khi bụng lớn. Sau sinh: áo mở khuy cho con bú, cạp chun êm.",
     incl:["Đổi size giữa tháng không mất phí","Nghỉ thai sản: tạm dừng gói, không tính tiền","Đi làm lại: tủ đồ sau sinh, không đăng ký lại","Vải mềm, giặt hấp không hoá chất mạnh"]},
-  {k:"Lead",slug:"lead",who:"Quản lý, gặp đối tác",price:1990000,unit:"/tháng · 10 bộ",monthly:1,ph:"--ph-3",cap:"Ảnh: suit đen, phòng họp kính",
+  {k:"Lead",slug:"lead",who:"Quản lý, gặp đối tác",price:3490000,unit:"/tháng · 10 bộ",monthly:1,ph:"--ph-3",cap:"Ảnh: suit đen, phòng họp kính",
     lead:"Bước vào phòng họp là đủ tiếng nói.",intro:"10 bộ vest, suit, sơ mi lụa đứng phom cho người dẫn dắt. Stylist ưu tiên đồ cho ngày họp lớn và gặp đối tác.",
     incl:["Vest, suit set, chân váy bút chì, sơ mi lụa","Đổi gấp trong 24 giờ trước buổi họp quan trọng","Giặt hấp, là phẳng hằng tuần","Giao văn phòng khu trung tâm miễn phí"]},
   {k:"Áo dài",slug:"ao-dai",who:"Thứ 2 và ngày lễ",price:590000,unit:"/tháng · 4 bộ",monthly:1,ph:"--ph-5",cap:"Ảnh: áo dài lụa trơn đỏ sơn mài",
@@ -581,7 +581,7 @@ var LINES=[
   {k:"Ngày quan trọng",slug:"ngay-quan-trong",who:"Phỏng vấn, thuyết trình",price:199000,unit:"/set",from:1,ph:"--ph-2",cap:"Ảnh: blazer xanh đêm, buổi thuyết trình",
     lead:"Một bộ cho ngày cần ghi điểm.",intro:"Thuê một set cho buổi phỏng vấn, thuyết trình, hội nghị. Stylist chọn theo vị trí và không khí buổi đó.",
     incl:["Set vest, hoặc sơ mi với quần tây, chân váy","Thử tại tiệm hoặc giao tận nơi","Trả trong 48 giờ","Ảnh hồ sơ: mượn thêm phụ kiện"]},
-  {k:"Classic",slug:"classic",who:"Đi làm mỗi ngày",price:1290000,unit:"/tháng · 10 bộ",monthly:1,ph:"--ph-1",cap:"Ảnh: vest set kem ở sảnh văn phòng",
+  {k:"Classic",slug:"classic",who:"Đi làm mỗi ngày",price:1590000,unit:"/tháng · 10 bộ",monthly:1,ph:"--ph-1",cap:"Ảnh: vest set kem ở sảnh văn phòng",
     lead:"Đi làm mỗi ngày, chưa lần nào lặp đồ.",intro:"10 bộ công sở mỗi tháng, mỗi bộ gồm áo và quần hoặc chân váy từ thương hiệu Việt quen thuộc. Mặc 5 bộ mỗi tuần, tối thứ 6 tụi mình lấy, sáng thứ 2 tủ mới tới.",
     incl:["Sơ mi, áo kiểu, quần tây, chân váy, vest","Đồ của PANTIO, IVY moda, JM Dress Design","Thêm phụ kiện mỗi ngày (dịch vụ thêm)","Giặt hấp và giao lại hằng tuần"]}
 ];
@@ -798,7 +798,7 @@ $("#qz").addEventListener("click",function(e){
 });
 /* đang bầu hoặc cho con bú: gợi ý chuyển sang dòng Mẹ (động theo câu trả lời) */
 function momHint(){var d=QZ.a.doiSong||[];var old=$("#momHint");if(old)old.remove();
-  if(d.indexOf("Đang mang bầu")>-1||d.indexOf("Đang cho con bú")>-1){var x=document.createElement("div");x.id="momHint";x.className="quizcard";x.style.marginTop="18px";x.innerHTML='<span class="k" style="color:var(--mom)">Gợi ý cho nàng</span><span>Dòng <b>Mẹ bầu &amp; Sau sinh</b> có đồ co giãn, đổi size giữa tháng và áo mở khuy cho con bú, cùng giá 1.290.000đ/tháng.</span><a class="pill" href="#chan-doan-me" style="background:var(--mom);border-color:var(--mom)">Chuyển sang trò chuyện với stylist của mẹ</a>';$("#qz .qbody").appendChild(x)}}
+  if(d.indexOf("Đang mang bầu")>-1||d.indexOf("Đang cho con bú")>-1){var x=document.createElement("div");x.id="momHint";x.className="quizcard";x.style.marginTop="18px";x.innerHTML='<span class="k" style="color:var(--mom)">Gợi ý cho nàng</span><span>Dòng <b>Mẹ bầu &amp; Sau sinh</b> có đồ co giãn, đổi size giữa tháng và áo mở khuy cho con bú, giá 1.690.000đ/tháng.</span><a class="pill" href="#chan-doan-me" style="background:var(--mom);border-color:var(--mom)">Chuyển sang trò chuyện với stylist của mẹ</a>';$("#qz .qbody").appendChild(x)}}
 $("#qz").addEventListener("input",function(e){var k=e.target.dataset.k;if(k){QZ.a[k]=e.target.value;QZ.a._wantSave=true;$("#qNext").disabled=!answered(cur())}});
 $("#qz").addEventListener("change",function(e){
   if(e.target.dataset.date){QZ.a[e.target.dataset.date]=e.target.value;saveQ();$("#qNext").disabled=!answered(cur())}
@@ -1002,7 +1002,7 @@ function renderMomResult(r){
   var h='<div class="typecard" style="background:#8E432B"><span class="k" style="color:rgba(255,255,255,.75)">Lộ trình tủ đồ · Mẹ bầu &amp; Sau sinh</span><span class="fr-name">'+esc(T.fr)+'</span><h1>'+esc(a.giaiDoan==="Đang mang bầu"?"Tủ đồ đi cùng mẹ suốt thai kỳ":"Tủ đồ cho ngày mẹ quay lại công sở")+'</h1><p>Phong cách mẹ chọn: '+esc(T.ten.replace("Nàng","nàng").toLowerCase())+'. '+esc(T.mo.split(":")[0])+'.</p><div class="pal">'+T.pal.map(function(c){return '<i style="background:'+c+'"></i>'}).join("")+'</div></div>';
   h+='<section class="sec" style="padding-top:30px"><h2>Từng giai đoạn, tủ đồ thay theo</h2><div class="timeline">'+plan.map(function(p){return '<div class="it"><span class="when">'+esc(p[0])+'</span><b>'+esc(p[1])+'</b><p>'+esc(p[2])+'</p></div>'}).join("")+'</div></section>';
   var ml=LINES.filter(function(x){return x.mom})[0],mc=buildCapsule(ml,a);r.cap=mc.ids;if(mc.bo.length)h+=capsuleHtml(ml,mc).replace("Stylist chọn từ đồ đang có trong kho","Phối từ những món trong kho mặc được khi bầu và sau sinh: dáng suông, cạp chun, sơ mi mở khuy");
-  h+='<div class="cta-box"><span class="k muted">Bước tiếp theo</span><h2>Mở tủ đồ cho mẹ</h2><p class="muted">1.290.000đ/tháng · 10 bộ, trả trước 3 tháng. Stylist dùng lộ trình này, mẹ không phải kể lại.</p><div class="row"><a class="pill" href="#dang-ky" style="background:#8E432B;border-color:#8E432B">Gửi đăng ký</a><a class="pill ghost" href="#chan-doan-me">Trò chuyện lại</a></div></div>';
+  h+='<div class="cta-box"><span class="k muted">Bước tiếp theo</span><h2>Mở tủ đồ cho mẹ</h2><p class="muted">1.690.000đ/tháng · 10 bộ, trả trước 3 tháng. Stylist dùng lộ trình này, mẹ không phải kể lại.</p><div class="row"><a class="pill" href="#dang-ky" style="background:#8E432B;border-color:#8E432B">Gửi đăng ký</a><a class="pill ghost" href="#chan-doan-me">Trò chuyện lại</a></div></div>';
   $("#res").innerHTML=h}
 
 /* ---------- tủ đồ & chi tiết ---------- */
@@ -1037,7 +1037,7 @@ function show(s){step=s;steps.forEach(function(f){f.hidden=(+f.dataset.step!==s)
   back.hidden=(s===1);next.hidden=false;next.disabled=false;next.textContent=(s===4?"Gửi đăng ký":"Tiếp tục");$("#dueWrap").hidden=(picked("line")!==MOM);$("#sent").hidden=true;if(s===4)summary();window.scrollTo(0,0)}
 function calc(){var l=byKey(picked("line"))||LINES[5];var ship=picked("ship")==="Nhà riêng"&&l.monthly?150000:0;
   if(!l.monthly)return {l:l,goi:l.price,ship:0,coc:0,tot:l.price};
-  var three=l.price*3,disc=l.price===1290000?280000:Math.round(three*0.0723/1000)*1000;return {l:l,goi:three-disc,ship:ship*3,coc:1000000,tot:three-disc+ship*3+1000000}}
+  var three=l.price*3,disc=Math.round(three*0.0723/1000)*1000;return {l:l,goi:three-disc,ship:ship*3,coc:1000000,tot:three-disc+ship*3+1000000}}
 function summary(){var c=calc(),r=ss("of-result");
   var rows=[["Dòng",c.l.k],["Size",val("fSize")+(val("fH")?" · "+val("fH")+"cm":"")],["Phong cách",r&&r.line===c.l.k?(TYPES[r.type]||{}).ten||"":"Stylist hỏi thêm qua Zalo"],["Giao",picked("ship")==="Nhà riêng"?"Nhà riêng, chiều chủ nhật":"Văn phòng, sáng thứ 2"],[c.l.monthly?"3 tháng gói":"Giá",vnd(c.goi)]];
   if(c.l.monthly){rows.push(["Phí giao 3 tháng",c.ship?vnd(c.ship):"Miễn phí"]);rows.push(["Cọc, hoàn lại sau",vnd(c.coc)])}
