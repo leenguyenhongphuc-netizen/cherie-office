@@ -26,7 +26,7 @@ T.NhapTuLink[0].push('');T.NhapTuLink[0][4]='GiaMua';if(T.NhapTuLink[2])T.NhapTu
  await p.goto(BASE+'admin/#kho');await shot('kho-dang-co');
  await p.click('[data-kseg=dm]');await shot('danh-muc');await p.click('[data-dmh="IVY moda"]').catch(()=>p.click('[data-dmh]:nth-child(3)'));await shot('danh-muc-ivy');
  await p.click('[data-dmh="Tất cả"]');await p.click('[data-dm]');await shot('chi-tiet-mau',1);
- if(await p.isVisible('#gnGia')){await p.fill('#gnGia','399000');await p.click('#fGN button[type=submit]')}await p.waitForTimeout(800);
+ if(await p.isVisible('#gnGia')){await p.fill('#gnGia','399000');await p.click('#fGNhap button[type=submit]')}await p.waitForTimeout(800);
  await p.keyboard.press('Escape');await p.goto(BASE+'admin/#kho');await p.waitForTimeout(500);await p.click('[data-kseg=mua]');await shot('can-mua');
  await p.goto(BASE+'admin/#khach');await p.waitForTimeout(500);await p.click('[data-ks=web]');await p.click('[data-web]');await shot('khach-web',1);
  console.log('Lỗi JS:',errs.length?errs:'không');await b.close()})();
