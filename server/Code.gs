@@ -4,11 +4,12 @@
    Đăng nhập và phân quyền RIÊNG của Office (tab NhanSu, PhanQuyen), không dùng chung với cherie.io.vn. */
 
 var SHEET_ID = "1_o3wqoBTCaTwD3WKa7QmPcK3pcrG7-ka1ae3FX8l0aM";
-var DATA_TABS = ["NhapTuLink", "SanPham", "Anh", "Dong", "KhachHang", "DangKy", "TuDo", "GiaoNhan", "DangKyWeb"];
+var DATA_TABS = ["NhapTuLink", "SanPham", "Anh", "Dong", "KhachHang", "DangKy", "TuDo", "GiaoNhan", "DangKyWeb", "KetQuaWeb", "SuKienWeb"];
 /* mục quyền đọc của từng tab */
 var READ_SEC = { NhapTuLink: ["NhapHang"], Anh: ["NhapHang", "Kho"], SanPham: ["Kho", "NhapHang", "KhachGoi", "TongQuan"],
   Dong: null, KhachHang: ["KhachGoi", "GiaoNhan", "TongQuan"], DangKy: ["KhachGoi", "GiaoNhan", "TongQuan"],
-  TuDo: ["KhachGoi", "Kho", "TongQuan"], GiaoNhan: ["GiaoNhan", "TongQuan"], DangKyWeb: ["KhachGoi", "TongQuan"] };
+  TuDo: ["KhachGoi", "Kho", "TongQuan"], GiaoNhan: ["GiaoNhan", "TongQuan"], DangKyWeb: ["KhachGoi", "TongQuan"],
+  KetQuaWeb: ["KhachGoi", "TongQuan"], SuKienWeb: ["KhachGoi", "TongQuan"] };
 /* mục cần quyền Sửa để ghi từng tab (một trong các mục) */
 var WRITE_SEC = { NhapTuLink: ["NhapHang"], Anh: ["NhapHang", "Kho"], SanPham: ["Kho", "NhapHang", "KhachGoi"],
   KhachHang: ["KhachGoi"], DangKy: ["KhachGoi"], TuDo: ["KhachGoi"], GiaoNhan: ["GiaoNhan", "KhachGoi"], DangKyWeb: ["KhachGoi"] };
@@ -30,6 +31,8 @@ function props() { return PropertiesService.getScriptProperties(); }
 function handle(q) {
   switch (q.fn) {
     case "webDangKy": return webDangKy(q);
+    case "webKetQua": return webKetQua(q);
+    case "webSuKien": return webSuKien(q);
     case "staff": return { staff: staffList() };
     case "login": return login(q.nv, q.pin);
     case "logout": props().deleteProperty("tk_" + q.token); return { ok: true };
@@ -199,5 +202,66 @@ function webDangKy(q) {
     row = row.map(function (v) { return typeof v === "string" && /^[=+\-@]/.test(v) ? "'" + v : v; });
     sh.getRange(sh.getLastRow() + 1, 1, 1, row.length).setValues([row]);
     return { ok: true, ma: ma };
+  } finally { lock.releaseLock(); }
+}
+
+/* ---------- dữ liệu khách từ website (nền CDP) ----------
+   Mỗi lần làm xong trắc nghiệm hoặc trò chuyện mẹ đều lưu 1 dòng, kể cả khi khách không để Zalo (ẩn danh theo MaKhachWeb).
+   Tên, Zalo chỉ lưu khi khách đồng ý. Hành vi sau đó (ngại giá, giữ tủ, đăng ký) ghi ở SuKienWeb và đánh dấu lên dòng kết quả. */
+var KQ_HEAD = ["MaKQ", "NgayTao", "MaKhachWeb", "Zalo", "Ten", "DongY", "Loai", "Dong", "KieuPhongCach", "CheDo", "GiaiDoan", "Size", "ChieuCao", "NgayDuSinh", "VayQuan", "MauThich", "PhongCach", "Tranh", "SoTim", "TimMa", "TuDeXuat", "ChiSoLoiTu", "NgaiGia", "BamGiuTu", "DaDangKy", "MaWeb", "Nguon", "KenhPhu", "ChienDich", "TrangGioiThieu", "ThietBi", "GiayLam", "LanThu", "TraLoi"];
+var SK_HEAD = ["Luc", "MaKhachWeb", "MaKQ", "SuKien", "GiaTri", "Trang"];
+function tabOf(name, head) {
+  var book = ss(), sh = book.getSheetByName(name);
+  if (!sh) { sh = book.insertSheet(name); sh.getRange(1, 1, 1, head.length).setValues([head]).setFontWeight("bold"); sh.setFrozenRows(1); }
+  return sh;
+}
+function vidOk(v) { v = txt(v, 24); if (!/^V-[A-Za-z0-9]{6,20}$/.test(v)) fail("Mã khách không hợp lệ", "bad_request"); return v; }
+function webRate(key, perVid, all) {
+  var c = CacheService.getScriptCache(), n1 = +(c.get(key) || 0), n0 = +(c.get("web_all2") || 0);
+  if (n1 >= perVid || n0 >= all) fail("Hệ thống đang bận, thử lại sau ít phút.", "rate");
+  c.put(key, String(n1 + 1), 3600); c.put("web_all2", String(n0 + 1), 3600);
+}
+function safe(v) { return typeof v === "string" && /^[=+\-@]/.test(v) ? "'" + v : v; }
+function webKetQua(q) {
+  var vid = vidOk(q.vid); webRate("kq_" + vid, 20, 2000);
+  var a = q.a || {}, dongY = q.dongY === true, zalo = dongY ? txt(q.zalo, 15).replace(/\s/g, "") : "";
+  if (zalo && !/^0\d{9}$/.test(zalo)) zalo = "";
+  var lock = LockService.getScriptLock(); lock.waitLock(20000);
+  try {
+    var sh = tabOf("KetQuaWeb", KQ_HEAD), last = sh.getLastRow(), mx = 0, lan = 1;
+    if (last > 1) sh.getRange(2, 1, last - 1, 3).getValues().forEach(function (r) { var m = String(r[0]).match(/(\d+)/); if (m && +m[1] > mx) mx = +m[1]; if (r[2] === vid) lan++; });
+    var ma = "KQ-" + ("0000" + (mx + 1)).slice(-5);
+    var now = Utilities.formatDate(new Date(), "Asia/Ho_Chi_Minh", "yyyy-MM-dd HH:mm:ss");
+    var arr = function (v) { return Array.isArray(v) ? v.map(function (x) { return txt(x, 40); }).join(", ") : txt(v, 80); };
+    var tl = ""; try { tl = JSON.stringify(a).slice(0, 5000); } catch (e) {}
+    var u = q.u || {};
+    var row = [ma, now, vid, zalo ? "'" + zalo : "", dongY ? txt(q.ten, 80) : "", dongY ? "Có" : "Không", txt(q.loai, 30), txt(q.dong, 40), txt(q.kieu, 60), txt(q.cheDo, 40),
+      txt(a.giaiDoan, 40), txt(a.size || a.sizeNay || a.sizeTruoc, 12), txt(a.cao, 20), txt(a.duSinh, 20), txt(a.vayQuan, 20), txt(a.mau, 30), txt(a.anTuong, 30), arr(a.tranh),
+      (a.tim || []).length || 0, arr(a.tim), arr(q.tuDe), +q.tuDeU || "", "", "", "", "",
+      txt(u.source, 60), txt(u.medium, 60), txt(u.campaign, 80), txt(q.ref, 200), txt(q.thietBi, 20), Math.round(+q.giay || 0) || "", lan, tl];
+    sh.getRange(sh.getLastRow() + 1, 1, 1, row.length).setValues([row.map(safe)]);
+    return { ok: true, ma: ma };
+  } finally { lock.releaseLock(); }
+}
+var SK_COT = { ngai_gia: "NgaiGia", giu_tu: "BamGiuTu", dang_ky: "DaDangKy" };
+function webSuKien(q) {
+  var vid = vidOk(q.vid), su = txt(q.su, 30); webRate("sk_" + vid, 60, 4000);
+  if (!/^[a-z_]{3,30}$/.test(su)) fail("Sự kiện không hợp lệ", "bad_request");
+  var maKQ = /^KQ-\d{5}$/.test(q.maKQ || "") ? q.maKQ : "";
+  var now = Utilities.formatDate(new Date(), "Asia/Ho_Chi_Minh", "yyyy-MM-dd HH:mm:ss");
+  var lock = LockService.getScriptLock(); lock.waitLock(20000);
+  try {
+    var sk = tabOf("SuKienWeb", SK_HEAD);
+    sk.getRange(sk.getLastRow() + 1, 1, 1, 6).setValues([[now, vid, maKQ, su, txt(q.giaTri, 120), txt(q.trang, 60)].map(safe)]);
+    var col = SK_COT[su];
+    if (col && maKQ) {
+      var sh = tabOf("KetQuaWeb", KQ_HEAD), last = sh.getLastRow(), c = KQ_HEAD.indexOf(col) + 1;
+      if (last > 1) {
+        var ids = sh.getRange(2, 1, last - 1, 3).getValues();
+        for (var i = ids.length - 1; i >= 0; i--) if (ids[i][0] === maKQ && ids[i][2] === vid) {
+          sh.getRange(i + 2, c).setValue(su === "dang_ky" ? txt(q.giaTri, 20) || "Có" : "Có"); break; }
+      }
+    }
+    return { ok: true };
   } finally { lock.releaseLock(); }
 }
