@@ -210,7 +210,7 @@ a.lk{color:var(--care);overflow-wrap:anywhere}
 <script>
 (function(){
 "use strict";
-var TABS=["NhapTuLink","SanPham","Anh","Dong","KhachHang","DangKy","TuDo","GiaoNhan"];
+var TABS=["NhapTuLink","SanPham","Anh","Dong","KhachHang","DangKy","TuDo","GiaoNhan","DangKyWeb"];
 var MA_DONG={"Classic":"CL","Mẹ bầu & Sau sinh":"ME","Lead":"LD","Áo dài":"AD","Travel":"TR","Ngày quan trọng":"NQ"};
 var DONG_DEFAULT=["Mẹ bầu & Sau sinh","Lead","Áo dài","Travel","Ngày quan trọng","Classic"];
 var LISTS={
@@ -372,6 +372,7 @@ function vTong(){
   if(!S.loaded)return h+(mcp&&!S.err?skeleton():"");
   var todo=[];
   if(choDuyet)todo.push('<a class="lk" href="#nhap">'+choDuyet+' món chờ bạn duyệt</a>');
+  if(webMoi())todo.push('<a class="lk" href="#khach" data-ks="web">'+webMoi()+' khách mới gửi từ web</a>');
   if(choXN)todo.push('<a class="lk" href="#khach">'+choXN+' đăng ký chờ xác nhận tiền</a>');
   if(loi)todo.push('<a class="lk" href="#nhap">'+loi+' link nhập bị lỗi</a>');
   if(sapHet.length)todo.push(sapHet.length+' gói hết hạn trong 14 ngày, nhắc gia hạn');
@@ -448,7 +449,7 @@ function vKho(){
 function vKhach(){
   var seg=S.f.khachSeg;
   var h='<div class="eyebrow">Mã khách là số Zalo</div><h1>Khách & gói</h1>'+banner();
-  h+='<div class="seg" role="group"><button type="button" data-ks="goi" aria-pressed="'+(seg==="goi")+'">Gói đăng ký</button><button type="button" data-ks="khach" aria-pressed="'+(seg==="khach")+'">Khách</button></div>';
+  h+='<div class="seg" role="group"><button type="button" data-ks="goi" aria-pressed="'+(seg==="goi")+'">Gói đăng ký</button><button type="button" data-ks="khach" aria-pressed="'+(seg==="khach")+'">Khách</button><button type="button" data-ks="web" aria-pressed="'+(seg==="web")+'">Từ web'+(webMoi()?' ('+webMoi()+')':'')+'</button></div>';
   if(!S.loaded)return h+(mcp&&!S.err?skeleton():"");
   if(seg==="goi"){
     var dk=rows("DangKy");var t0=today();
@@ -457,6 +458,11 @@ function vKhach(){
       h+='<div class="group">'+esc(st)+' · '+g.length+'</div><div class="list">'+g.map(function(r){var k=khachBy(r.MaKH);var d=parseD(r.NgayHetHan);var left=d?daysBetween(t0,d):null;
         return '<button class="item noimg" type="button" data-dk="'+esc(r.MaDK)+'"><div style="min-width:0"><div class="t1">'+esc(k?k.Ten:r.MaKH)+'</div><div class="t2">'+esc(r.Dong)+' · '+esc(r.GiaoTai||"")+' · '+dmy(r.NgayBatDau)+' → '+dmy(r.NgayHetHan)+'</div><div class="t2 mono">'+esc(r.MaDK)+'</div></div><div class="r">'+pillFor(r.TrangThai)+'<span class="small num">'+money(N(r.GiaThang)+N(r.PhiGiaoThang))+'</span>'+(left!=null&&st==="Đang dùng"?'<span class="small '+(left<=14?"":"muted")+'" style="'+(left<=14?"color:var(--warn)":"")+'">còn '+left+' ngày</span>':'')+'</div></button>'}).join("")+'</div>'});
     h+='<button class="btn fab" type="button" data-act="addDK">+ Đăng ký mới</button>';
+  }else if(seg==="web"){
+    var wb=rows("DangKyWeb").slice().reverse();
+    if(!wb.length)h+='<div class="empty">Chưa có ai gửi từ office.cherie.io.vn. Đăng ký, trắc nghiệm có để Zalo và trò chuyện cho mẹ sẽ hiện ở đây.</div>';
+    ["Mới","Đã liên hệ","Đã tạo đăng ký","Bỏ"].forEach(function(st){var g=wb.filter(function(r){return (r.TrangThai||"Mới")===st});if(!g.length)return;
+      h+='<div class="group">'+esc(st)+' · '+g.length+'</div><div class="list">'+g.map(function(r){return '<button class="item noimg" type="button" data-web="'+esc(r.MaWeb)+'"><div style="min-width:0"><div class="t1">'+esc(r.Ten||"(chưa có tên)")+'</div><div class="t2">'+esc(r.Loai)+' · '+esc(r.Dong)+(r.KieuPhongCach?' · '+esc(r.KieuPhongCach):'')+'</div><div class="t2 mono">'+esc(r.Zalo)+' · '+esc(r.NgayTao)+'</div></div><div class="r">'+pillFor(st==="Mới"?"Chờ xác nhận":st==="Đã liên hệ"?"Đã giao":st==="Bỏ"?"Huỷ":"Đang dùng")+'</div></button>'}).join("")+'</div>'});
   }else{
     var kh=rows("KhachHang");
     if(!kh.length)h+='<div class="empty">Chưa có khách. Thêm khách khi họ nhắn Zalo hoặc đăng ký trên web.</div>';
@@ -466,6 +472,21 @@ function vKhach(){
   }
   return h}
 
+function webMoi(){return rows("DangKyWeb").filter(function(r){return !r.TrangThai||r.TrangThai==="Mới"}).length}
+function openWeb(ma){var r=rows("DangKyWeb").filter(function(x){return x.MaWeb===ma})[0];if(!r)return;var tl={};try{tl=JSON.parse(r.TraLoi||"{}")}catch(e){}
+  var keys=Object.keys(tl).filter(function(k){var v=tl[k];return v&&(!Array.isArray(v)||v.length)&&k!=="tim"});
+  var b='<dl class="dl"><dt>Loại</dt><dd>'+esc(r.Loai)+'</dd><dt>Dòng</dt><dd>'+esc(r.Dong)+'</dd><dt>Zalo</dt><dd class="mono">'+esc(r.Zalo)+'</dd>'+(r.KieuPhongCach?'<dt>Phong cách</dt><dd>'+esc(r.KieuPhongCach)+'</dd>':'')+(r.Size?'<dt>Size</dt><dd>'+esc(r.Size)+(r.ChieuCao?' · '+esc(r.ChieuCao):'')+'</dd>':'')+(r.NgayDuSinh?'<dt>Dự sinh / đi làm</dt><dd>'+esc(r.NgayDuSinh)+'</dd>':'')+(r.NoiLam?'<dt>Nơi làm</dt><dd>'+esc(r.NoiLam)+'</dd>':'')+(r.DiaChi?'<dt>Giao tới</dt><dd>'+esc(r.DiaChi)+' · '+esc(r.GiaoTai)+'</dd>':'')+(r.TamTinh?'<dt>Tạm tính</dt><dd class="num">'+money(N(r.TamTinh))+'</dd>':'')+'<dt>Gửi lúc</dt><dd>'+esc(r.NgayTao)+'</dd></dl>';
+  if(r.GhiChu)b+='<div class="note">'+esc(r.GhiChu)+'</div>';
+  if(keys.length)b+='<h2 style="font-size:17px">Câu trả lời</h2><dl class="dl">'+keys.map(function(k){var v=tl[k];if(typeof v==="object"&&!Array.isArray(v))v=Object.keys(v).map(function(x){return x+": "+v[x]}).join(", ");return '<dt>'+esc(k)+'</dt><dd>'+esc(Array.isArray(v)?v.join(", "):v)+'</dd>'}).join("")+'</dl>';
+  if(tl.tim&&tl.tim.length)b+='<div class="small muted" style="margin-top:8px">Thả tim: <span class="mono">'+esc(tl.tim.join(", "))+'</span></div>';
+  b+='<div class="btnrow" id="fWeb" data-ma="'+esc(ma)+'"><button class="btn ghost" type="button" data-act="copyZalo" data-z="'+esc(r.Zalo)+'">Chép số Zalo</button><button class="btn ghost" type="button" data-webst="Đã liên hệ">Đã liên hệ</button><button class="btn" type="button" data-act="webToDK">Tạo khách và đăng ký</button><button class="btn bad" type="button" data-webst="Bỏ">Bỏ</button></div>';
+  openSheet(r.Ten||ma,b,'<span class="mono">'+esc(ma)+'</span>')}
+function setWeb(st){var ma=$("#fWeb").dataset.ma;var r=rows("DangKyWeb").filter(function(x){return x.MaWeb===ma})[0];run("Đang cập nhật",function(){return setCells("DangKyWeb",r._r,"MaWeb",ma,{TrangThai:st})},["DangKyWeb"])}
+function webToDK(){var ma=$("#fWeb").dataset.ma;var r=rows("DangKyWeb").filter(function(x){return x.MaWeb===ma})[0];var z=String(r.Zalo).replace(/\D/g,"");
+  var go=function(){formDK(z);if(!khachBy(z)){$("#dKH").value="__new";$("#dNew").hidden=false;$("#nTen").value=r.Ten||"";$("#nZalo").value=z;$("#nNoiLam").value=r.NoiLam||"";$("#nDiaChi").value=r.DiaChi||"";if(r.Size)$("#nSize").value=r.Size;$("#nNguon").value="Website"}
+    if(LISTS&&r.Dong)try{$("#dDong").value=r.Dong}catch(e){}if(r.GiaoTai)try{$("#dGiao").value=r.GiaoTai}catch(e){}calcDK();PENDING_WEB=r};
+  closeSheet();setTimeout(go,50)}
+var PENDING_WEB=null;
 function vGiao(){
   var gn=rows("GiaoNhan");var t0=today();
   var h='<div class="eyebrow">Lấy tối T6 · giặt T7 · giao CN hoặc sáng T2</div><h1>Giao nhận</h1>'+banner();
@@ -493,7 +514,7 @@ function render(){
   if(hadFocus){var nq=$("#q");if(nq){nq.focus();try{nq.setSelectionRange(pos,pos)}catch(e){}}}
   document.querySelectorAll(".tabs a").forEach(function(a){if(a.dataset.v===v)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
   var cd=rows("NhapTuLink").filter(function(r){return r.TrangThai==="Chờ duyệt"}).length;var dn=$("#dotNhap");dn.hidden=!cd;dn.textContent=cd;
-  var cx=rows("DangKy").filter(function(r){return r.TrangThai==="Chờ xác nhận"}).length;var dk=$("#dotKhach");dk.hidden=!cx;dk.textContent=cx;
+  var cx=rows("DangKy").filter(function(r){return r.TrangThai==="Chờ xác nhận"}).length+webMoi();var dk=$("#dotKhach");dk.hidden=!cx;dk.textContent=cx;
 }
 
 /* ---------- Sheets (detail/forms) ---------- */
@@ -630,7 +651,9 @@ function submitDK(){
   var maKH=val("dKH");var newK=null;
   if(maKH==="__new"){newK=khachObj("n");if(!newK.Ten||newK.Zalo.length<9){toast("Cần tên và số Zalo của khách");return}if(khachBy(newK.MaKH)){maKH=newK.MaKH;newK=null}else{newK.NgayTao=nowStr();maKH=newK.MaKH}}
   var o={MaDK:nextId("DangKy","MaDK","DK-",4),MaKH:maKH,Dong:c.dong,NgayBatDau:val("dStart"),SoThang:c.sl,GiaThang:c.gia,TraTruoc:c.tra,Coc:c.coc,GiaoTai:val("dGiao"),VungGiao:val("dVung"),PhiGiaoThang:c.phi,TongChuyen:c.theoDip?c.sl*2:c.sl*4*2,TrangThai:"Chờ xác nhận",NgayHetHan:c.het,NgayTao:nowStr(),GhiChu:val("dNote")};
-  run("Đang tạo đăng ký",function(){return (newK?appendRows("KhachHang",[newK]):Promise.resolve()).then(function(){return appendRows("DangKy",[o])})},["KhachHang","DangKy"])}
+  var w=PENDING_WEB;PENDING_WEB=null;
+  if(w&&!o.GhiChu)o.GhiChu="Từ web "+w.MaWeb+(w.KieuPhongCach?" · "+w.KieuPhongCach:"");
+  run("Đang tạo đăng ký",function(){return (newK?appendRows("KhachHang",[newK]):Promise.resolve()).then(function(){return appendRows("DangKy",[o])}).then(function(){return w?setCells("DangKyWeb",w._r,"MaWeb",w.MaWeb,{TrangThai:"Đã tạo đăng ký",XuLy:o.MaDK}):null})},["KhachHang","DangKy","DangKyWeb"])}
 function openDK(ma){
   var r=dkBy(ma);if(!r)return;var k=khachBy(r.MaKH);var td=rows("TuDo").filter(function(t){return t.MaDK===ma});
   var b='<dl class="dl"><dt>Khách</dt><dd>'+esc(k?k.Ten:"")+' · <span class="mono">'+esc(r.MaKH)+'</span></dd><dt>Dòng</dt><dd>'+esc(r.Dong)+'</dd><dt>Thời gian</dt><dd>'+dmy(r.NgayBatDau)+' → '+dmy(r.NgayHetHan)+' · '+esc(r.SoThang)+(dongInfo(r.Dong)&&dongInfo(r.Dong).CachThue==="Theo dịp"?" lượt":" tháng")+'</dd><dt>Giá</dt><dd class="num">'+money(N(r.GiaThang))+' + giao '+money(N(r.PhiGiaoThang))+'</dd><dt>Đã trả trước</dt><dd class="num">'+money(N(r.TraTruoc))+'</dd><dt>Cọc</dt><dd class="num">'+money(N(r.Coc))+'</dd><dt>Giao tại</dt><dd>'+esc(r.GiaoTai)+' · '+esc(r.VungGiao)+'</dd><dt>Trạng thái</dt><dd>'+pillFor(r.TrangThai)+'</dd></dl>';
@@ -728,6 +751,9 @@ document.addEventListener("click",function(ev){
   if(d.act==="luuSP"){luuSP();return}
   if(d.act==="addKH"){formKH();return}
   if(d.act==="editKH"){formKH(d.kh);return}
+  if(d.web){openWeb(d.web);return}
+  if(d.webst){if(d.webst==="Bỏ"&&!el.dataset.sure){el.dataset.sure="1";el.textContent="Bấm lần nữa để bỏ";return}setWeb(d.webst);return}
+  if(d.act==="webToDK"){webToDK();return}
   if(d.kh&&!d.act){openKH(d.kh);return}
   if(d.act==="addDK"){formDK(d.kh);return}
   if(d.dk&&!d.act&&!d.tdall){openDK(d.dk);return}

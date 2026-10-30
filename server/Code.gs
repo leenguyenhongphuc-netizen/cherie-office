@@ -4,14 +4,14 @@
    Đăng nhập và phân quyền RIÊNG của Office (tab NhanSu, PhanQuyen), không dùng chung với cherie.io.vn. */
 
 var SHEET_ID = "1_o3wqoBTCaTwD3WKa7QmPcK3pcrG7-ka1ae3FX8l0aM";
-var DATA_TABS = ["NhapTuLink", "SanPham", "Anh", "Dong", "KhachHang", "DangKy", "TuDo", "GiaoNhan"];
+var DATA_TABS = ["NhapTuLink", "SanPham", "Anh", "Dong", "KhachHang", "DangKy", "TuDo", "GiaoNhan", "DangKyWeb"];
 /* mục quyền đọc của từng tab */
 var READ_SEC = { NhapTuLink: ["NhapHang"], Anh: ["NhapHang", "Kho"], SanPham: ["Kho", "NhapHang", "KhachGoi", "TongQuan"],
   Dong: null, KhachHang: ["KhachGoi", "GiaoNhan", "TongQuan"], DangKy: ["KhachGoi", "GiaoNhan", "TongQuan"],
-  TuDo: ["KhachGoi", "Kho", "TongQuan"], GiaoNhan: ["GiaoNhan", "TongQuan"] };
+  TuDo: ["KhachGoi", "Kho", "TongQuan"], GiaoNhan: ["GiaoNhan", "TongQuan"], DangKyWeb: ["KhachGoi", "TongQuan"] };
 /* mục cần quyền Sửa để ghi từng tab (một trong các mục) */
 var WRITE_SEC = { NhapTuLink: ["NhapHang"], Anh: ["NhapHang", "Kho"], SanPham: ["Kho", "NhapHang", "KhachGoi"],
-  KhachHang: ["KhachGoi"], DangKy: ["KhachGoi"], TuDo: ["KhachGoi"], GiaoNhan: ["GiaoNhan", "KhachGoi"] };
+  KhachHang: ["KhachGoi"], DangKy: ["KhachGoi"], TuDo: ["KhachGoi"], GiaoNhan: ["GiaoNhan", "KhachGoi"], DangKyWeb: ["KhachGoi"] };
 var SECS = ["TongQuan", "NhapHang", "Kho", "KhachGoi", "GiaoNhan", "HoSoRieng"];
 var TOKEN_DAYS = 30;
 
@@ -29,6 +29,7 @@ function props() { return PropertiesService.getScriptProperties(); }
 
 function handle(q) {
   switch (q.fn) {
+    case "webDangKy": return webDangKy(q);
     case "staff": return { staff: staffList() };
     case "login": return login(q.nv, q.pin);
     case "logout": props().deleteProperty("tk_" + q.token); return { ok: true };
@@ -172,4 +173,31 @@ function appendRows(me, tab, rows) {
 function dangXuatTatCa() {
   var p = props(), all = p.getProperties();
   Object.keys(all).forEach(function (k) { if (k.indexOf("tk_") === 0) p.deleteProperty(k); });
+}
+
+/* ---------- đăng ký và trắc nghiệm từ website (công khai, không cần đăng nhập) ---------- */
+var WEB_HEAD = ["MaWeb", "NgayTao", "Loai", "Dong", "Ten", "Zalo", "NoiLam", "DiaChi", "GiaoTai", "Size", "ChieuCao", "NgayDuSinh", "KieuPhongCach", "TamTinh", "GhiChu", "TraLoi", "TrangThai", "XuLy"];
+function txt(v, n) { v = v == null ? "" : String(v).replace(/[\u0000-\u001f]/g, " ").trim(); return v.slice(0, n || 200); }
+function webDangKy(q) {
+  var zalo = txt(q.zalo, 15).replace(/\s/g, "");
+  if (!/^0\d{9}$/.test(zalo)) fail("Số Zalo chưa đúng", "bad_request");
+  var loai = ["Đăng ký", "Trắc nghiệm", "Trò chuyện mẹ"].indexOf(q.loai) > -1 ? q.loai : "Đăng ký";
+  var cache = CacheService.getScriptCache(), k1 = "web_" + zalo, n1 = +(cache.get(k1) || 0), n0 = +(cache.get("web_all") || 0);
+  if (n1 >= 6) fail("Số Zalo này đã gửi nhiều lần. Tụi mình sẽ nhắn sớm.", "rate");
+  if (n0 >= 300) fail("Hệ thống đang bận, nhắn Zalo 0377 159 189 giúp tụi mình.", "rate");
+  cache.put(k1, String(n1 + 1), 21600); cache.put("web_all", String(n0 + 1), 3600);
+  var lock = LockService.getScriptLock(); lock.waitLock(20000);
+  try {
+    var book = ss(), sh = book.getSheetByName("DangKyWeb");
+    if (!sh) { sh = book.insertSheet("DangKyWeb"); sh.getRange(1, 1, 1, WEB_HEAD.length).setValues([WEB_HEAD]).setFontWeight("bold"); sh.setFrozenRows(1); }
+    var last = sh.getLastRow(), mx = 0;
+    if (last > 1) sh.getRange(2, 1, last - 1, 1).getValues().forEach(function (r) { var m = String(r[0]).match(/(\d+)/); if (m && +m[1] > mx) mx = +m[1]; });
+    var ma = "WEB-" + ("000" + (mx + 1)).slice(-4);
+    var now = Utilities.formatDate(new Date(), "Asia/Ho_Chi_Minh", "yyyy-MM-dd HH:mm");
+    var tl = ""; try { tl = JSON.stringify(q.traLoi || {}).slice(0, 4000); } catch (e) {}
+    var row = [ma, now, loai, txt(q.dong, 40), txt(q.ten, 80), "'" + zalo, txt(q.noiLam, 120), txt(q.diaChi, 200), txt(q.giaoTai, 20), txt(q.size, 10), txt(q.chieuCao, 20), txt(q.duSinh, 20), txt(q.kieu, 60), +q.tamTinh || "", txt(q.ghiChu, 500), tl, "Mới", ""];
+    row = row.map(function (v) { return typeof v === "string" && /^[=+\-@]/.test(v) ? "'" + v : v; });
+    sh.getRange(sh.getLastRow() + 1, 1, 1, row.length).setValues([row]);
+    return { ok: true, ma: ma };
+  } finally { lock.releaseLock(); }
 }

@@ -3,404 +3,441 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>CHÉRIE Office</title>
-<meta name="description" content="CHÉRIE Office – tủ đồ đi làm theo tháng ở Đà Nẵng. Giặt hấp hằng tuần, giao tận nhà hoặc văn phòng.">
+<title>CHÉRIE Office · Tủ đồ đi làm theo tháng</title>
+<meta name="description" content="CHÉRIE Office – thuê tủ đồ công sở theo tháng ở Đà Nẵng. 6 dòng: Mẹ bầu & Sau sinh, Lead, Áo dài, Travel, Ngày quan trọng, Classic. Giặt hấp hằng tuần, giao tận văn phòng.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Be+Vietnam+Pro:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
-<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Be+Vietnam+Pro:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* Bố cục: ảnh tràn màn hình và khối chia đôi (Isabella Oliver) + lưới ảnh dọc, thẻ đồ tối giản, trang chi tiết (Rent the Runway). Nền trắng, chữ nhỏ, ảnh làm chủ. */
+/* Bố cục theo Rent the Runway: thanh trên gọn, hàng danh mục, hero bo tròn có thẻ giá, băng thẻ dọc bo tròn, các bước 01–04.
+   Trắc nghiệm theo air Closet: mỗi màn một câu, thanh tiến độ, chọn là sang câu. Dòng Mẹ dùng giao diện trò chuyện. */
 :root{
-  --bg:#FFFFFF; --soft:#F6F4F2; --ink:#1B1618; --muted:#6C6266; --line:#E7E2DF;
-  --gold:#8C6B3A; --office:#4E3B31; --care:#24476B; --closet:#7A1F3D; --bau:#8E432B;
-  --ph-1:#D9CEC4; --ph-2:#CBD0C6; --ph-3:#C9CDD4; --ph-4:#DCC9C0; --ph-5:#D2C7BF; --ph-dark:#6B5A4E;
-  --ph-ink:#5E534D; --on-dark:#FFFFFF;
-  --f-display:"Playfair Display", Didot, "Bodoni 72", Georgia, serif;
-  --f-sans:"Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --f-mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --bg:#FFFFFF; --soft:#F5F3F2; --soft2:#EFE7E1; --ink:#1B1618; --muted:#6F6468; --line:#E6DFDB;
+  --espresso:#4E3B31; --espresso-ink:#FFFFFF; --gold:#8C6B3A; --wine:#7A1F3D; --mom:#8E432B; --care:#24476B;
+  --ph-1:#E9E1DA; --ph-2:#DCE3DD; --ph-3:#D9DCE3; --ph-4:#EBDDD6; --ph-5:#E5DCD0; --ph-6:#E2E0EA;
+  --f-d:"Playfair Display",Georgia,"Times New Roman",serif;
+  --f-b:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-m:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --r-l:22px; --r:14px;
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#121011; --soft:#1B1718; --ink:#F2ECEE; --muted:#A3989C; --line:#302A2C;
-    --gold:#D2B27F; --office:#DCC5B6; --care:#9DBCDD; --closet:#D9759A; --bau:#E6A88F;
-    --ph-1:#2B2521; --ph-2:#242822; --ph-3:#23262C; --ph-4:#2E2420; --ph-5:#282320; --ph-dark:#3A302A; --ph-ink:#BDB0A8; color-scheme:dark;
-  }
-}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#141011; --soft:#1D1718; --soft2:#262021; --ink:#F2ECEE; --muted:#B0A4A8; --line:#352C2E;
+  --espresso:#E3CDBE; --espresso-ink:#1B1618; --gold:#D2B27F; --wine:#E58BA9; --mom:#E6A88F; --care:#9DBCDD;
+  --ph-1:#2A2321; --ph-2:#222824; --ph-3:#22252C; --ph-4:#2C2220; --ph-5:#2A251E; --ph-6:#25232D; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#121011; --soft:#1B1718; --ink:#F2ECEE; --muted:#A3989C; --line:#302A2C;
-  --gold:#D2B27F; --office:#DCC5B6; --care:#9DBCDD; --closet:#D9759A; --bau:#E6A88F;
-  --ph-1:#2B2521; --ph-2:#242822; --ph-3:#23262C; --ph-4:#2E2420; --ph-5:#282320; --ph-dark:#3A302A; --ph-ink:#BDB0A8; color-scheme:dark;
-}
+  --bg:#141011; --soft:#1D1718; --soft2:#262021; --ink:#F2ECEE; --muted:#B0A4A8; --line:#352C2E;
+  --espresso:#E3CDBE; --espresso-ink:#1B1618; --gold:#D2B27F; --wine:#E58BA9; --mom:#E6A88F; --care:#9DBCDD;
+  --ph-1:#2A2321; --ph-2:#222824; --ph-3:#22252C; --ph-4:#2C2220; --ph-5:#2A251E; --ph-6:#25232D; color-scheme:dark}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--ink);font-family:var(--f-sans);font-size:15px;line-height:24px;-webkit-font-smoothing:antialiased}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 var(--f-b);-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+[hidden]{display:none!important}
 a{color:inherit}
-h1,h2,h3,p,figure{margin:0}
-h1,h2{font-family:var(--f-display);font-weight:400;text-wrap:balance;letter-spacing:-.005em}
-.gut{padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
-.wrap{max-width:1280px;margin:0 auto}
-.k{font-size:11px;line-height:16px;font-weight:600;letter-spacing:.18em;text-transform:uppercase}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+h1,h2,h3{font-family:var(--f-d);font-weight:500;text-wrap:balance;margin:0}
+h1{font-size:clamp(30px,5vw,48px);line-height:1.1}
+h2{font-size:clamp(24px,3.4vw,34px);line-height:1.15}
+h3{font-size:19px;line-height:1.25}
+p{margin:0}
+.k{font-family:var(--f-m);font-size:11px;letter-spacing:.16em;text-transform:uppercase}
 .muted{color:var(--muted)}
-.mono{font-family:var(--f-mono);font-size:12px;line-height:18px;font-weight:500;letter-spacing:.02em;font-variant-numeric:tabular-nums}
-.view[hidden]{display:none!important}
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 26px;font:600 13px/18px var(--f-sans);letter-spacing:.12em;text-transform:uppercase;text-decoration:none;border:1px solid var(--ink);background:var(--ink);color:var(--bg);cursor:pointer;border-radius:0}
-.btn.ghost{background:transparent;color:var(--ink)}
-.btn.light{background:#FFFFFF;color:#1B1618;border-color:#FFFFFF}
-.btn.light.ghost{background:transparent;color:#FFFFFF}
-.btn.block{width:100%}
-.ul{text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1px;font-size:13px;font-weight:600;letter-spacing:.06em}
-:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.wrap{max-width:1240px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.num{font-variant-numeric:tabular-nums}
 
-/* khung ảnh: thay bằng ảnh thật khi có */
-.ph{position:relative;background:var(--ph-1);overflow:hidden}
-.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.ph .cap{position:absolute;left:12px;bottom:10px;right:12px;font-family:var(--f-mono);font-size:10px;line-height:14px;letter-spacing:.04em;color:var(--ph-ink);text-transform:uppercase}
+/* nút viên thuốc kiểu RTR */
+.pill{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 24px;border-radius:999px;border:1px solid var(--espresso);background:var(--espresso);color:var(--espresso-ink);font-weight:600;font-size:14px;text-decoration:none;white-space:nowrap}
+.pill.light{background:var(--bg);color:var(--ink);border-color:var(--bg)}
+.pill.ghost{background:transparent;color:var(--ink);border-color:var(--ink)}
+.pill.block{width:100%}
+.ul{text-decoration:underline;text-underline-offset:4px;font-weight:500}
 
-/* header */
-header.site{position:sticky;top:env(safe-area-inset-top, 0px);z-index:30;background:var(--bg);border-bottom:1px solid var(--line)}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top, 0px);z-index:31;background:var(--bg)}
-.hbar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;min-height:60px}
-.hleft,.hright{display:flex;align-items:center;gap:22px;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
-.hright{justify-content:flex-end}
-.hleft a,.hright a{text-decoration:none}
-.navlinks{display:none;gap:22px}
-.menu-btn{background:none;border:0;padding:8px 8px 8px 0;color:var(--ink);cursor:pointer;display:flex}
-.menu-btn svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.4}
-.logo{display:flex;flex-direction:column;align-items:center;text-decoration:none;gap:2px}
-.logo .w{font-family:var(--f-display);font-weight:500;font-size:20px;line-height:22px;letter-spacing:.32em;margin-right:-.32em}
-.logo .s{font-size:9px;line-height:12px;font-weight:600;letter-spacing:.36em;margin-right:-.36em;color:var(--office)}
-.drawer{border-top:1px solid var(--line);display:flex;flex-direction:column}
-.drawer[hidden],[hidden]{display:none!important}
-.drawer a{padding:16px 0;border-bottom:1px solid var(--line);text-decoration:none;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
+/* ===== header ===== */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
+.hd{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--bg);border-bottom:1px solid var(--line)}
+.hd .r1{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:58px}
+.hd .r1 .l{display:flex;gap:18px;align-items:center;font-size:13px}
+.hd .r1 .l a{text-decoration:none}
+.hd .r1 .r{display:flex;justify-content:flex-end;align-items:center;gap:10px}
+.logo{display:flex;flex-direction:column;align-items:center;text-decoration:none;line-height:1}
+.logo .w{font-family:var(--f-d);font-size:22px;letter-spacing:.22em;font-weight:500}
+.logo .s{font-family:var(--f-m);font-size:9px;letter-spacing:.42em;color:var(--gold);margin-top:5px}
+.hd .pill{min-height:36px;padding:0 16px;font-size:13px}
+.menu-btn{display:none;border:0;background:none;padding:6px;margin-left:-6px}
+.menu-btn svg{width:22px;height:22px}
+.r2{display:flex;gap:26px;overflow-x:auto;scrollbar-width:none;height:44px;align-items:center;font-size:13.5px;justify-content:center}
+.r2::-webkit-scrollbar{display:none}
+.r2 a{text-decoration:none;white-space:nowrap;padding:10px 0;border-bottom:2px solid transparent}
+.r2 a.on{border-bottom-color:var(--ink)}
+.r2 a.mom{color:var(--mom)}
+@media (max-width:760px){.hd .r1 .l .tx{display:none}.menu-btn{display:block}.r2{justify-content:flex-start;gap:20px}}
 
-/* hero tràn màn hình */
-.hero{position:relative;min-height:560px;display:flex;align-items:flex-end;background:var(--ph-dark);color:var(--on-dark)}
-.hero .ph{position:absolute;inset:0;background:var(--ph-dark)}
-.hero .ph .cap{color:rgba(255,255,255,.55);top:14px;bottom:auto}
-.hero .in{position:relative;padding-block:0 40px;display:flex;flex-direction:column;gap:16px;width:100%}
-.hero h1{font-size:48px;line-height:50px;max-width:9em}
+/* ===== hero ===== */
+.hero{position:relative;margin-top:18px;border-radius:var(--r-l);overflow:hidden;background:var(--espresso);min-height:min(78vh,620px);display:flex;align-items:flex-end}
+.hero .bgimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 25%}
+.hero .shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,12,8,.62) 0%,rgba(20,12,8,.25) 55%,rgba(20,12,8,0) 100%)}
+.hero .tx{position:relative;padding:clamp(24px,5vw,56px);display:grid;gap:14px;max-width:620px;color:#FFF}
+.hero h1{font-size:clamp(34px,6vw,62px);color:#FFF}
 .hero h1 em{font-style:italic}
-.hero p{font-size:16px;line-height:25px;max-width:28em;opacity:.92}
-.hero .ctas{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+.hero p{font-size:16px;color:rgba(255,255,255,.88);max-width:30em}
+.hero .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.hero .cta .pill{background:#FFF;color:#1B1618;border-color:#FFF}
+.hero .cta .pill.ghost{background:transparent;color:#FFF;border-color:rgba(255,255,255,.8)}
+.pricecard{position:absolute;right:clamp(14px,3vw,28px);bottom:clamp(14px,3vw,28px);background:#FFF;color:#1B1618;border-radius:16px;padding:12px 16px;display:grid;gap:2px;font-size:13px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+.pricecard b{font-family:var(--f-d);font-size:24px;font-weight:500}
+@media (max-width:760px){.hero{min-height:560px}.pricecard{position:relative;right:auto;bottom:auto;margin:0 clamp(24px,5vw,56px) 24px}.hero{flex-direction:column;justify-content:flex-end;align-items:stretch}}
 
-/* tiêu đề mục */
-section.blk{padding-block:56px 8px}
-.st{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;margin-bottom:28px}
-.st h2{font-size:32px;line-height:38px}
-.st p{max-width:32em}
+/* ===== section heads ===== */
+.sec{padding-block:clamp(44px,7vw,80px) 0}
+.sh{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:22px;text-align:left}
+.sh.c{justify-content:center;text-align:center}
+.sh .sub{max-width:36em;margin-top:6px}
 
-/* ô dòng sản phẩm */
-.cats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 10px}
-.cat{text-decoration:none;display:flex;flex-direction:column;gap:10px}
-.cat .ph{aspect-ratio:3/4}
-.cat b{font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
-.cat span{font-size:13px;line-height:18px;color:var(--muted);margin-top:-6px}
-.cat .ph img{transition:transform .4s}.cat:hover .ph img{transform:scale(1.03)}
-.cat .ph .mom{position:absolute;top:10px;left:10px;background:var(--bg);color:var(--ink);font-size:10px;font-weight:600;letter-spacing:.14em;padding:4px 8px;text-transform:uppercase}
+/* ===== băng thẻ dọc (6 nhóm) ===== */
+.rail{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(220px,1fr);gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px;scrollbar-width:thin}
+.tile{scroll-snap-align:start;text-decoration:none;display:grid;gap:10px}
+.tile .fr{position:relative;aspect-ratio:3/4.2;border-radius:var(--r-l);overflow:hidden;background:var(--ph-1)}
+.tile .fr img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.tile:hover .fr img{transform:scale(1.03)}
+.tile .cap{position:absolute;left:14px;right:14px;bottom:14px;font-family:var(--f-m);font-size:10.5px;letter-spacing:.06em;color:var(--muted)}
+.tile .tag{position:absolute;top:12px;left:12px;background:var(--bg);color:var(--mom);font-family:var(--f-m);font-size:10px;letter-spacing:.12em;padding:4px 9px;border-radius:999px;text-transform:uppercase}
+.tile b{font-size:16px;font-weight:600}
+.tile .w{font-size:13px;color:var(--muted);margin-top:-6px}
+.tile .p{font-size:13px;font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:reduce){.tile .fr img{transition:none}}
 
-/* lưới đồ kiểu Rent the Runway */
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 10px}
-.pc{display:flex;flex-direction:column;gap:6px;text-decoration:none;min-width:0}
-.pc .ph{aspect-ratio:2/3}
-.pc .ph .b{position:absolute;inset:0;opacity:0;transition:opacity .25s}
-.pc:hover .ph .b{opacity:1}
-.pc .heart{position:absolute;top:8px;right:8px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;background:none;border:0;color:var(--ink);cursor:pointer;z-index:2}
-.pc .heart svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.4}
-.pc .heart.on svg{fill:currentColor}
-.pc .br{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;margin-top:4px}
-.pc .nm{font-size:14px;line-height:20px}
-.pc .in{font-size:12px;line-height:16px;color:var(--muted)}
-.more{display:flex;justify-content:center;margin-top:32px}
+/* băng chữ chạy */
+.marq{margin-top:clamp(44px,7vw,80px);border-block:1px solid var(--line);overflow:hidden;white-space:nowrap}
+.marq .t{display:inline-block;padding:16px 0;font-family:var(--f-d);font-size:clamp(18px,2.4vw,26px);animation:mq 38s linear infinite}
+.marq .t span{padding:0 22px}
+.marq .t i{font-style:normal;color:var(--gold)}
+@keyframes mq{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.marq .t{animation:none}}
 
-/* khối chia đôi kiểu Isabella Oliver */
-.split{display:grid;background:var(--soft)}
-.split .ph{aspect-ratio:4/5;background:var(--ph-4)}
-.split .tx{padding:36px 20px 44px;display:flex;flex-direction:column;gap:16px;align-items:flex-start}
-.split h2{font-size:34px;line-height:40px}
-.split p{max-width:30em;color:var(--muted)}
+/* 3 giá trị */
+.vals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+.val{display:grid;gap:8px;align-content:start}
+.val .ic{width:44px;height:44px;border-radius:50%;background:var(--soft2);display:flex;align-items:center;justify-content:center}
+.val .ic svg{width:22px;height:22px;fill:none;stroke:var(--espresso);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:760px){.vals{grid-template-columns:1fr}}
 
-/* cách hoạt động */
-.steps{display:grid;gap:0;border-top:1px solid var(--line)}
-.stp{display:grid;grid-template-columns:44px minmax(0,1fr);gap:12px;padding:20px 0;border-bottom:1px solid var(--line)}
-.stp .n{font-family:var(--f-display);font-size:26px;line-height:28px}
-.stp .t{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
-.stp h3{font-size:16px;line-height:24px;font-weight:600}
-.stp p{font-size:14px;line-height:22px;color:var(--muted)}
+/* lưới đồ */
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:26px 16px}
+@media (max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.pc{text-decoration:none;display:grid;gap:6px;min-width:0}
+.pc .fr{position:relative;aspect-ratio:3/4;border-radius:var(--r);overflow:hidden;background:var(--ph-1)}
+.pc .fr img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pc .fr img.b{opacity:0;transition:opacity .3s}
+.pc:hover .fr img.b{opacity:1}
+.pc .cap{position:absolute;left:12px;right:12px;bottom:12px;font-family:var(--f-m);font-size:10px;color:var(--muted)}
+.pc .br{font-family:var(--f-m);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+.pc .nm{font-weight:600;font-size:14.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pc .in{font-size:12.5px;color:var(--muted)}
 
-.promise{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 12px;padding-block:40px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:56px}
-.pr{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px}
-.pr svg{width:26px;height:26px;stroke:var(--ink);fill:none;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
-.pr b{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
-.pr span{font-size:13px;line-height:19px;color:var(--muted)}
+/* các bước 01–04 */
+.how{background:var(--soft);border-radius:var(--r-l);padding:clamp(28px,5vw,56px)}
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;margin-top:26px}
+.stp{display:grid;gap:8px;align-content:start}
+.stp .n{font-family:var(--f-d);font-size:40px;line-height:1;color:var(--gold)}
+.stp .t{font-family:var(--f-m);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+@media (max-width:900px){.steps{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.steps{grid-template-columns:1fr}}
 
-.closet{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;padding-block:56px}
-.closet .w{font-family:var(--f-display);font-size:26px;line-height:32px}
-.closet .w em{color:var(--closet)}
+.closet{margin-top:clamp(44px,7vw,80px);display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;justify-content:space-between;border:1px solid var(--line);border-radius:var(--r-l);padding:22px 26px}
+.closet p{font-family:var(--f-d);font-size:20px}
+.closet em{color:var(--wine)}
 
-/* trang tủ đồ */
-.ptop{padding-block:28px 18px;display:flex;flex-direction:column;gap:8px;align-items:center;text-align:center}
-.ptop h1{font-size:34px;line-height:40px}
-.bar2{position:sticky;top:calc(env(safe-area-inset-top, 0px) + 61px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line);margin-bottom:22px}
-.chips{display:flex;gap:6px;overflow-x:auto;padding-block:10px;scrollbar-width:none}
-.chips::-webkit-scrollbar{display:none}
-.chip{flex:none;min-height:36px;padding:0 14px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:600 11px/16px var(--f-sans);letter-spacing:.12em;text-transform:uppercase;cursor:pointer;border-radius:0}
-.chip[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--bg)}
-.count{display:flex;justify-content:space-between;align-items:center;padding-bottom:10px}
-
-/* trang chi tiết */
-.pd{display:grid;gap:22px;padding-block:16px 40px}
-.gal{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:6px;scrollbar-width:none}
-.gal::-webkit-scrollbar{display:none}
-.gal .ph{flex:0 0 86%;aspect-ratio:2/3;scroll-snap-align:start}
-.pinfo{display:flex;flex-direction:column;gap:14px}
-.pinfo h1{font-size:30px;line-height:36px}
-.sizes{display:flex;gap:6px;flex-wrap:wrap}
-.sz{min-width:48px;min-height:44px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600}
-.sz.off{color:var(--muted);text-decoration:line-through}
-.inplan{background:var(--soft);padding:16px;display:flex;flex-direction:column;gap:6px}
-.dl{border-top:1px solid var(--line)}
-.dl div{display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px}
-.dl div span:first-child{color:var(--muted)}
-
-/* trang dòng Mẹ bầu & Sau sinh */
-.lh{display:grid;background:var(--soft)}
-.lh .ph{aspect-ratio:4/5;background:var(--ph-4)}
-.lh .tx{padding:32px 20px 40px;display:flex;flex-direction:column;gap:14px}
-.lh h1{font-size:38px;line-height:44px}
-.price{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
-.price b{font-family:var(--f-display);font-weight:400;font-size:30px;line-height:34px}
-.jr{display:grid;border-top:1px solid var(--line)}
-.jr div{display:grid;grid-template-columns:110px minmax(0,1fr);gap:12px;padding:18px 0;border-bottom:1px solid var(--line)}
-.jr .t{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;color:var(--bau);text-transform:uppercase;padding-top:3px}
-.jr h3{font-size:16px;line-height:24px;font-weight:600}
-.jr p{font-size:14px;line-height:22px;color:var(--muted)}
-details{border-bottom:1px solid var(--line)}
-details:first-of-type{border-top:1px solid var(--line)}
-summary{cursor:pointer;list-style:none;padding:18px 0;font-weight:600;font-size:15px;display:flex;justify-content:space-between;gap:12px}
-summary::-webkit-details-marker{display:none}
-summary::after{content:"+";font-family:var(--f-mono)}
+/* ===== trang nhóm ===== */
+.gh{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(20px,4vw,56px);align-items:center;margin-top:18px}
+.gh .fr{position:relative;aspect-ratio:4/5;border-radius:var(--r-l);overflow:hidden;background:var(--ph-1)}
+.gh .fr img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.gh .fr .cap{position:absolute;left:16px;right:16px;bottom:16px;font-family:var(--f-m);font-size:11px;color:var(--muted)}
+.gh .tx{display:grid;gap:16px;align-content:center}
+.gh .price{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.gh .price b{font-family:var(--f-d);font-size:30px;font-weight:500}
+.incl{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.incl li{display:flex;gap:10px;align-items:flex-start;font-size:14.5px}
+.incl li::before{content:"";flex:none;width:7px;height:7px;border-radius:50%;background:var(--gold);margin-top:8px}
+.quizcard{background:var(--soft);border-radius:var(--r);padding:16px 18px;display:grid;gap:10px}
+.quizcard .k{color:var(--gold)}
+@media (max-width:760px){.gh{grid-template-columns:1fr}.gh .fr{aspect-ratio:4/3.6}}
+details{border-top:1px solid var(--line);padding:14px 0}
+details:last-child{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:12px}
+summary::after{content:"+";font-family:var(--f-m);color:var(--muted)}
 details[open] summary::after{content:"–"}
-details p{padding-bottom:18px;color:var(--muted);max-width:40em}
+details p{margin-top:8px;color:var(--muted)}
 
-/* gói và giá */
-.plans{display:grid;border-top:1px solid var(--line)}
-.plan{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 16px;padding:20px 0;border-bottom:1px solid var(--line);align-items:baseline}
-.plan h3{font-family:var(--f-display);font-weight:400;font-size:24px;line-height:30px}
-.plan .p{font-family:var(--f-mono);font-size:14px;text-align:right}
-.plan .w{grid-column:1/-1;font-size:14px;line-height:21px;color:var(--muted)}
-.plan .go{grid-column:1/-1;margin-top:6px}
-table.fees{width:100%;border-collapse:collapse;font-size:14px;line-height:21px}
-table.fees td{padding:14px 0;border-bottom:1px solid var(--line);vertical-align:top}
-table.fees td:last-child{text-align:right;font-family:var(--f-mono);font-size:13px;white-space:nowrap;padding-left:12px}
-
-/* đăng ký */
-.fw{max-width:560px;margin:0 auto;padding-block:28px 56px}
-.prog{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin:16px 0 28px}
-.prog i{height:2px;background:var(--line)}
-.prog i.on{background:var(--ink)}
-fieldset{border:none;margin:0;padding:0;display:flex;flex-direction:column;gap:18px}
-legend{font-family:var(--f-display);font-size:28px;line-height:34px;margin-bottom:6px;padding:0}
-.field{display:flex;flex-direction:column;gap:6px}
-.field label{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+/* ===== trắc nghiệm (kiểu air Closet) ===== */
+.qz{min-height:calc(100vh - 140px);display:flex;flex-direction:column;max-width:720px;margin:0 auto;padding-block:20px 120px}
+.qbar{height:3px;background:var(--line);border-radius:2px;overflow:hidden;margin-top:6px}
+.qbar i{display:block;height:100%;background:var(--gold);transition:width .3s}
+.qmeta{display:flex;justify-content:space-between;font-family:var(--f-m);font-size:11px;letter-spacing:.1em;color:var(--muted);margin-top:10px}
+.qhead{text-align:center;margin-top:28px;display:grid;gap:8px}
+.qhead .qn{font-family:var(--f-d);font-size:28px;color:var(--gold)}
+.qhead h2{font-size:clamp(21px,3vw,27px)}
+.qhead .hint{font-size:13px;color:var(--muted)}
+.qbody{margin-top:24px}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.opts.one{grid-template-columns:1fr}
+.opts.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.opts.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.opts.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+.qbody>.k{text-align:left}
+.op{position:relative;border:1.5px solid var(--line);background:var(--bg);border-radius:var(--r);padding:16px 14px;text-align:left;display:grid;gap:4px;min-height:64px;align-content:center}
+.op b{font-size:15px;font-weight:600}
+.op span{font-size:13px;color:var(--muted)}
+.op[aria-pressed="true"]{border-color:var(--espresso);background:var(--soft2)}
+.op .sw{display:flex;gap:5px;margin-bottom:6px}
+.op .sw i{width:22px;height:22px;border-radius:50%;border:1px solid rgba(0,0,0,.08)}
+.op .fig{height:64px;border-radius:10px;margin-bottom:8px;display:flex;align-items:flex-end;padding:8px;font-family:var(--f-d);font-size:22px;color:#1B1618}
+.hearts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media (max-width:520px){.hearts{grid-template-columns:repeat(2,minmax(0,1fr))}.opts.three{grid-template-columns:1fr 1fr}.opts.four{grid-template-columns:repeat(2,minmax(0,1fr))}.op{padding:12px}}
+.ht{position:relative;aspect-ratio:3/4;border-radius:var(--r);overflow:hidden;background:var(--ph-1);border:0;padding:0}
+.ht img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ht .cap{position:absolute;left:10px;right:10px;bottom:10px;font-family:var(--f-m);font-size:10px;color:var(--muted);text-align:left}
+.ht .hb{position:absolute;right:8px;bottom:8px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center}
+.ht .hb svg{width:18px;height:18px;fill:none;stroke:#1B1618;stroke-width:1.6}
+.ht[aria-pressed="true"] .hb{background:var(--wine)}
+.ht[aria-pressed="true"] .hb svg{fill:#FFF;stroke:#FFF}
+.ht[aria-pressed="true"]{outline:2px solid var(--wine);outline-offset:2px}
+.qfoot{position:fixed;left:0;right:0;bottom:0;z-index:40;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:12px max(16px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.qfoot .in{max-width:720px;margin:0 auto;display:flex;gap:10px;align-items:center}
+.qfoot .back{width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--bg);display:flex;align-items:center;justify-content:center;flex:none}
+.qfoot .back svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2}
+.qfoot .pill{flex:1}
+.qfoot .pill[disabled]{opacity:.4;cursor:default}
+.stylist{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;margin-top:40px}
+.av{width:76px;height:76px;border-radius:50%;background:var(--espresso);color:var(--espresso-ink);display:flex;align-items:center;justify-content:center;font-family:var(--f-d);font-size:30px;flex:none}
+.stylist p{max-width:30em;color:var(--muted)}
+.field{display:grid;gap:6px;margin-top:12px}
+.field label{font-size:13px;font-weight:500}
+.field input,.field select,.field textarea{width:100%;border:1.5px solid var(--line);background:var(--bg);border-radius:12px;min-height:48px;padding:10px 14px;font-size:16px}
+.field textarea{min-height:86px}
 .field small{font-size:12px;color:var(--muted)}
-input[type=text],input[type=tel],input[type=date],select,textarea{font:400 16px/22px var(--f-sans);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:0;padding:12px 14px;width:100%;min-height:48px}
-textarea{min-height:88px;resize:vertical}
-.opts{display:grid;gap:8px}
-.opt{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--line);padding:14px;cursor:pointer}
-.opt input{margin-top:4px;accent-color:var(--ink);flex:none}
-.opt b{font-weight:600;display:block}
-.opt span{font-size:13px;color:var(--muted)}
-.opt:has(input:checked){border-color:var(--ink)}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.err{font-size:13px;color:#B0261E}
-.fnav{display:flex;justify-content:space-between;gap:10px;margin-top:28px}
-.sum{background:var(--soft);padding:20px;display:flex;flex-direction:column;gap:10px}
-.sum .r{display:flex;justify-content:space-between;gap:12px;font-size:14px}
-.sum .r span:last-child{font-family:var(--f-mono);font-size:13px;text-align:right}
+
+/* ===== trò chuyện (dòng Mẹ) ===== */
+.chat{max-width:680px;margin:0 auto;padding-block:16px 160px;display:flex;flex-direction:column;gap:12px}
+.chat .top{display:flex;gap:12px;align-items:center;padding:8px 0 14px;border-bottom:1px solid var(--line);margin-bottom:6px}
+.chat .top .av{width:46px;height:46px;font-size:20px;background:var(--mom);color:#FFF}
+.chat .top small{display:block;color:var(--muted);font-size:12px}
+.msg{max-width:84%;padding:12px 15px;border-radius:18px;font-size:15px;line-height:1.5}
+.msg.bot{background:var(--soft);border-bottom-left-radius:6px;align-self:flex-start}
+.msg.me{background:var(--mom);color:#FFF;border-bottom-right-radius:6px;align-self:flex-end}
+.msg.typing{color:var(--muted);font-family:var(--f-m);font-size:12px;letter-spacing:.1em}
+.replies{position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--bg);border-top:1px solid var(--line);padding:12px max(16px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.replies .in{max-width:680px;margin:0 auto;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.chip{border:1.5px solid var(--mom);color:var(--mom);background:var(--bg);border-radius:999px;padding:9px 15px;font-size:14px;font-weight:500}
+.chip[aria-pressed="true"]{background:var(--mom);color:#FFF}
+.replies input{flex:1;min-width:150px;border:1.5px solid var(--line);border-radius:999px;min-height:44px;padding:0 16px;font-size:16px;background:var(--bg)}
+.replies .send{border:0;background:var(--mom);color:#FFF;border-radius:999px;min-height:44px;padding:0 18px;font-weight:600}
+
+/* ===== kết quả ===== */
+.res{max-width:880px;margin:0 auto;padding-block:24px 40px}
+.typecard{border-radius:var(--r-l);padding:clamp(24px,5vw,48px);color:#FFF;display:grid;gap:12px;position:relative;overflow:hidden}
+.typecard .fr-name{font-family:var(--f-d);font-style:italic;font-size:18px;opacity:.85}
+.typecard h1{color:#FFF}
+.typecard p{color:rgba(255,255,255,.9);max-width:34em}
+.typecard .pal{display:flex;gap:8px;margin-top:6px}
+.typecard .pal i{width:34px;height:34px;border-radius:50%;border:2px solid rgba(255,255,255,.7)}
+.rules{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:20px}
+.rule{background:var(--soft);border-radius:var(--r);padding:16px;display:grid;gap:4px}
+.rule .k{color:var(--gold)}
+@media (max-width:760px){.rules{grid-template-columns:1fr}}
+.timeline{display:grid;gap:0;margin-top:18px;border-left:2px solid var(--line);padding-left:18px}
+.timeline .it{position:relative;padding:0 0 18px}
+.timeline .it::before{content:"";position:absolute;left:-25px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--mom)}
+.timeline .when{font-family:var(--f-m);font-size:11px;letter-spacing:.08em;color:var(--mom);text-transform:uppercase}
+.timeline b{display:block;margin-top:2px}
+.timeline p{font-size:14px;color:var(--muted)}
+.cta-box{margin-top:26px;border:1px solid var(--line);border-radius:var(--r-l);padding:22px;display:grid;gap:12px}
+.cta-box .row{display:flex;flex-wrap:wrap;gap:10px}
+
+/* ===== tủ đồ / sản phẩm / giá / đăng ký ===== */
+.ptop{padding-block:28px 18px;display:grid;gap:8px}
+.chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:16px}
+.chips::-webkit-scrollbar{display:none}
+.chips .c{flex:none;border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:8px 15px;font-size:13.5px}
+.chips .c[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.pd{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(18px,4vw,48px);padding-block:24px}
+.gal{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.gal .fr{position:relative;aspect-ratio:3/4;border-radius:var(--r);overflow:hidden;background:var(--ph-1)}
+.gal .fr img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.gal .fr .cap{position:absolute;left:12px;bottom:12px;right:12px;font-family:var(--f-m);font-size:10px;color:var(--muted)}
+.pinfo{display:grid;gap:14px;align-content:start;position:sticky;top:130px}
+.sizes{display:flex;gap:8px}
+.sz{width:46px;height:40px;border:1px solid var(--line);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:13px}
+.sz.off{color:var(--muted);text-decoration:line-through;opacity:.6}
+.inplan{background:var(--soft);border-radius:var(--r);padding:14px 16px;display:grid;gap:4px}
+.dl{display:grid;gap:8px;font-size:14px;border-top:1px solid var(--line);padding-top:14px}
+.dl div{display:flex;justify-content:space-between;gap:12px}
+.dl span:first-child{color:var(--muted)}
+@media (max-width:860px){.pd{grid-template-columns:1fr}.pinfo{position:static}}
+.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.plan{border:1px solid var(--line);border-radius:var(--r-l);padding:22px;display:grid;gap:10px;align-content:start}
+.plan.mom{border-color:var(--mom)}
+.plan .p{font-family:var(--f-d);font-size:28px;line-height:1.1}
+.plan .p small{font-family:var(--f-b);font-size:13px;color:var(--muted)}
+@media (max-width:900px){.plans{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.plans{grid-template-columns:1fr}}
+table.fees{width:100%;border-collapse:collapse;margin-top:14px}
+table.fees td{border-bottom:1px solid var(--line);padding:14px 0;vertical-align:top}
+table.fees td:last-child{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.fw{max-width:620px;margin:0 auto;padding-block:28px 60px}
+.prog{display:flex;gap:6px;margin:14px 0 22px}
+.prog i{flex:1;height:3px;border-radius:2px;background:var(--line)}
+.prog i.on{background:var(--gold)}
+fieldset{border:0;padding:0;margin:0}
+legend{font-family:var(--f-d);font-size:26px;margin-bottom:12px;padding:0}
+.ropts{display:grid;gap:10px}
+.ro{display:flex;gap:12px;align-items:flex-start;border:1.5px solid var(--line);border-radius:var(--r);padding:14px;cursor:pointer}
+.ro input{margin-top:4px;accent-color:var(--espresso);width:18px;height:18px}
+.ro b{display:block}
+.ro span{font-size:13px;color:var(--muted)}
+.ro:has(input:checked){border-color:var(--espresso);background:var(--soft2)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.err{display:block;color:var(--wine);font-size:13px;margin-top:10px}
+.sum{display:grid;gap:8px;border:1px solid var(--line);border-radius:var(--r);padding:16px;font-size:14px}
+.sum .r{display:flex;justify-content:space-between;gap:12px}
+.sum .r span:first-child{color:var(--muted)}
 .sum .tot{border-top:1px solid var(--line);padding-top:10px;font-weight:600}
+.fnav{display:flex;gap:10px;margin-top:22px}
+.done{background:var(--soft);border-radius:var(--r);padding:18px;margin-top:18px;display:grid;gap:6px}
+.prefill{background:var(--soft2);border-radius:var(--r);padding:12px 14px;font-size:13.5px;margin-bottom:14px}
 
-footer.site{background:#1B1618;color:#E9E2DF;margin-top:40px;padding-block:44px 32px}
-footer .cols{display:grid;gap:28px}
-footer .c{display:flex;flex-direction:column;gap:10px;font-size:14px}
-footer .c a{text-decoration:none}
-footer .k{color:#A3989C}
-footer .logo .s{color:#D2B27F}
-footer .base{margin-top:36px;padding-top:18px;border-top:1px solid #3A3234;font-size:12px;color:#A3989C}
+/* footer */
+footer.site{margin-top:clamp(56px,8vw,96px);background:#1B1618;color:#E9E1E3;padding-block:48px 28px}
+footer .cols{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:28px}
+footer .c{display:grid;gap:9px;align-content:start;font-size:14px}
+footer .c a{text-decoration:none;color:#E9E1E3}
+footer .c .k{color:#B79A6A}
+footer .base{margin-top:36px;padding-top:18px;border-top:1px solid #3A3033;font-size:12px;color:#A3989C}
+@media (max-width:760px){footer .cols{grid-template-columns:1fr 1fr}}
 
-@media (min-width:900px){
-  .navlinks{display:flex}
-  .menu-btn{display:none}
-  .hbar{min-height:72px}
-  .logo .w{font-size:24px;line-height:26px}
-  .hero{min-height:680px}
-  .hero .in{padding-block:0 72px}
-  .hero h1{font-size:84px;line-height:84px}
-  .cats{grid-template-columns:repeat(3,minmax(0,1fr));gap:32px 16px}
-  .grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:44px 16px}
-  .split,.lh{grid-template-columns:1fr 1fr}
-  .split .ph,.lh .ph{aspect-ratio:auto;min-height:640px}
-  .split .tx,.lh .tx{padding:72px;justify-content:center}
-  .split h2{font-size:48px;line-height:54px}
-  .lh h1{font-size:56px;line-height:62px}
-  .steps{grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;border-top:none}
-  .stp{grid-template-columns:1fr;border-top:1px solid var(--ink);border-bottom:none}
-  .promise{grid-template-columns:repeat(4,minmax(0,1fr))}
-  .pd{grid-template-columns:1.3fr 1fr;gap:48px;align-items:start}
-  .gal{display:grid;grid-template-columns:1fr 1fr;overflow:visible}
-  .gal .ph{flex:auto}
-  .pinfo{position:sticky;top:96px}
-  .plans{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:48px}
-  footer .cols{grid-template-columns:2fr 1fr 1fr 1fr}
-}
-@media (prefers-reduced-motion:reduce){.pc .ph .b{transition:none}}
+/* menu điện thoại */
+.drawer{position:fixed;inset:0;z-index:70;background:var(--bg);padding:calc(16px + env(safe-area-inset-top,0px)) max(20px,env(safe-area-inset-right,0px)) 24px max(20px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:4px;overflow-y:auto}
+.drawer a{font-family:var(--f-d);font-size:24px;text-decoration:none;padding:10px 0;border-bottom:1px solid var(--line)}
+.drawer .x{align-self:flex-end;border:0;background:var(--soft);width:40px;height:40px;border-radius:50%;font-size:20px}
 </style>
 </head>
 <body>
 
-
-<header class="site">
-  <div class="wrap gut hbar">
-    <div class="hleft">
-      <button class="menu-btn" type="button" id="menuBtn" aria-label="Mở menu" aria-expanded="false"><svg viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h18"/></svg></button>
-      <nav class="navlinks" aria-label="Menu chính"><a href="#tu-do">Tủ đồ</a><a href="#goi-va-gia">Gói và giá</a><a href="#cach-hoat-dong">Cách hoạt động</a></nav>
+<header class="hd">
+  <div class="wrap">
+    <div class="r1">
+      <div class="l">
+        <button class="menu-btn" id="menuBtn" type="button" aria-label="Mở menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+        <a class="tx" href="#cach-hoat-dong">Cách hoạt động</a><a class="tx" href="#goi-va-gia">Gói và giá</a>
+      </div>
+      <a class="logo" href="#" aria-label="CHÉRIE Office, trang chủ"><span class="w">CHÉRIE</span><span class="s">OFFICE</span></a>
+      <div class="r"><a class="pill" href="#chon-nhom">Bắt đầu</a></div>
     </div>
-    <a class="logo" href="#" aria-label="CHÉRIE Office – trang chủ"><span class="w">CHÉRIE</span><span class="s">OFFICE</span></a>
-    <div class="hright"><a href="#dang-ky">Đăng ký</a></div>
   </div>
-  <nav class="drawer wrap gut" id="drawer" hidden aria-label="Menu">
-    <a href="#tu-do">Tủ đồ</a><a href="#goi-va-gia">Gói và giá</a><a href="#cach-hoat-dong">Cách hoạt động</a><a href="#bau">Mẹ bầu &amp; Sau sinh</a><a href="https://zalo.me/0377159189" target="_blank" rel="noopener">Nhắn Zalo</a>
-  </nav>
+  <nav class="r2 wrap" id="catNav" aria-label="Các dòng"></nav>
 </header>
+
+<div class="drawer" id="drawer" hidden>
+  <button class="x" type="button" id="drawerX" aria-label="Đóng menu">×</button>
+  <div id="drawerLinks" style="display:grid"></div>
+</div>
 
 <!-- ============ TRANG CHỦ ============ -->
 <main id="v-home" class="view">
-  <section class="hero">
-    <div class="ph"><span class="cap">Ảnh: nàng mặc blazer kem, bước ra khỏi thang máy văn phòng, ánh sáng sáng sớm</span></div>
-    <div class="in wrap gut">
-      <span class="k">Thuê đồ đi làm theo tháng · Đà Nẵng</span>
-      <h1>Tủ đồ đi làm, <em>luôn mới.</em></h1>
-      <p>Mỗi tuần một tủ đồ công sở mới, chọn sẵn theo gu của nàng. Giặt hấp xong, tụi mình mang tới tận nhà.</p>
-      <div class="ctas"><a class="btn light" href="#dang-ky">Chọn tủ đồ của nàng</a><a class="btn light ghost" href="#tu-do">Xem tủ đồ</a></div>
-    </div>
-  </section>
-
-  <div class="wrap gut">
-    <section class="blk">
-      <div class="st"><span class="k muted">Bảy dòng</span><h2>Tủ đồ cho từng giai đoạn</h2></div>
-      <div class="cats" id="cats"></div>
-    </section>
-
-    <section class="blk">
-      <div class="st"><span class="k muted">Mới vào tủ</span><h2>Mặc gì tuần sau?</h2></div>
-      <div class="grid" id="homeGrid"></div>
-      <div class="more"><a class="btn ghost" href="#tu-do">Xem cả tủ đồ</a></div>
+  <div class="wrap">
+    <section class="hero">
+      <img class="bgimg" id="heroImg" alt="" hidden>
+      <div class="shade"></div>
+      <div class="tx">
+        <span class="k" style="color:rgba(255,255,255,.8)">Thuê đồ đi làm theo tháng · Đà Nẵng</span>
+        <h1>Một tủ đồ đi làm, <em>mỗi tuần một chiếc mới.</em></h1>
+        <p>Chọn dòng hợp với nàng, trả lời vài câu để stylist hiểu gu. Đồ giặt hấp sẵn, giao tận văn phòng.</p>
+        <div class="cta"><a class="pill" href="#chon-nhom">Thuê theo tháng</a><a class="pill ghost" href="#nhom-ngay-quan-trong">Thuê cho một dịp</a></div>
+      </div>
+      <div class="pricecard"><span class="k" style="color:#6F6468">Gói tháng từ</span><b class="num">590.000đ</b><span>Giặt hấp hằng tuần · stylist chọn đồ</span></div>
     </section>
   </div>
 
-  <section class="blk" style="padding-bottom:0">
-    <div class="split wrap">
-      <div class="ph"><span class="cap">Ảnh: mẹ bầu 6 tháng, đầm suông đất nung, đứng cạnh cửa sổ văn phòng</span></div>
-      <div class="tx">
-        <span class="k" style="color:var(--bau)">Cho mẹ</span>
-        <h2>Bụng lớn dần, tủ đồ lớn theo.</h2>
-        <p>Một gói đi cùng mẹ từ tháng thứ 4 thai kỳ đến khi quay lại công sở. Đổi size giữa tháng không mất phí, nghỉ sinh thì tạm dừng, đi làm lại có sẵn đồ mở khuy cho con bú.</p>
-        <a class="btn" href="#bau">Xem dòng Mẹ bầu &amp; Sau sinh</a>
+  <section class="sec wrap" id="chon-nhom">
+    <div class="sh c"><div><h2>Nàng đang cần tủ đồ nào?</h2><p class="sub muted" style="margin-inline:auto">Sáu dòng cho sáu nhịp đi làm. Chọn một dòng, trả lời 3 phút, stylist xếp tủ theo gu nàng.</p></div></div>
+    <div class="rail" id="groupRail"></div>
+  </section>
+
+  <div class="marq" aria-hidden="true"><div class="t" id="marq"></div></div>
+
+  <section class="sec wrap">
+    <div class="sh c"><h2>Tủ của tụi mình là tủ của nàng</h2></div>
+    <div class="vals">
+      <div class="val"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3v3"/><path d="M8 7l-5 4 3 2 1-1v9h10v-9l1 1 3-2-5-4z"/></svg></div><h3>Luôn có đồ mới để mặc</h3><p class="muted">Mỗi tuần một tủ khác, không lặp lại trước mặt đồng nghiệp, không phải sắm thêm.</p></div>
+      <div class="val"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></svg></div><h3>Thử phong cách mới, không rủi ro</h3><p class="muted">Muốn thử vest màu đậm hay chân váy xếp ly? Mặc một tuần rồi tính.</p></div>
+      <div class="val"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div><h3>Đúng đồ cho từng lịch</h3><p class="muted">Họp đối tác, thứ 2 mặc áo dài, chuyến công tác hay buổi phỏng vấn đều có dòng riêng.</p></div>
+    </div>
+  </section>
+
+  <section class="sec wrap">
+    <div class="sh"><div><h2>Mới vào tủ</h2><p class="sub muted">Những bộ vừa giặt hấp, đang chờ nàng.</p></div><a class="ul" href="#tu-do">Xem cả tủ đồ</a></div>
+    <div class="grid" id="homeGrid"></div>
+  </section>
+
+  <section class="sec wrap" id="cach-hoat-dong">
+    <div class="how">
+      <div class="sh" style="margin:0"><div><span class="k muted">Cách hoạt động</span><h2 style="margin-top:6px">Một tuần của tủ đồ</h2></div><a class="pill" href="#chon-nhom">Chọn dòng của nàng</a></div>
+      <div class="steps">
+        <div class="stp"><span class="n">01</span><span class="t">Ngày đầu</span><h3>Chọn dòng, trả lời 3 phút</h3><p class="muted">Stylist hiểu gu, size, lịch làm việc của nàng.</p></div>
+        <div class="stp"><span class="n">02</span><span class="t">Thứ 2 – thứ 6</span><h3>Mặc 5 bộ đi làm</h3><p class="muted">Mỗi ngày một bộ, không phải nghĩ mặc gì.</p></div>
+        <div class="stp"><span class="n">03</span><span class="t">Tối thứ 6</span><h3>Tụi mình lấy đồ đã mặc</h3><p class="muted">Không cần giặt. CHÉRIE Care giặt hấp, niêm phong.</p></div>
+        <div class="stp"><span class="n">04</span><span class="t">Chiều CN · sáng T2</span><h3>Tủ tuần mới tới nơi</h3><p class="muted">Tại nhà chiều chủ nhật, hoặc văn phòng sáng thứ 2.</p></div>
       </div>
     </div>
   </section>
 
-  <div class="wrap gut">
-    <section class="blk" id="cach-hoat-dong">
-      <div class="st"><span class="k muted">Cách hoạt động</span><h2>Một tuần của tủ đồ</h2></div>
-      <div class="steps">
-        <div class="stp"><span class="n">1</span><div><span class="t">Thứ 2 – thứ 6</span><h3>Nàng mặc 5 bộ đi làm</h3><p>Mỗi ngày một bộ, không phải đứng trước tủ nghĩ mặc gì.</p></div></div>
-        <div class="stp"><span class="n">2</span><div><span class="t">Tối thứ 6</span><h3>Tụi mình lấy đồ đã mặc</h3><p>Tại nhà riêng hoặc văn phòng. Không cần giặt trước.</p></div></div>
-        <div class="stp"><span class="n">3</span><div><span class="t">Thứ 7</span><h3>Giặt hấp, niêm phong</h3><p>Stylist xếp tủ tuần mới theo gu và lịch của nàng.</p></div></div>
-        <div class="stp"><span class="n">4</span><div><span class="t">Chiều CN · sáng T2</span><h3>Tủ tuần mới tới nơi</h3><p>Chiều chủ nhật tại nhà, hoặc sáng thứ 2 tại văn phòng.</p></div></div>
-      </div>
-    </section>
-
-    <div class="promise">
-      <div class="pr"><svg viewBox="0 0 24 24"><path d="M4 8h16v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M8 8V6a4 4 0 0 1 8 0v2"/></svg><b>Túi niêm phong</b><span>Giặt hấp tại CHÉRIE Care sau mỗi lần mặc</span></div>
-      <div class="pr"><svg viewBox="0 0 24 24"><path d="M12 3v3"/><path d="M8 7l-5 4 3 2 1-1v9h10v-9l1 1 3-2-5-4z"/></svg><b>Đổi size miễn phí</b><span>Báo trong 48 giờ, đổi ở chuyến kế tiếp</span></div>
-      <div class="pr"><svg viewBox="0 0 24 24"><path d="M3 12l9-9h7v7l-9 9z"/><circle cx="15.5" cy="8.5" r="1.5"/></svg><b>Tag số lần mặc</b><span>Đủ 40 lần mặc là cho nghỉ</span></div>
-      <div class="pr"><svg viewBox="0 0 24 24"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg><b>Giao văn phòng miễn phí</b><span>Khu trung tâm Đà Nẵng</span></div>
-    </div>
-
-    <div class="closet">
-      <span class="k muted">Gia đình CHÉRIE</span>
-      <p class="w">Cần đầm cho tiệc công ty hay đám cưới? <em>CHÉRIE Closet</em></p>
-      <a class="ul" href="https://cherie.io.vn" target="_blank" rel="noopener">Xem đầm ở Closet</a>
-    </div>
+  <div class="wrap">
+    <div class="closet"><p>Cần đầm cho tiệc công ty hay đám cưới? <em>CHÉRIE Closet</em></p><a class="ul" href="https://cherie.io.vn" target="_blank" rel="noopener">Xem đầm ở Closet</a></div>
   </div>
 </main>
 
+<!-- ============ TRANG NHÓM ============ -->
+<main id="v-nhom" class="view" hidden><div class="wrap" id="nhomBody"></div></main>
+
+<!-- ============ TRẮC NGHIỆM ============ -->
+<main id="v-quiz" class="view" hidden><div class="wrap"><div class="qz" id="qz"></div></div>
+  <div class="qfoot" id="qfoot"><div class="in"><button class="back" type="button" id="qBack" aria-label="Câu trước"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button><button class="pill" type="button" id="qNext">Tiếp</button></div></div>
+</main>
+
+<!-- ============ TRÒ CHUYỆN MẸ ============ -->
+<main id="v-chat" class="view" hidden><div class="wrap"><div class="chat" id="chat" aria-live="polite"></div></div>
+  <div class="replies" id="replies"><div class="in" id="repliesIn"></div></div>
+</main>
+
+<!-- ============ KẾT QUẢ ============ -->
+<main id="v-ket-qua" class="view" hidden><div class="wrap"><div class="res" id="res"></div></div></main>
+
 <!-- ============ TỦ ĐỒ ============ -->
 <main id="v-tu-do" class="view" hidden>
-  <div class="wrap gut">
-    <div class="ptop"><span class="k muted">Tủ đồ</span><h1>Những bộ nàng sẽ mặc</h1><p class="muted" style="max-width:32em">Mỗi bộ nằm trong tủ đồ của một dòng. Stylist chọn 10 bộ hợp gu nàng mỗi tháng.</p></div>
-  </div>
-  <div class="bar2"><div class="wrap gut"><div class="chips" id="chips" role="group" aria-label="Lọc theo dòng"></div></div></div>
-  <div class="wrap gut">
-    <div class="count"><span class="mono muted" id="count"></span></div>
+  <div class="wrap">
+    <div class="ptop"><span class="k muted">Tủ đồ</span><h1>Những bộ nàng sẽ mặc</h1><p class="muted" style="max-width:34em">Mỗi bộ thuộc tủ của một dòng. Stylist chọn đồ cho nàng theo kết quả trắc nghiệm.</p></div>
+    <div class="chips" id="chips" role="group" aria-label="Lọc theo dòng"></div>
+    <p class="k muted" id="count" style="margin-bottom:14px"></p>
     <div class="grid" id="allGrid"></div>
   </div>
 </main>
 
-<!-- ============ CHI TIẾT BỘ ĐỒ ============ -->
-<main id="v-sp" class="view" hidden>
-  <div class="wrap gut"><div class="pd" id="pd"></div></div>
-</main>
-
-<!-- ============ DÒNG BẦU ============ -->
-<main id="v-bau" class="view" hidden>
-  <div class="lh wrap">
-    <div class="ph"><span class="cap">Ảnh: mẹ bầu 7 tháng, blazer mở và đầm suông, ánh cửa sổ buổi sáng</span></div>
-    <div class="tx">
-      <span class="k" style="color:var(--bau)">CHÉRIE Office · Mẹ bầu &amp; Sau sinh</span>
-      <h1>Chỉn chu suốt thai kỳ, tự tin ngày đi làm lại.</h1>
-      <p class="muted" style="font-size:16px;line-height:26px">10 bộ công sở mỗi tháng. Lúc bầu: vải co giãn, dáng suông, đổi size khi bụng lớn. Sau sinh: áo mở khuy cho con bú, cạp chun êm. Không phải sắm đồ để rồi cất tủ.</p>
-      <div class="price"><b>1.290.000đ</b><span class="muted">/tháng · trả trước 3 tháng</span></div>
-      <a class="btn" href="#dang-ky" data-line="Mẹ bầu & Sau sinh" style="align-self:flex-start">Đăng ký gói Mẹ bầu &amp; Sau sinh</a>
-    </div>
-  </div>
-  <div class="wrap gut">
-    <section class="blk">
-      <div class="st"><span class="k muted">Trong tủ Mẹ bầu &amp; Sau sinh</span><h2>Đồ công sở cho dáng bầu và sau sinh</h2></div>
-      <div class="grid" id="bauGrid"></div>
-    </section>
-    <section class="blk">
-      <div class="st"><span class="k muted">Hành trình của mẹ</span><h2>Một gói từ thai kỳ đến ngày đi làm lại</h2></div>
-      <div class="jr">
-        <div><span class="t">Tháng 4 thai kỳ</span><span><h3>Bắt đầu gói</h3><p>Gửi số đo và ngày dự sinh. Stylist chọn 10 bộ vải co giãn.</p></span></div>
-        <div><span class="t">Tháng 6 – 8</span><span><h3>Bụng lớn, đổi size</h3><p>Nhắn Zalo, size mới tới ở chuyến giao kế tiếp.</p></span></div>
-        <div><span class="t">Nghỉ thai sản</span><span><h3>Tạm dừng gói</h3><p>Trả đồ, dừng tính tiền. Tủ đồ giữ chỗ cho nàng.</p></span></div>
-        <div><span class="t">Đi làm lại</span><span><h3>Tủ đồ sau sinh</h3><p>Vẫn gói đó, stylist đổi sang áo mở khuy cho con bú, cạp chun êm.</p></span></div>
-      </div>
-    </section>
-    <section class="blk">
-      <div class="st"><h2>Mẹ hay hỏi</h2></div>
-      <details><summary>Đồ người khác mặc rồi có sạch không?</summary><p>Mỗi bộ được CHÉRIE Care giặt hấp nhiệt sau mỗi lần mặc, đóng túi niêm phong, có tag ghi số lần mặc. Đủ 40 lần là cho nghỉ.</p></details>
-      <details><summary>Bụng lớn nhanh quá thì sao?</summary><p>Nhắn Zalo cho tụi mình. Size mới tới ở chuyến giao kế tiếp, không tính thêm tiền.</p></details>
-      <details><summary>Nghỉ sinh có phải trả tiền không?</summary><p>Không. Nàng trả đồ và tạm dừng gói. Khi đi làm lại, mở gói tiếp với tủ đồ sau sinh, không phải đăng ký lại.</p></details>
-      <details><summary>Giao ở đâu?</summary><p>Văn phòng khu trung tâm Đà Nẵng, sáng thứ 2, miễn phí. Hoặc tại nhà riêng chiều chủ nhật, 150.000đ/tháng.</p></details>
-    </section>
-  </div>
-</main>
+<!-- ============ CHI TIẾT ============ -->
+<main id="v-sp" class="view" hidden><div class="wrap"><div class="pd" id="pd"></div></div></main>
 
 <!-- ============ GÓI VÀ GIÁ ============ -->
 <main id="v-goi-va-gia" class="view" hidden>
-  <div class="wrap gut">
-    <div class="ptop"><span class="k muted">Gói và giá</span><h1>Thuê theo tháng, trả trước 3 tháng</h1><p class="muted" style="max-width:34em">Giá dự kiến. Mọi gói đều gồm giặt hấp hằng tuần và stylist chọn đồ theo gu.</p></div>
+  <div class="wrap">
+    <div class="ptop"><span class="k muted">Gói và giá</span><h1>Thuê theo tháng, trả trước 3 tháng</h1><p class="muted" style="max-width:36em">Mọi gói tháng đều gồm giặt hấp hằng tuần và stylist chọn đồ theo gu. Travel và Ngày quan trọng thuê theo chuyến, theo dịp.</p></div>
     <div class="plans" id="plans"></div>
-    <section class="blk">
-      <div class="st"><h2>Giao nhận và cọc</h2></div>
+    <section class="sec" style="padding-top:44px">
+      <h2>Giao nhận và cọc</h2>
       <table class="fees">
-        <tr><td><b>Giao tại văn phòng</b><br><span class="muted">Khu trung tâm · giao sáng thứ 2, lấy thứ 6</span></td><td>Miễn phí</td></tr>
-        <tr><td><b>Giao tại nhà riêng</b><br><span class="muted">Khu trung tâm · giao chiều CN, lấy tối T6</span></td><td>150.000đ/tháng</td></tr>
+        <tr><td><b>Giao tại văn phòng</b><br><span class="muted">Khu trung tâm · giao sáng thứ 2, lấy tối thứ 6</span></td><td>Miễn phí</td></tr>
+        <tr><td><b>Giao tại nhà riêng</b><br><span class="muted">Khu trung tâm · giao chiều chủ nhật, lấy tối thứ 6</span></td><td>150.000đ/tháng</td></tr>
         <tr><td><b>Giao tại nhà riêng</b><br><span class="muted">Khu mở rộng</span></td><td>250.000đ/tháng</td></tr>
         <tr><td><b>Cọc</b><br><span class="muted">Hoàn lại khi kết thúc gói và kiểm đồ xong</span></td><td>1.000.000đ</td></tr>
-        <tr><td><b>Gói công ty</b><br><span class="muted">Từ 3 người cùng tòa nhà, một hóa đơn</span></td><td>Giảm 10%</td></tr>
       </table>
     </section>
   </div>
@@ -408,171 +445,506 @@ footer .base{margin-top:36px;padding-top:18px;border-top:1px solid #3A3234;font-
 
 <!-- ============ ĐĂNG KÝ ============ -->
 <main id="v-dang-ky" class="view" hidden>
-  <div class="wrap gut"><div class="fw">
-    <span class="k muted">Đăng ký gói tháng</span>
+  <div class="wrap"><div class="fw">
+    <span class="k muted">Đăng ký gói</span>
     <div class="prog" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
+    <div class="prefill" id="prefill" hidden></div>
     <form id="reg" novalidate>
-      <fieldset data-step="1"><legend>Nàng chọn dòng nào?</legend><div class="opts" id="lineOpts"></div><span class="err" id="e1" hidden>Chọn một dòng để tiếp tục.</span></fieldset>
-      <fieldset data-step="2" hidden><legend>Số đo và gu mặc</legend>
+      <fieldset data-step="1"><legend>Nàng chọn dòng nào?</legend><div class="ropts" id="lineOpts"></div><span class="err" id="e1" hidden>Chọn một dòng để tiếp tục.</span></fieldset>
+      <fieldset data-step="2" hidden><legend>Số đo của nàng</legend>
         <div class="row2"><div class="field"><label for="fSize">Size</label><select id="fSize"><option value="">Chọn size</option><option>S</option><option>M</option><option>L</option><option>XL</option></select></div>
         <div class="field"><label for="fH">Chiều cao (cm)</label><input id="fH" type="text" inputmode="numeric" placeholder="160"></div></div>
         <div class="field" id="dueWrap" hidden><label for="fDue">Ngày dự sinh hoặc ngày bé chào đời</label><input id="fDue" type="date"><small>Để stylist chọn đồ bầu hay đồ sau sinh, đúng size từng tháng.</small></div>
-        <div class="field"><label for="fStyle">Gu của nàng</label><select id="fStyle"><option value="">Chọn một kiểu</option><option>Tối giản, màu trung tính</option><option>Mềm mại, nữ tính</option><option>Sắc sảo, quyền lực</option><option>Để stylist chọn giúp</option></select></div>
-        <div class="field"><label for="fNote">Điều nàng muốn tránh</label><textarea id="fNote" placeholder="Không mặc váy ngắn trên gối, không màu vàng"></textarea></div>
-        <span class="err" id="e2" hidden>Chọn size và gu của nàng.</span></fieldset>
+        <div class="field"><label for="fNote">Điều nàng muốn stylist biết thêm</label><textarea id="fNote" placeholder="Không mặc váy trên gối, không màu vàng"></textarea></div>
+        <span class="err" id="e2" hidden>Chọn size của nàng.</span></fieldset>
       <fieldset data-step="3" hidden><legend>Giao ở đâu?</legend>
-        <div class="opts">
-          <label class="opt"><input type="radio" name="ship" value="office" checked><div><b>Văn phòng · miễn phí</b><span>Khu trung tâm. Giao sáng thứ 2, lấy thứ 6.</span></div></label>
-          <label class="opt"><input type="radio" name="ship" value="home"><div><b>Nhà riêng · 150.000đ/tháng</b><span>Giao chiều chủ nhật, lấy tối thứ 6.</span></div></label>
+        <div class="ropts">
+          <label class="ro"><input type="radio" name="ship" value="Văn phòng" checked><div><b>Văn phòng · miễn phí</b><span>Khu trung tâm. Giao sáng thứ 2, lấy tối thứ 6.</span></div></label>
+          <label class="ro"><input type="radio" name="ship" value="Nhà riêng"><div><b>Nhà riêng · 150.000đ/tháng</b><span>Khu trung tâm. Giao chiều chủ nhật, lấy tối thứ 6.</span></div></label>
         </div>
         <div class="field"><label for="fName">Tên của nàng</label><input id="fName" type="text" autocomplete="name" placeholder="Nguyễn Minh Anh"></div>
         <div class="field"><label for="fZalo">Số Zalo</label><input id="fZalo" type="tel" inputmode="tel" autocomplete="tel" placeholder="0905 123 456"></div>
+        <div class="field"><label for="fWork">Nơi làm việc</label><input id="fWork" type="text" placeholder="Công ty, tòa nhà"></div>
         <div class="field"><label for="fAddr">Địa chỉ giao</label><input id="fAddr" type="text" placeholder="Tòa nhà, tầng, đường"></div>
         <span class="err" id="e3" hidden>Điền tên, số Zalo 10 số và địa chỉ giao.</span></fieldset>
-      <fieldset data-step="4" hidden><legend>Kiểm tra lại</legend><div class="sum" id="sum"></div><p class="muted" style="font-size:14px">Bấm gửi, tụi mình gọi Zalo xác nhận trong 24 giờ. Nàng chuyển khoản sau khi đã nói chuyện với stylist, chưa cần trả gì lúc này.</p></fieldset>
-      <div class="fnav"><button type="button" class="btn ghost" id="back" hidden>Quay lại</button><button type="button" class="btn" id="next" style="margin-left:auto">Tiếp tục</button></div>
-      <p class="mono muted" id="sent" hidden style="margin-top:18px">ĐÃ GHI NHẬN · bản xem thử chưa gửi dữ liệu đi đâu</p>
+      <fieldset data-step="4" hidden><legend>Kiểm tra lại</legend><div class="sum" id="sum"></div><p class="muted" style="font-size:14px;margin-top:12px">Bấm gửi, tụi mình nhắn Zalo xác nhận trong 24 giờ. Nàng chuyển khoản sau khi đã nói chuyện với stylist, chưa cần trả gì lúc này.</p></fieldset>
+      <div class="fnav"><button type="button" class="pill ghost" id="back" hidden>Quay lại</button><button type="button" class="pill" id="next" style="margin-left:auto">Tiếp tục</button></div>
+      <div class="done" id="sent" hidden role="status"></div>
     </form>
   </div></div>
 </main>
 
 <footer class="site">
-  <div class="wrap gut">
+  <div class="wrap">
     <div class="cols">
-      <div class="c"><a class="logo" href="#" style="align-items:flex-start"><span class="w" style="color:#F2ECEE">CHÉRIE</span><span class="s">OFFICE</span></a><p style="color:#A3989C;max-width:28em">Tủ đồ đi làm theo tháng ở Đà Nẵng. Mỗi lần, một chiếc mới.</p></div>
+      <div class="c"><a class="logo" href="#" style="align-items:flex-start"><span class="w" style="color:#F2ECEE">CHÉRIE</span><span class="s">OFFICE</span></a><p style="color:#A3989C;max-width:28em;margin-top:8px">Tủ đồ đi làm theo tháng ở Đà Nẵng. Mỗi lần, một chiếc mới.</p></div>
+      <div class="c"><span class="k">Các dòng</span><div id="footLines" style="display:grid;gap:9px"></div></div>
       <div class="c"><span class="k">Office</span><a href="#tu-do">Tủ đồ</a><a href="#goi-va-gia">Gói và giá</a><a href="#cach-hoat-dong">Cách hoạt động</a></div>
-      <div class="c"><span class="k">Gia đình CHÉRIE</span><a href="https://cherie.io.vn" target="_blank" rel="noopener">Closet · thuê đầm</a><span>Care · chăm đồ</span><span>Seconde · ký gửi</span></div>
-      <div class="c"><span class="k">Liên hệ</span><span class="mono">ZALO 0377 159 189</span><span class="mono">hello@cherie.io.vn</span></div>
+      <div class="c"><span class="k">Liên hệ</span><span class="num">Zalo 0377 159 189</span><span>hello@cherie.io.vn</span><a href="https://cherie.io.vn" target="_blank" rel="noopener">CHÉRIE Closet · thuê đầm</a></div>
     </div>
-    <div class="base">© 2026 CHÉRIE · Đà Nẵng</div>
+    <div class="base">© 2026 CHÉRIE · Hộ kinh doanh tại Đà Nẵng</div>
   </div>
 </footer>
 
 <script src="office-data.js"></script>
 <script>
-/* ===== Dữ liệu đồ: cùng khuôn với Closet (bảng "sp" và "anh" trong Sheet, đọc qua pubLoad của Apps Script).
-   Office lấy những món có mã bắt đầu "OF-". Khi tab Office trong Sheet sẵn sàng, điền đường dẫn Apps Script vào API. ===== */
-var OFFICE={api:"", prefix:"OF-"};
-var LINES=[
-  {k:"Classic",who:"Đi làm mỗi ngày",price:1290000,unit:"/tháng · 10 bộ",ph:"--ph-1",cap:"Nàng mặc vest set kem ở sảnh văn phòng"},
-  {k:"Lead",who:"Quản lý, gặp đối tác",price:1990000,unit:"/tháng · 10 bộ",ph:"--ph-3",cap:"Suit đen, phòng họp kính"},
-  {k:"Áo dài",who:"Thứ 2 và ngày lễ",price:590000,unit:"/tháng · 4 bộ",ph:"--ph-5",cap:"Áo dài lụa trơn đỏ sơn mài"},
-  {k:"Mẹ bầu & Sau sinh",who:"Từ tháng thứ 4 đến ngày đi làm lại",price:1290000,unit:"/tháng · 10 bộ",ph:"--ph-4",cap:"Mẹ bầu, đầm suông, cửa sổ",mom:1,href:"#bau"},
-  {k:"Travel",who:"Công tác, xứ lạnh",price:690000,unit:"/chuyến 5 ngày",ph:"--ph-3",cap:"Măng tô dạ, sân bay"},
-  {k:"Ngày quan trọng",who:"Phỏng vấn, thuyết trình",price:199000,unit:"/set",from:1,ph:"--ph-2",cap:"Blazer xanh đêm, buổi thuyết trình"},
-  {k:"Tất cả",who:"",hidden:1}
-];
-var SAMPLE={sp:[
-  {id:"OF-0142",ten:"Blazer dáng suông",mau:"Kem lạc đà",loai:"Classic",size:"S,M,L",chatLieu:"Tuytsi pha len",ph:"--ph-1"},
-  {id:"OF-0087",ten:"Đầm suông cổ tròn",mau:"Xanh xô thơm",loai:"Classic",size:"S,M,L,XL",chatLieu:"Cotton lạnh",ph:"--ph-2"},
-  {id:"OF-0310",ten:"Đầm bầu cổ V",mau:"Đất nung",loai:"Mẹ bầu & Sau sinh",size:"M,L,XL",chatLieu:"Thun lụa co giãn",ph:"--ph-4"},
-  {id:"OF-0502",ten:"Vest set hai mảnh",mau:"Đen than",loai:"Lead",size:"S,M,L",chatLieu:"Tuytsi Ý",ph:"--ph-3"},
-  {id:"OF-0219",ten:"Quần ống đứng",mau:"Xanh đêm",loai:"Classic",size:"S,M,L,XL",chatLieu:"Tuytsi co giãn",ph:"--ph-3"},
-  {id:"OF-0601",ten:"Áo dài lụa trơn",mau:"Đỏ sơn mài",loai:"Áo dài",size:"S,M,L",chatLieu:"Lụa tơ tằm pha",ph:"--ph-5"},
-  {id:"OF-0401",ten:"Sơ mi mở khuy trước",mau:"Hồng phấn",loai:"Mẹ bầu & Sau sinh",size:"M,L,XL",chatLieu:"Lụa satin mềm",ph:"--ph-4"},
-  {id:"OF-0031",ten:"Sơ mi lụa mềm",mau:"Ngà",loai:"Classic",size:"S,M,L",chatLieu:"Lụa satin",ph:"--ph-1"},
-  {id:"OF-0315",ten:"Đầm bầu dáng A",mau:"Xanh xô thơm",loai:"Mẹ bầu & Sau sinh",size:"M,L,XL",chatLieu:"Thun cotton",ph:"--ph-2"},
-  {id:"OF-0322",ten:"Chân váy cạp bầu",mau:"Mocha",loai:"Mẹ bầu & Sau sinh",size:"M,L,XL",chatLieu:"Tuytsi co giãn",ph:"--ph-5"},
-  {id:"OF-0328",ten:"Sơ mi dáng rộng",mau:"Ngà",loai:"Mẹ bầu & Sau sinh",size:"M,L,XL",chatLieu:"Cotton lụa",ph:"--ph-1"},
-  {id:"OF-0507",ten:"Chân váy bút chì",mau:"Đen than",loai:"Lead",size:"S,M,L",chatLieu:"Tuytsi Ý",ph:"--ph-3"},
-  {id:"OF-0702",ten:"Măng tô dạ dài",mau:"Xám đá",loai:"Travel",size:"S,M,L",chatLieu:"Dạ len",ph:"--ph-3"},
-  {id:"OF-0811",ten:"Blazer phỏng vấn",mau:"Xanh đêm",loai:"Ngày quan trọng",size:"S,M,L",chatLieu:"Tuytsi",ph:"--ph-2"}
-],anh:[]};
-
 (function(){
-  var REAL=window.OFFICE_DATA;
-  if(REAL&&REAL.sp&&REAL.sp.length){var lines={};REAL.sp.forEach(function(s){lines[s.loai]=1});SAMPLE={sp:REAL.sp.concat(SAMPLE.sp.filter(function(s){return !lines[s.loai]})),anh:REAL.anh||[]}}
-  var DATA=SAMPLE;
-  function $(s){return document.querySelector(s)}
-  function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
-  function vnd(n){return (+n).toLocaleString("vi-VN").replace(/,/g,".")+"đ"}
-  function slug(id){return "sp-"+String(id).toLowerCase()}
-  function pics(id){return DATA.anh.filter(function(a){return a.sp===id}).sort(function(a,b){return (+a.thuTu||0)-(+b.thuTu||0)})}
-  function frame(src,ph,cap,cls){return '<div class="ph'+(cls?' '+cls:'')+'" style="background:var('+(ph||"--ph-1")+')">'+(src?'<img src="'+esc(src)+'" alt="" loading="lazy">':'<span class="cap">'+esc(cap)+'</span>')+'</div>'}
-  function card(s){
-    var p=pics(s.id),a=p[0]&&(p[0].th||p[0].src),b=p[1]&&(p[1].th||p[1].src);
-    return '<a class="pc" href="#'+slug(s.id)+'"><div class="ph" style="background:var('+(s.ph||"--ph-1")+')">'+
-      (a?'<img src="'+esc(a)+'" alt="'+esc(s.ten)+'" loading="lazy">':'<span class="cap">Ảnh: '+esc(s.ten)+', '+esc(s.mau)+'</span>')+
-      (b?'<img class="b" src="'+esc(b)+'" alt="" loading="lazy">':'')+
-      '<button class="heart" type="button" aria-label="Lưu '+esc(s.ten)+'"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.5-9-9a4.5 4.5 0 0 1 9-3 4.5 4.5 0 0 1 9 3c-2 4.5-9 9-9 9z" stroke-linejoin="round"/></svg></button></div>'+
-      '<span class="br">'+esc(s.brand||("Office · "+s.loai))+'</span><span class="nm">'+esc(s.ten)+'</span><span class="in">'+esc(s.mau)+' · Có trong gói '+esc(s.loai)+'</span></a>';
+"use strict";
+var API="https://script.google.com/macros/s/AKfycbzWTCxEygVW-SGqYz3HpoKCPMfnRqN0cZktAesQRnRwpqC5-IPxmu-15ckJXqrGI64SXQ/exec";
+var MOM="Mẹ bầu & Sau sinh";
+/* 6 dòng. slug dùng cho đường dẫn #nhom-<slug> và #chan-doan-<slug> */
+var LINES=[
+  {k:MOM,slug:"me-bau-sau-sinh",who:"Từ tháng thứ 4 thai kỳ đến ngày đi làm lại",price:1290000,unit:"/tháng · 10 bộ",monthly:1,ph:"--ph-4",cap:"Ảnh: mẹ bầu 6 tháng, đầm suông, cửa sổ văn phòng",mom:1,
+    lead:"Chỉn chu suốt thai kỳ, tự tin ngày đi làm lại.",
+    intro:"10 bộ công sở mỗi tháng. Lúc bầu: vải co giãn, dáng suông, đổi size khi bụng lớn. Sau sinh: áo mở khuy cho con bú, cạp chun êm.",
+    incl:["Đổi size giữa tháng không mất phí","Nghỉ thai sản: tạm dừng gói, không tính tiền","Đi làm lại: tủ đồ sau sinh, không đăng ký lại","Vải mềm, giặt hấp không hoá chất mạnh"]},
+  {k:"Lead",slug:"lead",who:"Quản lý, gặp đối tác",price:1990000,unit:"/tháng · 10 bộ",monthly:1,ph:"--ph-3",cap:"Ảnh: suit đen, phòng họp kính",
+    lead:"Bước vào phòng họp là đủ tiếng nói.",intro:"10 bộ vest, suit, sơ mi lụa đứng phom cho người dẫn dắt. Stylist ưu tiên đồ cho ngày họp lớn và gặp đối tác.",
+    incl:["Vest, suit set, chân váy bút chì, sơ mi lụa","Đổi gấp trong 24 giờ trước buổi họp quan trọng","Giặt hấp, là phẳng hằng tuần","Giao văn phòng khu trung tâm miễn phí"]},
+  {k:"Áo dài",slug:"ao-dai",who:"Thứ 2 và ngày lễ",price:590000,unit:"/tháng · 4 bộ",monthly:1,ph:"--ph-5",cap:"Ảnh: áo dài lụa trơn đỏ sơn mài",
+    lead:"Mỗi thứ 2 một tà áo khác.",intro:"4 áo dài công sở mỗi tháng cho ngân hàng, trường học, cơ quan mặc áo dài đầu tuần và ngày lễ.",
+    incl:["Áo dài lụa trơn và gấm nhẹ, kèm quần","Chọn theo màu quy định của nơi làm","Giặt hấp riêng, giữ phom tà","Thêm bộ cho ngày lễ không tính phí"]},
+  {k:"Travel",slug:"travel",who:"Công tác, xứ lạnh",price:690000,unit:"/chuyến 5 ngày",ph:"--ph-6",cap:"Ảnh: măng tô dạ, sân bay",
+    lead:"Một vali gọn cho cả chuyến công tác.",intro:"Trọn bộ cho chuyến 5 ngày: đồ họp, đồ di chuyển, áo khoác xứ lạnh. Trả lại khi về, không phải mua đồ chỉ mặc một lần.",
+    incl:["Măng tô, áo len, đồ họp, đồ di chuyển","Giao trước ngày bay 1 ngày","Phối sẵn theo lịch họp của chuyến","Thêm ngày: báo trước, tính theo ngày"]},
+  {k:"Ngày quan trọng",slug:"ngay-quan-trong",who:"Phỏng vấn, thuyết trình",price:199000,unit:"/set",from:1,ph:"--ph-2",cap:"Ảnh: blazer xanh đêm, buổi thuyết trình",
+    lead:"Một bộ cho ngày cần ghi điểm.",intro:"Thuê một set cho buổi phỏng vấn, thuyết trình, hội nghị. Stylist chọn theo vị trí và không khí buổi đó.",
+    incl:["Set vest, đầm công sở hoặc sơ mi + chân váy","Thử tại tiệm hoặc giao tận nơi","Trả trong 48 giờ","Ảnh hồ sơ: mượn thêm phụ kiện"]},
+  {k:"Classic",slug:"classic",who:"Đi làm mỗi ngày",price:1290000,unit:"/tháng · 10 bộ",monthly:1,ph:"--ph-1",cap:"Ảnh: vest set kem ở sảnh văn phòng",
+    lead:"Đi làm mỗi ngày, chưa lần nào lặp đồ.",intro:"10 bộ công sở mỗi tháng từ thương hiệu Việt quen thuộc. Mặc 5 bộ mỗi tuần, tối thứ 6 tụi mình lấy, sáng thứ 2 tủ mới tới.",
+    incl:["Sơ mi, áo kiểu, quần tây, chân váy, đầm, vest","Đồ của thương hiệu công sở như PANTIO","Giặt hấp và giao lại hằng tuần","Đổi size miễn phí trong 48 giờ"]}
+];
+function bySlug(s){if(s==="bau")s="me-bau-sau-sinh";return LINES.filter(function(l){return l.slug===s})[0]}
+function byKey(k){return LINES.filter(function(l){return l.k===k})[0]}
+
+/* dữ liệu đồ: office-data.js (PANTIO cho Classic) */
+var REAL=window.OFFICE_DATA||{sp:[],anh:[]};
+var DATA={sp:(REAL.sp||[]).slice(),anh:(REAL.anh||[]).slice()};
+
+/* ---------- tiện ích ---------- */
+function $(s,r){return (r||document).querySelector(s)}
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function vnd(n){return Math.round(+n).toLocaleString("vi-VN").replace(/,/g,".")+"đ"}
+function slugSp(id){return "sp-"+String(id).toLowerCase()}
+function pics(id){return DATA.anh.filter(function(a){return a.sp===id}).sort(function(a,b){return (+a.thuTu||0)-(+b.thuTu||0)})}
+function imgOf(s,i){var p=pics(s.id)[i||0];return p?(p.src||p.th):""}
+function ss(k,v){try{if(v===undefined){var x=sessionStorage.getItem(k);return x?JSON.parse(x):null}sessionStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
+function frame(src,cap,ph){return '<div class="fr" style="background:var('+(ph||"--ph-1")+')">'+(src?'<img src="'+esc(src)+'" alt="" loading="lazy">':'<span class="cap">'+esc(cap||"")+'</span>')+'</div>'}
+function card(s){
+  var a=imgOf(s,0),b=imgOf(s,1),l=byKey(s.loai)||{};
+  return '<a class="pc" href="#'+slugSp(s.id)+'"><div class="fr" style="background:var('+(l.ph||"--ph-1")+')">'+(a?'<img src="'+esc(a)+'" alt="'+esc(s.ten)+'" loading="lazy">':'<span class="cap">Ảnh: '+esc(s.ten)+'</span>')+(b?'<img class="b" src="'+esc(b)+'" alt="" loading="lazy">':'')+'</div>'+
+    '<span class="br">'+esc(s.brand||"CHÉRIE Office")+'</span><span class="nm">'+esc(s.ten)+'</span><span class="in">'+esc(s.mau||"")+' · Có trong gói '+esc(s.loai)+'</span></a>'}
+function lineImg(l){var f=DATA.sp.filter(function(s){return s.loai===l.k&&pics(s.id).length})[0];return f?imgOf(f,0):""}
+
+/* ---------- khung chung ---------- */
+function renderChrome(){
+  $("#catNav").innerHTML='<a href="#tu-do" data-nav="tu-do">Tủ đồ</a>'+LINES.map(function(l){return '<a href="#nhom-'+l.slug+'" data-nav="nhom-'+l.slug+'"'+(l.mom?' class="mom"':'')+'>'+esc(l.k)+'</a>'}).join("")+'<a href="#goi-va-gia" data-nav="goi-va-gia">Gói và giá</a>';
+  $("#drawerLinks").innerHTML='<a href="#">Trang chủ</a>'+$("#catNav").innerHTML+'<a href="#cach-hoat-dong">Cách hoạt động</a>';
+  $("#footLines").innerHTML=LINES.map(function(l){return '<a href="#nhom-'+l.slug+'">'+esc(l.k)+'</a>'}).join("");
+  var words=["Giặt hấp hằng tuần","Giao văn phòng miễn phí","Đổi size trong 48 giờ","Tag đếm số lần mặc","Stylist chọn theo gu","Mỗi lần, một chiếc mới"];
+  var one=words.map(function(w){return '<span>'+esc(w)+'</span><i>·</i>'}).join("");$("#marq").innerHTML=one+one;
+}
+function renderHome(){
+  var hi=DATA.sp.filter(function(s){return pics(s.id).length>1})[3];var h=$("#heroImg");if(hi){h.src=imgOf(hi,0);h.hidden=false}
+  $("#groupRail").innerHTML=LINES.map(function(l){var im=lineImg(l);return '<a class="tile" href="#nhom-'+l.slug+'"><div class="fr" style="background:var('+l.ph+')">'+(im?'<img src="'+esc(im)+'" alt="" loading="lazy">':'<span class="cap">'+esc(l.cap)+'</span>')+(l.mom?'<span class="tag">Cho mẹ</span>':'')+'</div><b>'+esc(l.k)+'</b><span class="w">'+esc(l.who)+'</span><span class="p">'+(l.from?"từ ":"")+vnd(l.price)+' '+esc(l.unit)+'</span></a>'}).join("");
+  $("#homeGrid").innerHTML=DATA.sp.filter(function(s){return pics(s.id).length}).slice(0,8).map(card).join("");
+  $("#plans").innerHTML=LINES.map(function(l){return '<div class="plan'+(l.mom?' mom':'')+'"><span class="k muted">'+esc(l.who)+'</span><h3>'+esc(l.k)+'</h3><span class="p num">'+(l.from?'<small>từ </small>':'')+vnd(l.price)+'<br><small>'+esc(l.unit)+'</small></span><a class="ul" href="#nhom-'+l.slug+'">Xem dòng '+esc(l.k)+'</a></div>'}).join("");
+}
+
+/* ---------- trang nhóm ---------- */
+function renderNhom(l){
+  var items=DATA.sp.filter(function(s){return s.loai===l.k});var im=lineImg(l);
+  var qLabel=l.mom?"Trò chuyện với stylist của mẹ":"Tìm phong cách của nàng";
+  var qHref=l.mom?"#chan-doan-me":"#chan-doan-"+l.slug;
+  $("#nhomBody").innerHTML='<section class="gh"><div class="fr" style="background:var('+l.ph+')">'+(im?'<img src="'+esc(im)+'" alt="">':'<span class="cap">'+esc(l.cap)+'</span>')+'</div>'+
+    '<div class="tx"><span class="k" style="color:'+(l.mom?"var(--mom)":"var(--gold)")+'">CHÉRIE Office · '+esc(l.k)+'</span><h1>'+esc(l.lead)+'</h1><p class="muted" style="font-size:16px">'+esc(l.intro)+'</p>'+
+    '<div class="price"><b class="num">'+(l.from?"từ ":"")+vnd(l.price)+'</b><span class="muted">'+esc(l.unit)+(l.monthly?" · trả trước 3 tháng":"")+'</span></div>'+
+    '<ul class="incl">'+l.incl.map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ul>'+
+    '<div class="quizcard"><span class="k">'+(l.mom?"Bước đầu cho mẹ · 3 phút":"Bước đầu · 3 phút")+'</span><span>'+(l.mom?"Kể cho stylist nghe mẹ đang ở giai đoạn nào. Tụi mình vẽ lộ trình tủ đồ theo từng tháng.":"Trả lời vài câu để stylist hiểu gu, dáng và lịch làm việc của nàng.")+'</span><a class="pill block" href="'+qHref+'">'+qLabel+'</a></div></div></section>'+
+    '<section class="sec"><div class="sh"><div><h2>Trong tủ '+esc(l.k)+'</h2><p class="sub muted">'+(items.length?items.length+" bộ đang có.":"Đồ dòng này đang được tuyển, ảnh thật sẽ cập nhật sớm.")+'</p></div>'+(items.length?'<a class="ul" href="#tu-do" data-filter="'+esc(l.k)+'">Xem tất cả</a>':'')+'</div>'+
+    (items.length?'<div class="grid">'+items.slice(0,8).map(card).join("")+'</div>':'')+'</section>'+
+    '<section class="sec"><h2 style="margin-bottom:14px">Hay được hỏi</h2>'+faq(l).map(function(q){return '<details><summary>'+esc(q[0])+'</summary><p>'+esc(q[1])+'</p></details>'}).join("")+'</section>';
+}
+function faq(l){
+  var base=[["Đồ người khác mặc rồi có sạch không?","Mỗi bộ được CHÉRIE Care giặt hấp nhiệt sau mỗi lần mặc, đóng túi niêm phong, có tag ghi số lần mặc. Đủ 40 lần là cho nghỉ."],
+    ["Giao ở đâu?","Văn phòng khu trung tâm Đà Nẵng sáng thứ 2, miễn phí. Hoặc nhà riêng chiều chủ nhật, 150.000đ/tháng khu trung tâm."],
+    ["Làm hư đồ thì sao?","Vết bẩn thường, sứt chỉ: tụi mình lo. Rách lớn hoặc mất: tính theo giá trị bồi thường ghi trên tag, trừ vào cọc."]];
+  if(l.mom)base.unshift(["Bụng lớn nhanh quá thì sao?","Nhắn Zalo cho tụi mình. Size mới tới ở chuyến giao kế tiếp, không tính thêm tiền."],["Nghỉ sinh có phải trả tiền không?","Không. Mẹ trả đồ và tạm dừng gói. Khi đi làm lại, gói mở tiếp với tủ đồ sau sinh."]);
+  if(!l.monthly)base.splice(1,1,["Đặt thế nào?","Làm trắc nghiệm 3 phút rồi gửi đăng ký, hoặc nhắn Zalo 0377 159 189 kèm ngày cần đồ."]);
+  return base}
+
+/* ---------- trắc nghiệm phong cách (5 dòng, không áp dụng Mẹ bầu & Sau sinh) ----------
+   Theo khung air Closet (thả tim, ấn tượng, tính cách, công việc, đời sống, vùng cơ thể, kỳ vọng) nhưng:
+   gộp nhiều ý vào một màn (khoảng 9 màn), câu phụ chỉ hiện khi cần, nội dung theo đời sống đi làm ở Việt Nam. */
+var PERSONA=[
+  {v:"Thanh lịch",b:"Chỉn chu, đáng tin",s:"Gọn gàng, ai nhìn cũng yên tâm",c:"#E9E1DA"},
+  {v:"Mềm mại",b:"Dịu dàng, dễ gần",s:"Nữ tính, ai cũng muốn bắt chuyện",c:"#EBDDD6"},
+  {v:"Quyền lực",b:"Sắc sảo, có tiếng nói",s:"Vào phòng họp là được lắng nghe",c:"#D9DCE3"},
+  {v:"Hiện đại",b:"Năng động, có gu riêng",s:"Đơn giản mà khác người",c:"#DCE3DD"}];
+var PALETTE=[
+  {v:"Trung tính",b:"Kem, be, nâu",sw:["#EDE3D6","#CDBBA5","#8A6E57"]},
+  {v:"Đen trắng",b:"Đen, trắng, xám",sw:["#FFFFFF","#9B9B9B","#1B1B1B"]},
+  {v:"Pastel",b:"Hồng phấn, xanh xô thơm",sw:["#F1D7D3","#CFE0D6","#D9DDF0"]},
+  {v:"Màu đậm",b:"Đỏ rượu, xanh cổ vịt",sw:["#7A1F3D","#1F5C63","#2B3A67"]}];
+var BODY={ /* vùng cơ thể và câu phụ hiện ngay dưới khi được chọn */
+  "Vai":{q:"Vai của nàng",o:["Vai rộng","Vai xuôi"]},
+  "Bắp tay":{q:"Bắp tay",o:["Hơi to","Săn chắc"]},
+  "Ngực":{q:"Vòng ngực",o:["Nhỏ","Lớn"]},
+  "Eo, bụng":{q:"Eo, bụng",o:["Muốn che bụng","Muốn khoe eo"]},
+  "Hông":{q:"Hông",o:["Hông rộng","Hông nhỏ"]},
+  "Đùi":{q:"Đùi",o:["Đùi to","Muốn che đùi"]},
+  "Bắp chân":{q:"Bắp chân",o:["Bắp chân to","Muốn khoe chân"]}};
+function o(list){return list.map(function(x){return typeof x==="string"?{v:x,b:x}:x})}
+function questions(l){
+  var Q=[];
+  Q.push({id:"intro",t:"intro"});
+  /* 1. thả tim: đồ thật trong kho, đảo thứ tự mỗi lần */
+  if(l.k==="Áo dài")Q.push({id:"s-ad",parts:[
+    {id:"adKieu",q:"Áo dài nàng thích mặc đi làm?",t:"single",o:o([{v:"Lụa trơn",b:"Lụa trơn",s:"Một màu, thanh nhã"},{v:"Gấm nhẹ",b:"Gấm hoa văn nhẹ",s:"Có điểm nhấn"},{v:"Cách tân",b:"Cách tân",s:"Tà ngắn, dễ đi xe máy"},{v:"Theo đồng phục",b:"Theo màu quy định",s:"Nơi làm có màu riêng"}])},
+    {id:"adKhi",q:"Nàng mặc áo dài khi nào?",t:"single",o:o(["Thứ 2 hằng tuần","Mỗi ngày","Ngày lễ, sự kiện"]),cols:"three"}]});
+  else Q.push({id:"s-tim",title:"Thả tim những bộ khiến nàng muốn mặc ngay",hint:"Chọn bao nhiêu cũng được",parts:[{id:"tim",t:"hearts"}]});
+  /* 2. ấn tượng */
+  Q.push({id:"s-an",parts:[{id:"anTuong",q:"Nàng muốn đồng nghiệp thấy mình thế nào?",t:"single",o:PERSONA,fig:1}]});
+  /* 3. tính cách mua sắm: giữ nếp hay thích thử (3 câu gọn trên một màn) */
+  Q.push({id:"s-tc",title:"Nàng là kiểu người nào?",hint:"Chọn nhanh theo cảm giác",parts:[
+    {id:"tc1",q:"Gặp món khác gu thường ngày",t:"single",o:o([{v:"thu",b:"Mua thử liền"},{v:"giu",b:"Còn đắn đo"}]),cols:"two"},
+    {id:"tc2",q:"Đồ đang thịnh hành",t:"single",o:o([{v:"thu",b:"Muốn mặc ngay"},{v:"giu",b:"Chờ xem đã"}]),cols:"two"},
+    {id:"tc3",q:"Mặc đồ nào quan trọng hơn",t:"single",o:o([{v:"giu",b:"Đồ hợp với mình"},{v:"thu",b:"Đồ mình thích"}]),cols:"two"}]});
+  /* 4. dòng riêng */
+  if(l.k==="Lead")Q.push({id:"s-lead",parts:[{id:"hop",q:"Mỗi tuần nàng gặp đối tác, họp lớn mấy lần?",t:"single",o:o([{v:"0–1",b:"Một lần hoặc ít hơn"},{v:"2–3",b:"Hai, ba lần"},{v:"Hằng ngày",b:"Gần như mỗi ngày"}]),cols:"one"}]});
+  if(l.k==="Travel")Q.push({id:"s-tr",title:"Chuyến đi sắp tới",parts:[
+    {id:"diaDiem",q:"Nàng đi đâu?",t:"single",o:o([{v:"Trong nước",b:"Trong nước"},{v:"Xứ lạnh",b:"Xứ lạnh",s:"Hàn, Nhật, châu Âu"},{v:"Nước ngoài ấm",b:"Nước ngoài, trời ấm"}]),cols:"three"},
+    {id:"soNgay",q:"Mấy ngày?",t:"single",o:o(["3 ngày","5 ngày","Từ 7 ngày"]),cols:"three"},
+    {id:"ngayDi",q:"Ngày bay",t:"date",opt:1}]});
+  if(l.k==="Ngày quan trọng")Q.push({id:"s-nqt",title:"Dịp quan trọng của nàng",parts:[
+    {id:"dip",q:"Đó là dịp gì?",t:"single",o:o(["Phỏng vấn","Thuyết trình","Hội nghị, sự kiện","Chụp ảnh hồ sơ"])},
+    {id:"ngayDip",q:"Ngày nào?",t:"date",opt:1}]});
+  /* 5. công việc (theo Việt Nam) */
+  Q.push({id:"s-cv",title:"Công việc của nàng",parts:[
+    {id:"nganh",q:"Gần nhất với nghề nào?",t:"single",o:o(["Ngân hàng, tài chính","Kế toán, hành chính","Giáo viên, giảng viên","Cơ quan nhà nước","Kinh doanh, chăm sóc khách","Marketing, sáng tạo","Y tế, dược","IT, kỹ thuật","Quản lý, chủ doanh nghiệp","Nghề khác"]),cols:"two"},
+    {id:"chuan",q:"Đồ đi làm hằng ngày",t:"single",o:o([{v:"Vest",b:"Vest, suit"},{v:"Công sở",b:"Sơ mi, quần tây, chân váy"},{v:"Thoải mái",b:"Lịch sự, thoải mái"}]),cols:"three",skipIf:function(a){return l.k==="Áo dài"}}]});
+  /* 6. đời sống đi làm (Việt Nam) */
+  Q.push({id:"s-ds",title:"Một ngày đi làm của nàng",hint:"Chọn nhiều",parts:[
+    {id:"diLai",q:"Nàng đi làm bằng",t:"single",o:o(["Xe máy","Ô tô, Grab","Đi bộ, xe buýt"]),cols:"three"},
+    {id:"doiSong",q:"Những điều đúng với nàng",t:"multi",o:o(["Ngồi máy lạnh cả ngày","Hay ra ngoài trời nắng","Hay gặp khách, đối tác","Hay đi công tác","Có con nhỏ","Đang mang bầu","Đang cho con bú"])}]});
+  /* 7. vùng cơ thể, câu phụ hiện ngay bên dưới */
+  Q.push({id:"s-body",title:"Stylist nên để ý vùng nào?",hint:"Chọn nhiều, hoặc bỏ qua",parts:[{id:"body",t:"body",opt:1}]});
+  /* 8. số đo + dáng */
+  Q.push({id:"s-size",title:"Số đo của nàng",parts:[
+    {id:"size",q:"Size thường mặc",t:"single",o:o(["S","M","L","XL"]),cols:"four"},
+    {id:"cao",q:"Chiều cao",t:"single",o:o(["Dưới 1m55","1m55 – 1m62","1m63 – 1m70","Trên 1m70"]),cols:"two"},
+    {id:"form",q:"Dáng nàng thấy thoải mái",t:"single",o:o([{v:"Ôm sát",b:"Ôm"},{v:"Co giãn nhẹ",b:"Vừa người"},{v:"Suông",b:"Suông"}]),cols:"three",skipIf:function(){return l.k==="Áo dài"}}]});
+  /* 9. màu và điều tránh */
+  Q.push({id:"s-mau",title:"Màu sắc và điều nàng tránh",parts:[
+    {id:"mau",q:"Bảng màu hợp nàng",t:"single",o:PALETTE,sw:1},
+    {id:"tranh",q:"Kiểu nàng muốn tránh",t:"multi",o:o(["Cổ sâu","Sát nách","Váy trên gối","Vải mỏng","Họa tiết lớn","Không tránh gì"]),none:"Không tránh gì",cols:"three"}]});
+  /* 10. kỳ vọng + chi tiêu */
+  Q.push({id:"s-kv",title:"Gần xong rồi",parts:[
+    {id:"kyVong",q:"Nàng mong stylist điều gì nhất?",t:"single",o:o(["Tôn dáng, che khéo khuyết điểm","Nhiều đồ đi làm để xoay vòng","Thử phong cách, xu hướng mới","Đồ đúng cho từng dịp","Tìm ra đồ hợp với mình","Bớt tiền sắm đồ mỗi tháng"]),cols:"one"},
+    {id:"chiTieu",q:"Mỗi tháng nàng chi cho đồ đi làm",t:"single",o:o(["Dưới 500.000đ","500.000đ – 1.000.000đ","1.000.000đ – 2.000.000đ","Trên 2.000.000đ"]),cols:"two"}]});
+  Q.push({id:"done",t:"done"});
+  return Q}
+
+/* ---------- máy chạy trắc nghiệm ---------- */
+var QZ=null;
+function startQuiz(l){var saved=ss("of-quiz-"+l.slug);QZ={l:l,Q:questions(l),i:0,a:(saved&&saved.a)||{},seed:Math.random()};drawQ()}
+function cur(){return QZ.Q[QZ.i]}
+function parts(q){return (q.parts||[]).filter(function(p){return !(p.skipIf&&p.skipIf(QZ.a))})}
+function realCount(){return QZ.Q.filter(function(q){return q.parts}).length}
+function idxReal(){return QZ.Q.slice(0,QZ.i+1).filter(function(q){return q.parts}).length}
+function partOk(p){var v=QZ.a[p.id];if(p.opt)return true;if(p.t==="hearts"||p.t==="multi")return v&&v.length>0;return !!v}
+function answered(q){if(!q.parts)return q.t!=="done"||doneOk();return parts(q).every(partOk)}
+function autoAdvance(q){var ps=parts(q);return ps.length===1&&ps[0].t==="single"}
+function drawQ(){
+  var q=cur(),l=QZ.l,n=realCount(),k=idxReal(),h="";
+  h+='<div class="qbar" aria-hidden="true"><i style="width:'+(q.t==="intro"?0:q.t==="done"?100:Math.round(k*100/(n+1)))+'%"></i></div><div class="qmeta"><span>'+esc(l.k.toUpperCase())+'</span><span>'+(q.t==="intro"?"KHOẢNG 2 PHÚT":q.t==="done"?"HOÀN TẤT":k+" / "+n)+'</span></div>';
+  if(q.t==="intro"){
+    h+='<div class="stylist"><div class="av" aria-hidden="true">C</div><span class="k" style="color:var(--gold)">Stylist CHÉRIE Office</span><h2>Chào nàng, mình là stylist dòng '+esc(l.k)+'.</h2><p>'+n+' màn ngắn, trả lời theo cảm giác đầu tiên. Xong là có kiểu phong cách và tủ đồ gợi ý từ đồ đang có trong kho.</p></div>';
+  }else if(q.t==="done"){
+    h+=doneScreen();
+  }else{
+    var ps=parts(q),title=q.title||(ps.length===1?ps[0].q:"");
+    h+='<div class="qhead"><span class="qn">Q'+k+'</span><h2>'+esc(title)+'</h2>'+(q.hint?'<span class="hint">'+esc(q.hint)+'</span>':'')+'</div><div class="qbody">'+ps.map(function(p){return partHtml(p,ps.length>1||!!q.title)}).join("")+'</div>';
   }
-  function render(){
-    var L=LINES.filter(function(l){return !l.hidden});
-    $("#cats").innerHTML=L.map(function(l){var f=DATA.sp.filter(function(s){return s.loai===l.k})[0],im=f&&pics(f.id)[0];return '<a class="cat" href="'+(im?"#tu-do":(l.href||"#goi-va-gia"))+'" data-cat="'+esc(l.k)+'"><div class="ph" style="background:var('+l.ph+')">'+(im?'<img src="'+esc(im.th||im.src)+'" alt="" loading="lazy">':'<span class="cap">Ảnh: '+esc(l.cap)+'</span>')+(l.mom?'<span class="mom">Cho mẹ</span>':'')+'</div><b>'+esc(l.k)+'</b><span>'+esc(l.who)+'</span></a>'}).join("");
-    $("#homeGrid").innerHTML=DATA.sp.slice(0,8).map(card).join("");
-    $("#bauGrid").innerHTML=DATA.sp.filter(function(s){return s.loai==="Mẹ bầu & Sau sinh"}).map(card).join("");
-    renderAll();
-    $("#plans").innerHTML=L.map(function(l){return '<div class="plan"><h3>'+esc(l.k)+'</h3><span class="p">'+(l.from?"từ ":"")+vnd(l.price)+'<br><span class="muted">'+esc(l.unit)+'</span></span><span class="w">'+esc(l.who)+'. Giặt hấp hằng tuần, stylist chọn đồ.</span><span class="go"><a class="ul" href="'+(/tháng/.test(l.unit)?"#dang-ky":"https://zalo.me/0377159189")+'" data-line="'+esc(l.k)+'"'+(/tháng/.test(l.unit)?'':' target="_blank" rel="noopener"')+'>'+(/tháng/.test(l.unit)?"Đăng ký "+esc(l.k):"Đặt qua Zalo")+'</a></span></div>'}).join("");
-    var monthly=L.filter(function(l){return /tháng/.test(l.unit)});
-    $("#lineOpts").innerHTML=monthly.map(function(l){return '<label class="opt"><input type="radio" name="line" value="'+esc(l.k)+'"><div><b>'+esc(l.k)+' · '+vnd(l.price)+'/tháng</b><span>'+esc(l.who)+'</span></div></label>'}).join("")+'<p class="muted" style="font-size:13px">Travel và Ngày quan trọng đặt qua Zalo theo từng chuyến, từng dịp.</p>';
+  $("#qz").innerHTML=h;
+  $("#qBack").style.visibility=QZ.i===0?"hidden":"visible";
+  var nx=$("#qNext");nx.textContent=q.t==="intro"?"Bắt đầu":(q.t==="done"?"Xem kết quả":"Tiếp");nx.disabled=!answered(q);
+  nx.hidden=autoAdvance(q);
+  window.scrollTo(0,0)}
+function partHtml(p,showLabel){
+  var v=QZ.a[p.id],lab=showLabel&&p.q?'<p class="k muted" style="margin:22px 0 10px">'+esc(p.q)+'</p>':'';
+  if(p.t==="hearts")return lab+heartsHtml(v);
+  if(p.t==="body")return bodyHtml();
+  if(p.t==="date")return lab+'<div class="field" style="max-width:320px;margin-top:0"><input id="qd-'+p.id+'" data-date="'+p.id+'" type="date" value="'+esc(v||"")+'" aria-label="'+esc(p.q)+'"><small>Chưa chắc thì để trống, stylist hỏi lại qua Zalo.</small></div>';
+  var sel=p.t==="multi"?(v||[]):[v];
+  return lab+'<div class="opts'+(p.cols?" "+p.cols:"")+'" data-part="'+p.id+'">'+p.o.map(function(x){return opBtn(x,sel.indexOf(x.v)>-1,p)}).join("")+'</div>'}
+function heartsHtml(v){
+  /* lấy đồ thật có ảnh, ưu tiên dòng đang chọn, đảo ngẫu nhiên, đa dạng nhóm đồ */
+  var pool=DATA.sp.filter(function(s){return pics(s.id).length});
+  var mine=pool.filter(function(s){return s.loai===QZ.l.k}),rest=pool.filter(function(s){return s.loai!==QZ.l.k});
+  var sh=function(a){var r=QZ.seed,b=a.slice();for(var i=b.length-1;i>0;i--){r=(r*9301+49297)%233280/233280;var j=Math.floor(r*(i+1));var t=b[i];b[i]=b[j];b[j]=t}return b};
+  var pick=sh(mine).concat(sh(rest)),seen={},out=[];
+  pick.forEach(function(s){var g=s.nhom||"";seen[g]=(seen[g]||0)+1;if(out.length<12&&seen[g]<=4)out.push(s)});
+  if(out.length<12)pick.forEach(function(s){if(out.length<12&&out.indexOf(s)<0)out.push(s)});
+  if(!out.length)return '<p class="muted" style="text-align:center">Kho đang cập nhật ảnh. Bấm Tiếp để qua câu sau.</p>';
+  return '<div class="hearts">'+out.map(function(s){var on=(v||[]).indexOf(s.id)>-1;return '<button type="button" class="ht" data-heart="'+esc(s.id)+'" aria-pressed="'+on+'" aria-label="'+esc(s.ten)+'"><img src="'+esc(imgOf(s,0))+'" alt="" loading="lazy"><span class="hb"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.5-9-9a4.5 4.5 0 0 1 9-3 4.5 4.5 0 0 1 9 3c-2 4.5-9 9-9 9z" stroke-linejoin="round"/></svg></span></button>'}).join("")+'</div>'}
+function bodyHtml(){
+  var chosen=QZ.a.body||[],h='<div class="opts four" data-body="1">'+Object.keys(BODY).concat(["Không có"]).map(function(k){return '<button type="button" class="op" data-b="'+esc(k)+'" aria-pressed="'+(chosen.indexOf(k)>-1)+'" style="text-align:center"><b>'+esc(k)+'</b></button>'}).join("")+'</div>';
+  chosen.filter(function(k){return BODY[k]}).forEach(function(k){var f=BODY[k],cv=(QZ.a.bodyNote||{})[k];
+    h+='<p class="k muted" style="margin:20px 0 8px">'+esc(f.q)+'</p><div class="opts two">'+f.o.map(function(x){return '<button type="button" class="op" data-bn="'+esc(k)+'" data-bv="'+esc(x)+'" aria-pressed="'+(cv===x)+'"><b>'+esc(x)+'</b></button>'}).join("")+'</div>'});
+  return h}
+function opBtn(x,on,p){
+  var inner="";
+  if(p&&p.sw)inner+='<span class="sw">'+x.sw.map(function(c){return '<i style="background:'+c+'"></i>'}).join("")+'</span>';
+  if(p&&p.fig)inner+='<span class="fig" style="background:'+x.c+'">'+esc(x.v)+'</span>';
+  return '<button type="button" class="op" data-v="'+esc(x.v)+'" aria-pressed="'+on+'">'+inner+'<b>'+esc(x.b)+'</b>'+(x.s?'<span>'+esc(x.s)+'</span>':'')+'</button>'}
+/* màn Hoàn tất: nhận kết quả qua Zalo (giống air Closet gửi qua LINE) */
+function doneOk(){var z=(QZ.a._zalo||"").replace(/\s/g,"");return !QZ.a._wantSave||(!!(QZ.a._ten||"").trim()&&/^0\d{9}$/.test(z)&&QZ.a._dongY)}
+function doneScreen(){
+  var a=QZ.a;
+  return '<div class="stylist" style="margin-top:24px"><div class="av" aria-hidden="true">✓</div><span class="k" style="color:var(--gold)">Hoàn tất</span><h2>Hồ sơ phong cách của nàng đã xong</h2><p>Để lại tên và Zalo để stylist giữ hồ sơ, gửi kết quả và tủ đồ gợi ý qua Zalo. Nàng không phải làm lại khi đăng ký.</p></div>'+
+  '<div style="max-width:420px;margin:18px auto 0">'+
+  '<div class="field"><label for="qTen">Tên của nàng</label><input id="qTen" data-k="_ten" autocomplete="name" value="'+esc(a._ten||"")+'" placeholder="Minh Anh"></div>'+
+  '<div class="field"><label for="qZalo">Số Zalo</label><input id="qZalo" data-k="_zalo" type="tel" inputmode="tel" autocomplete="tel" value="'+esc(a._zalo||"")+'" placeholder="0905 123 456"></div>'+
+  '<label style="display:flex;gap:10px;align-items:flex-start;font-size:13px;margin-top:12px;color:var(--muted)"><input id="qOk" type="checkbox" '+(a._dongY?"checked":"")+' style="width:18px;height:18px;margin-top:2px;accent-color:var(--espresso)">Đồng ý để CHÉRIE lưu câu trả lời và nhắn Zalo cho tôi về kết quả, tủ đồ gợi ý.</label>'+
+  '<p style="text-align:center;margin-top:16px"><button type="button" class="ul" id="qSkip" style="background:none;border:0;color:var(--muted)">Xem kết quả ngay, không lưu</button></p></div>'}
+function saveQ(){var c={};Object.keys(QZ.a).forEach(function(k){if(k.charAt(0)!=="_")c[k]=QZ.a[k]});ss("of-quiz-"+QZ.l.slug,{a:c})}
+function refresh(){var q=cur();$("#qz .qbody").innerHTML=parts(q).map(function(p){return partHtml(p,parts(q).length>1||!!q.title)}).join("");$("#qNext").disabled=!answered(q)}
+function nextQ(){if(QZ.i<QZ.Q.length-1){QZ.i++;drawQ()}else finishQuiz()}
+$("#qz").addEventListener("click",function(e){
+  if(!QZ)return;var q=cur();
+  if(e.target.id==="qSkip"){QZ.a._wantSave=false;finishQuiz();return}
+  var h=e.target.closest("[data-heart]");if(h){var arr=QZ.a.tim||[];var id=h.dataset.heart,ix=arr.indexOf(id);if(ix>-1)arr.splice(ix,1);else arr.push(id);QZ.a.tim=arr;h.setAttribute("aria-pressed",ix<0);saveQ();$("#qNext").disabled=!answered(q);return}
+  var bb=e.target.closest("[data-b]");if(bb){var k=bb.dataset.b,b=QZ.a.body||[];if(k==="Không có")b=["Không có"];else{b=b.filter(function(x){return x!=="Không có"});var j=b.indexOf(k);if(j>-1)b.splice(j,1);else b.push(k)}QZ.a.body=b;saveQ();refresh();return}
+  var bn=e.target.closest("[data-bn]");if(bn){var m=QZ.a.bodyNote||{};m[bn.dataset.bn]=bn.dataset.bv;QZ.a.bodyNote=m;saveQ();refresh();return}
+  var btn=e.target.closest(".op[data-v]");if(!btn)return;var wrap=btn.closest("[data-part]");if(!wrap)return;
+  var p=parts(q).filter(function(x){return x.id===wrap.dataset.part})[0];var v=btn.dataset.v;
+  if(p.t==="multi"){var a=QZ.a[p.id]||[];if(p.none&&v===p.none)a=[v];else{a=a.filter(function(x){return x!==p.none});var jj=a.indexOf(v);if(jj>-1)a.splice(jj,1);else a.push(v)}QZ.a[p.id]=a;saveQ();refresh();momHint();return}
+  QZ.a[p.id]=v;saveQ();refresh();
+  if(autoAdvance(q))setTimeout(nextQ,220);
+});
+/* đang bầu hoặc cho con bú: gợi ý chuyển sang dòng Mẹ (động theo câu trả lời) */
+function momHint(){var d=QZ.a.doiSong||[];var old=$("#momHint");if(old)old.remove();
+  if(d.indexOf("Đang mang bầu")>-1||d.indexOf("Đang cho con bú")>-1){var x=document.createElement("div");x.id="momHint";x.className="quizcard";x.style.marginTop="18px";x.innerHTML='<span class="k" style="color:var(--mom)">Gợi ý cho nàng</span><span>Dòng <b>Mẹ bầu &amp; Sau sinh</b> có đồ co giãn, đổi size giữa tháng và áo mở khuy cho con bú, cùng giá 1.290.000đ/tháng.</span><a class="pill" href="#chan-doan-me" style="background:var(--mom);border-color:var(--mom)">Chuyển sang trò chuyện với stylist của mẹ</a>';$("#qz .qbody").appendChild(x)}}
+$("#qz").addEventListener("input",function(e){var k=e.target.dataset.k;if(k){QZ.a[k]=e.target.value;QZ.a._wantSave=true;$("#qNext").disabled=!answered(cur())}});
+$("#qz").addEventListener("change",function(e){
+  if(e.target.dataset.date){QZ.a[e.target.dataset.date]=e.target.value;saveQ();$("#qNext").disabled=!answered(cur())}
+  if(e.target.id==="qOk"){QZ.a._dongY=e.target.checked;QZ.a._wantSave=true;$("#qNext").disabled=!answered(cur())}});
+$("#qNext").addEventListener("click",function(){if(!QZ)return;var q=cur();if(q.t==="done"){if(!(QZ.a._ten||QZ.a._zalo)){QZ.a._wantSave=false}if(!answered(q))return;finishQuiz();return}if(!answered(q))return;nextQ()});
+$("#qBack").addEventListener("click",function(){if(QZ&&QZ.i>0){QZ.i--;drawQ()}});
+
+/* ---------- tính kiểu phong cách ---------- */
+var TYPES={
+  "Thanh lịch":{fr:"Classique",ten:"Nàng Chỉn Chu",bg:"#4E3B31",pal:["#EDE3D6","#CDBBA5","#1B2A41","#FFFFFF"],mo:"Nàng chọn sự yên tâm: đường may gọn, màu trung tính, không chi tiết thừa. Tủ đồ của nàng xoay quanh blazer đứng phom, sơ mi trơn và chân váy qua gối."},
+  "Mềm mại":{fr:"Douce",ten:"Nàng Dịu Dàng",bg:"#8E5A55",pal:["#F1D7D3","#EDE3D6","#CFE0D6","#FFFFFF"],mo:"Nàng muốn người khác thấy dễ gần: chất liệu rủ, cổ bèo nhẹ, màu phấn. Tủ đồ của nàng có áo kiểu tay phồng, đầm suông và chân váy xếp ly."},
+  "Quyền lực":{fr:"Puissante",ten:"Nàng Bản Lĩnh",bg:"#1B1618",pal:["#1B1B1B","#7A1F3D","#9B9B9B","#FFFFFF"],mo:"Nàng bước vào phòng họp để dẫn dắt: vai đứng, đường cắt sắc, màu đậm. Tủ đồ của nàng là suit set, vest hai hàng khuy và quần ống đứng."},
+  "Hiện đại":{fr:"Moderne",ten:"Nàng Có Gu",bg:"#1F5C63",pal:["#1F5C63","#EDE3D6","#1B1B1B","#D9DDF0"],mo:"Nàng thích đơn giản mà khác người: phom rộng, phối màu lạ tay, một chi tiết điểm nhấn. Tủ đồ của nàng có vest oversize, quần ống rộng và áo cổ lạ."}};
+function computeType(a){
+  var t=a.anTuong||"Thanh lịch",adv=0;
+  ["tc1","tc2","tc3"].forEach(function(k){if(a[k]==="thu")adv++;if(a[k]==="giu")adv--});
+  if(a.mau==="Màu đậm")adv++;if(a.kyVong==="Thử phong cách, xu hướng mới")adv++;if(a.adKieu==="Cách tân")adv++;
+  return {key:t,mode:adv>0?"Thích thử":"Giữ nếp"}}
+function finishQuiz(){
+  var a=QZ.a,r=computeType(a),clean={};Object.keys(a).forEach(function(k){if(k.charAt(0)!=="_")clean[k]=a[k]});
+  var res={line:QZ.l.k,slug:QZ.l.slug,type:r.key,mode:r.mode,a:clean,at:Date.now(),ten:a._ten||"",zalo:(a._zalo||"").replace(/\s/g,"")};
+  ss("of-result",res);
+  if(a._wantSave&&res.zalo){sendLead(res,"Trắc nghiệm")}
+  location.hash="ket-qua"}
+function sendLead(r,loai){
+  var T=TYPES[r.type]||{};
+  try{fetch(API,{method:"POST",redirect:"follow",body:JSON.stringify({fn:"webDangKy",loai:loai,dong:r.line,ten:r.ten,zalo:r.zalo,kieu:(T.ten||r.type)+(r.mode?" · "+r.mode:""),size:r.mom?(r.a.sizeNay||r.a.sizeTruoc||""):(r.a.size||""),chieuCao:r.a.cao||"",duSinh:r.a.duSinh||"",traLoi:r.a})}).catch(function(){})}catch(e){}}
+/* nguyên tắc tủ đồ: động theo câu trả lời */
+function rulesOf(a){
+  var R=[],n=a.bodyNote||{},tips=[];
+  R.push(["Dáng",a.form?(a.form==="Suông"?"Phom suông, thoáng":a.form==="Ôm sát"?"Ôm tôn dáng":"Vừa người, co giãn nhẹ"):"Theo phom áo dài truyền thống"]);
+  if(n["Bắp tay"]==="Hơi to")tips.push("tay lỡ hoặc tay phồng nhẹ che bắp tay");
+  if(n["Ngực"]==="Lớn")tips.push("cổ V, tránh bèo ở ngực");if(n["Ngực"]==="Nhỏ")tips.push("cổ bèo, xếp ly ở ngực");
+  if(n["Eo, bụng"]==="Muốn che bụng")tips.push("đầm suông, áo peplum");if(n["Eo, bụng"]==="Muốn khoe eo")tips.push("thắt eo, cạp cao");
+  if(n["Hông"]==="Hông rộng")tips.push("chân váy chữ A");if(n["Vai"]==="Vai rộng")tips.push("cổ V, tránh độn vai");
+  if(n["Đùi"])tips.push("quần ống suông");if(n["Bắp chân"]==="Bắp chân to")tips.push("váy midi qua bắp chân");if(n["Bắp chân"]==="Muốn khoe chân")tips.push("chân váy ngang gối");
+  R.push(["Tôn dáng",tips.length?tips.slice(0,3).join(", "):"Nàng mặc được nhiều phom, stylist đổi đa dạng"]);
+  var life=[];if(a.diLai==="Xe máy")life.push("vải chống nhăn, váy không bó để ngồi xe máy, kèm áo khoác mỏng");
+  var d=a.doiSong||[];if(d.indexOf("Ngồi máy lạnh cả ngày")>-1)life.push("blazer, cardigan mỏng cho phòng lạnh");if(d.indexOf("Hay ra ngoài trời nắng")>-1)life.push("vải thoáng, màu sáng");if(d.indexOf("Hay gặp khách, đối tác")>-1)life.push("1–2 bộ vest đứng phom mỗi tuần");
+  var tr=(a.tranh||[]).filter(function(x){return x!=="Không tránh gì"});if(tr.length)life.push("tránh "+tr.join(", ").toLowerCase());
+  R.push(["Theo nhịp sống",life.length?life.slice(0,3).join("; "):"Đồ công sở linh hoạt cho cả tuần"]);
+  return R}
+function renderResult(){
+  var r=ss("of-result");if(!r){location.hash="chon-nhom";return}
+  if(r.mom)return renderMomResult(r);
+  var T=TYPES[r.type]||TYPES["Thanh lịch"],l=byKey(r.line)||LINES[5];
+  /* gợi ý: đồ đã thả tim lên trước, sau đó đồ cùng nhóm đồ với món đã thích, rồi đồ cùng dòng */
+  var liked=r.a.tim||[],likedNhom={};DATA.sp.forEach(function(s){if(liked.indexOf(s.id)>-1&&s.nhom)likedNhom[s.nhom]=1});
+  var pool=DATA.sp.filter(function(s){return pics(s.id).length&&(s.loai===l.k||liked.indexOf(s.id)>-1)});
+  var score=function(s){return (liked.indexOf(s.id)>-1?3:0)+(likedNhom[s.nhom]?1:0)+(s.loai===l.k?1:0)};
+  pool.sort(function(x,y){return score(y)-score(x)});
+  var hi=r.ten?esc(r.ten)+", nàng là":"Nàng là";
+  var h='<div class="typecard" style="background:'+T.bg+'"><span class="k" style="color:rgba(255,255,255,.75)">Kết quả · dòng '+esc(l.k)+'</span><span class="fr-name">'+esc(T.fr)+' · '+esc(r.mode)+'</span><p style="font-size:15px;margin-bottom:-6px">'+hi+'</p><h1>'+esc(T.ten)+'</h1><p>'+esc(T.mo)+'</p>'+
+    '<p style="font-size:14px">'+(r.mode==="Thích thử"?"Nàng sẵn sàng thử cái mới: mỗi tháng stylist cài vào 2 bộ khác gu thường ngày để nàng thử.":"Nàng thích sự ổn định: stylist giữ bảng màu quen, chỉ đổi kiểu dáng để tủ đồ không nhàm.")+'</p>'+
+    '<div class="pal">'+T.pal.map(function(c){return '<i style="background:'+c+'"></i>'}).join("")+'</div></div>';
+  h+='<div class="rules">'+rulesOf(r.a).map(function(x){return '<div class="rule"><span class="k">'+esc(x[0])+'</span><b>'+esc(x[1])+'</b></div>'}).join("")+'</div>';
+  if(pool.length)h+='<section class="sec" style="padding-top:36px"><div class="sh"><div><h2>Tủ đồ gợi ý cho nàng</h2><p class="sub muted">'+(liked.length?"Những bộ nàng thả tim và đồ cùng kiểu được xếp lên trước.":"Chọn từ đồ đang có trong kho dòng "+esc(l.k)+".")+'</p></div></div><div class="grid">'+pool.slice(0,8).map(card).join("")+'</div></section>';
+  h+='<div class="cta-box"><span class="k muted">Bước tiếp theo</span><h2>'+(l.monthly?"Mở tủ đồ "+esc(l.k)+" với hồ sơ này":"Đặt "+esc(l.k)+" với hồ sơ này")+'</h2><p class="muted">'+vnd(l.price)+' '+esc(l.unit)+'. Stylist dùng kết quả này để chọn đồ'+(r.zalo?" và đã giữ hồ sơ theo Zalo "+esc(r.zalo):"")+'.</p><div class="row"><a class="pill" href="#dang-ky">Gửi đăng ký</a><a class="pill ghost" href="#chan-doan-'+l.slug+'" data-redo="'+l.slug+'">Làm lại trắc nghiệm</a></div></div>';
+  $("#res").innerHTML=h}
+
+/* ---------- bản trò chuyện cho Mẹ bầu & Sau sinh ---------- */
+var CH=null;
+var MOM_FLOW={
+  start:{say:["Chào mẹ! Mình là stylist dòng Mẹ bầu & Sau sinh của CHÉRIE Office.","Mình hỏi vài câu để vẽ lộ trình tủ đồ theo từng tháng cho mẹ nhé. Mẹ đang ở giai đoạn nào?"],
+    key:"giaiDoan",chips:["Đang mang bầu","Đã sinh, đang cho con bú","Đã sinh, không cho con bú"],next:function(v){return v==="Đang mang bầu"?"duSinh":"beThang"}},
+  duSinh:{say:["Chúc mừng mẹ! Mẹ dự sinh ngày nào?"],key:"duSinh",date:1,skip:"Chưa chắc",next:"sizeTruoc"},
+  sizeTruoc:{say:["Trước khi bầu, mẹ thường mặc size gì?"],key:"sizeTruoc",chips:["S","M","L","XL"],next:"bung"},
+  bung:{say:["Hiện giờ bụng của mẹ thế nào?"],key:"bung",chips:["Chưa lộ","Lộ nhẹ","Đã rõ"],next:"coThe"},
+  coThe:{say:["Dạo này cơ thể mẹ hay thế nào? Chọn nhiều cũng được."],key:"coThe",multi:1,chips:["Hay nóng, ra mồ hôi","Phù chân","Da nhạy cảm với vải","Không có gì đặc biệt"],none:"Không có gì đặc biệt",next:"dangBau"},
+  dangBau:{say:["Mẹ thích dáng nào khi đi làm?"],key:"dang",chips:["Suông, che bụng","Ôm nhẹ, khoe bụng bầu","Babydoll, chiết dưới ngực"],next:"nghi"},
+  nghi:{say:["Mẹ dự định nghỉ thai sản từ khi nào?"],key:"nghi",chips:["Tháng thứ 8","Tháng thứ 9","Sát ngày sinh","Chưa biết"],next:"anTuong"},
+  beThang:{say:["Chúc mừng mẹ và bé! Bé được mấy tháng rồi?"],key:"beThang",chips:["Dưới 4 tháng","4 – 6 tháng","6 – 12 tháng","Trên 12 tháng"],next:"diLam"},
+  diLam:{say:["Mẹ đi làm lại từ ngày nào?"],key:"diLam",date:1,skip:"Đã đi làm rồi",next:function(){return CH.a.giaiDoan==="Đã sinh, đang cho con bú"?"hutSua":"sizeNay"}},
+  hutSua:{say:["Ở công ty mẹ có hút sữa không? Mình sẽ chọn áo mở khuy trước hoặc khoá kéo cho tiện."],key:"hutSua",chips:["Có, cần áo mở nhanh","Thỉnh thoảng","Không"],next:"sizeNay"},
+  sizeNay:{say:["Size hiện tại của mẹ là gì?"],key:"sizeNay",chips:["S","M","L","XL","Chưa chắc, cần đo"],next:"che"},
+  che:{say:["Mẹ muốn khéo che vùng nào? Chọn nhiều cũng được."],key:"che",multi:1,chips:["Bụng","Hông","Bắp tay","Không cần che"],none:"Không cần che",next:"anTuong"},
+  anTuong:{say:["Ở công ty, mẹ muốn trông thế nào?"],key:"anTuong",chips:PERSONA.map(function(p){return p.b}),next:"mau"},
+  mau:{say:["Mẹ hay mặc bảng màu nào?"],key:"mau",chips:PALETTE.map(function(p){return p.b}),next:"nganh"},
+  nganh:{say:["Mẹ làm trong lĩnh vực nào?"],key:"nganh",chips:["Ngân hàng, tài chính","Kế toán, hành chính","Giáo viên, giảng viên","Cơ quan nhà nước","Y tế, dược","Nghề khác"],next:"diLai"},
+  diLai:{say:["Mẹ đi làm bằng gì?"],key:"diLai",chips:["Xe máy","Ô tô, Grab","Đi bộ, xe buýt"],next:"lienHe"},
+  lienHe:{say:["Xong rồi! Mẹ cho mình xin tên và số Zalo để stylist giữ hồ sơ và gửi lộ trình tủ đồ nhé."],key:"lienHe",contact:1,skip:"Xem trước, để sau",next:"end"},
+  end:{say:["Cảm ơn mẹ! Mình đã vẽ xong lộ trình tủ đồ. Mẹ xem bên dưới nhé."],end:1}};
+function startChat(){CH={a:{},node:"start"};$("#chat").innerHTML='<div class="top"><div class="av" aria-hidden="true">C</div><div><b>Stylist Mẹ bầu &amp; Sau sinh</b><small>CHÉRIE Office · thường trả lời ngay</small></div></div>';runNode("start")}
+function bubble(t,who){var d=document.createElement("div");d.className="msg "+who;d.textContent=t;$("#chat").appendChild(d);d.scrollIntoView({block:"end",behavior:"smooth"});return d}
+function runNode(id){
+  CH.node=id;var n=MOM_FLOW[id];$("#repliesIn").innerHTML="";var i=0;
+  var typing=bubble("STYLIST ĐANG GÕ…","bot typing");
+  (function step(){
+    if(i<n.say.length){setTimeout(function(){if(i===0)typing.remove();bubble(n.say[i],"bot");i++;step()},i===0?500:650);return}
+    if(n.end){setTimeout(finishChat,700);return}
+    drawReplies(n)})()}
+function drawReplies(n){
+  var sel=CH.a[n.key]||(n.multi?[]:"");var h="";
+  if(n.contact){h+='<input id="chTen" autocomplete="name" placeholder="Tên của mẹ" aria-label="Tên"><input id="chZalo" type="tel" inputmode="tel" placeholder="Số Zalo" aria-label="Số Zalo"><button class="send" type="button" data-send="contact">Gửi</button><button class="chip" type="button" data-c="'+esc(n.skip)+'">'+esc(n.skip)+'</button><span style="font-size:12px;color:var(--muted);width:100%">Bấm Gửi là mẹ đồng ý để CHÉRIE lưu câu trả lời và nhắn Zalo về lộ trình tủ đồ.</span>'}
+  else if(n.date){h+='<input id="chDate" type="date" aria-label="Chọn ngày"><button class="send" type="button" data-send="date">Gửi</button>'+(n.skip?'<button class="chip" type="button" data-c="'+esc(n.skip)+'">'+esc(n.skip)+'</button>':'')}
+  else{h+=n.chips.map(function(c){return '<button class="chip" type="button" data-c="'+esc(c)+'" aria-pressed="'+(n.multi?sel.indexOf(c)>-1:false)+'">'+esc(c)+'</button>'}).join("");if(n.multi)h+='<button class="send" type="button" data-send="multi">Xong</button>'}
+  $("#repliesIn").innerHTML=h}
+function answer(v,label){var n=MOM_FLOW[CH.node];CH.a[n.key]=v;bubble(label||String(v),"me");var nx=typeof n.next==="function"?n.next(v):n.next;runNode(nx)}
+$("#repliesIn").addEventListener("click",function(e){
+  if(!CH)return;var n=MOM_FLOW[CH.node];var c=e.target.closest("[data-c]"),s=e.target.closest("[data-send]");
+  if(c){var v=c.dataset.c;
+    if(n.multi){var a=CH.a[n.key]||[];if(n.none&&v===n.none)a=[v];else{a=a.filter(function(x){return x!==n.none});var j=a.indexOf(v);if(j>-1)a.splice(j,1);else a.push(v)}CH.a[n.key]=a;drawReplies(n);return}
+    answer(v);return}
+  if(s){if(s.dataset.send==="date"){var d=$("#chDate").value;if(!d){$("#chDate").focus();return}var p=d.split("-");answer(d,p[2]+"/"+p[1]+"/"+p[0]);return}
+    if(s.dataset.send==="contact"){var tn=$("#chTen").value.trim(),zl=$("#chZalo").value.replace(/\s/g,"");if(!tn||!/^0\d{9}$/.test(zl)){$("#chZalo").focus();$("#chZalo").style.borderColor="var(--wine)";return}CH.ten=tn;CH.zalo=zl;answer("ok",tn+" · "+zl);return}
+    if(s.dataset.send==="multi"){var arr=CH.a[n.key]||[];if(!arr.length)return;CH.a[n.key]=null;answer(arr,arr.join(", "));return}}
+});
+function finishChat(){
+  var p=PERSONA.filter(function(x){return x.b===CH.a.anTuong})[0];
+  var a={};Object.keys(CH.a).forEach(function(k){if(k!=="lienHe")a[k]=CH.a[k]});
+  var res={mom:1,line:MOM,slug:"me-bau-sau-sinh",type:p?p.v:"Mềm mại",a:a,at:Date.now(),ten:CH.ten||"",zalo:CH.zalo||""};ss("of-result",res);
+  if(res.zalo)sendLead(res,"Trò chuyện mẹ");location.hash="ket-qua"}
+function fmtD(d){return ("0"+d.getDate()).slice(-2)+"/"+("0"+(d.getMonth()+1)).slice(-2)+"/"+d.getFullYear()}
+function momPlan(a){
+  var out=[],now=new Date();
+  if(a.giaiDoan==="Đang mang bầu"){
+    var due=a.duSinh&&a.duSinh!=="Chưa chắc"?new Date(a.duSinh):null;var sz=a.sizeTruoc||"M";var up={S:"M",M:"L",L:"XL",XL:"XL"}[sz]||sz;
+    if(due){var wk=40-Math.round((due-now)/(7*864e5));var m=Math.max(1,Math.ceil(wk/4.35));
+      if(m<=5)out.push(["Từ nay đến tháng thứ 5","Size "+sz+", vải co giãn","Đầm suông, chân váy lưng thun, blazer mở. Mặc vẫn như ngày thường."]);
+      if(m<=7)out.push(["Tháng thứ 6 – 7","Lên size "+up+", phom rộng bụng","Đầm "+(a.dang||"suông").toLowerCase()+", quần bầu cạp cao. Đổi size miễn phí khi bụng lớn nhanh."]);
+      out.push(["Tháng thứ 8 – 9","Đồ bầu chuyên dụng","Vải thoáng"+((a.coThe||[]).indexOf("Hay nóng, ra mồ hôi")>-1?", thấm mồ hôi":"")+", không bó bụng"+((a.coThe||[]).indexOf("Phù chân")>-1?", stylist gửi kèm gợi ý giày êm":"")+"."]);
+      out.push(["Nghỉ thai sản"+(a.nghi&&a.nghi!=="Chưa biết"?" ("+a.nghi.toLowerCase()+")":""),"Tạm dừng gói","Trả đồ, không tính tiền. Dự sinh "+fmtD(due)+"."]);
+    }else{out.push(["Tháng đầu","Size "+sz+", vải co giãn","Stylist hỏi ngày dự sinh qua Zalo rồi xếp lộ trình chi tiết."]);out.push(["Khi bụng lớn","Lên size "+up,"Đổi size miễn phí ở chuyến giao kế tiếp."]);out.push(["Nghỉ thai sản","Tạm dừng gói","Không tính tiền trong thời gian nghỉ."])}
+    out.push(["Ngày đi làm lại","Tủ đồ sau sinh","Áo mở khuy trước cho con bú, cạp chun êm. Gói mở tiếp, không đăng ký lại."]);
+  }else{
+    var back=a.diLam&&a.diLam!=="Đã đi làm rồi"?new Date(a.diLam):null;var nurse=a.giaiDoan==="Đã sinh, đang cho con bú";
+    out.push([back?"Trước "+fmtD(back):"Tuần đầu","Đo lại size","Stylist hẹn đo hoặc gửi bảng size "+(a.sizeNay&&a.sizeNay!=="Chưa chắc, cần đo"?"quanh size "+a.sizeNay:"để mẹ tự đo")+"."]);
+    out.push(["Tháng đầu đi làm",nurse?"Áo mở nhanh cho con bú":"Phom che khéo, đứng dáng",(nurse&&a.hutSua!=="Không"?"Sơ mi khuy trước, áo khoá kéo, đầm cài vạt. ":"")+"Cạp chun êm"+((a.che||[]).length&&(a.che||[])[0]!=="Không cần che"?", che khéo "+a.che.join(", ").toLowerCase():"")+"."]);
+    out.push(["Tháng 2 – 3","Về dần size cũ","Đổi size miễn phí. Khi sẵn sàng, chuyển sang Classic hoặc Lead cùng giá gốc."]);
   }
-  var cur="Tất cả";
-  function renderAll(){
-    var keys=["Tất cả"].concat(LINES.filter(function(l){return !l.hidden}).map(function(l){return l.k}));
-    $("#chips").innerHTML=keys.map(function(k){return '<button type="button" class="chip" aria-pressed="'+(k===cur)+'">'+esc(k)+'</button>'}).join("");
-    var list=DATA.sp.filter(function(s){return cur==="Tất cả"||s.loai===cur});
-    $("#count").textContent=list.length+" BỘ";
-    $("#allGrid").innerHTML=list.map(card).join("");
-  }
-  document.addEventListener("click",function(e){var c=e.target.closest("[data-cat]");if(c&&c.getAttribute("href")==="#tu-do"){cur=c.dataset.cat;renderAll()}});
-  $("#chips").addEventListener("click",function(e){var b=e.target.closest(".chip");if(!b)return;cur=b.textContent;renderAll()});
-  document.addEventListener("click",function(e){var h=e.target.closest(".heart");if(h){e.preventDefault();h.classList.toggle("on")}});
-  function detail(id){
-    var s=DATA.sp.filter(function(x){return x.id===id})[0];if(!s){location.hash="tu-do";return}
-    var p=pics(id),line=LINES.filter(function(l){return l.k===s.loai})[0]||LINES[0];
-    var shots=p.length?p.map(function(a){return frame(a.th||a.src,s.ph,"")}).join(""):[frame("",s.ph,"Ảnh chính diện: "+s.ten),frame("",s.ph,"Ảnh nghiêng hoặc đang bước"),frame("",s.ph,"Cận chất liệu"),frame("",s.ph,"Ảnh phối cả bộ")].join("");
-    var have=String(s.size||"").split(",").map(function(x){return x.trim()});
-    $("#pd").innerHTML='<div class="gal">'+shots+'</div><div class="pinfo"><span class="k muted">'+esc(s.brand||("Office · "+s.loai))+'</span><h1>'+esc(s.ten)+'</h1><span class="muted">'+esc(s.mau)+'</span>'+
-      '<div class="sizes">'+["S","M","L","XL"].map(function(z){return '<span class="sz'+(have.indexOf(z)>-1?'':' off')+'">'+z+'</span>'}).join("")+'</div>'+
-      '<div class="inplan"><span class="k">Có trong gói '+esc(s.loai)+'</span><span style="font-size:14px">'+vnd(line.price)+esc(line.unit.replace(/ · .*/,""))+'. Stylist có thể xếp bộ này vào tủ đồ của nàng.</span></div>'+
-      '<a class="btn block" href="'+(/tháng/.test(line.unit)?"#dang-ky":"https://zalo.me/0377159189")+'" data-line="'+esc(s.loai)+'">'+(/tháng/.test(line.unit)?"Đăng ký gói "+esc(s.loai):"Hỏi stylist qua Zalo")+'</a>'+
-      (p.length&&s.brand?'<p class="muted" style="font-size:13px">Ảnh mẫu của '+esc(s.brand)+'. Ảnh tụi mình tự chụp đang được cập nhật.</p>':'')+'<div class="dl">'+(s.brand?'<div><span>Thương hiệu</span><span>'+esc(s.brand)+'</span></div>':'')+'<div><span>Mã đồ</span><span class="mono">'+esc(s.id)+'</span></div><div><span>Chất liệu</span><span>'+esc(s.chatLieu||"Đang cập nhật")+'</span></div><div><span>Giặt</span><span>Giặt hấp tại CHÉRIE Care</span></div></div></div>';
-  }
-  /* đăng ký */
-  var form=$("#reg"),step=1,steps=form.querySelectorAll("fieldset"),bars=document.querySelectorAll(".prog i"),back=$("#back"),next=$("#next");
-  function val(id){return ($("#"+id).value||"").trim()}
-  function picked(n){var r=form.querySelector('input[name="'+n+'"]:checked');return r?r.value:""}
-  function show(s){step=s;steps.forEach(function(f){f.hidden=(+f.dataset.step!==s)});bars.forEach(function(b,i){b.classList.toggle("on",i<Math.min(s,3))});
-    back.hidden=(s===1);next.hidden=false;next.textContent=(s===4?"Gửi đăng ký":"Tiếp tục");$("#dueWrap").hidden=(picked("line")!=="Mẹ bầu & Sau sinh");$("#sent").hidden=true;if(s===4)summary()}
-  function summary(){var l=LINES.filter(function(x){return x.k===picked("line")})[0];var ship=picked("ship")==="home"?150000:0,three=l.price*3,disc=Math.round(three*0.0723/1000)*1000;if(l.price===1290000)disc=280000;
-    var rows=[["Dòng",l.k],["Size · gu",val("fSize")+" · "+val("fStyle")],["Giao",ship?"Nhà riêng, chiều CN":"Văn phòng, sáng T2"],["3 tháng gói",vnd(three-disc)],["Phí giao 3 tháng",ship?vnd(ship*3):"Miễn phí"],["Cọc, hoàn lại sau",vnd(1000000)]];
-    $("#sum").innerHTML=rows.map(function(r){return '<div class="r"><span>'+esc(r[0])+'</span><span>'+esc(r[1])+'</span></div>'}).join("")+'<div class="r tot"><span>Tổng chuyển khi xác nhận</span><span>'+vnd(three-disc+ship*3+1000000)+'</span></div>'}
-  function check(s){var ok=true;if(s===1)ok=!!picked("line");if(s===2)ok=!!val("fSize")&&!!val("fStyle");if(s===3)ok=!!val("fName")&&/^0\d{9}$/.test(val("fZalo").replace(/\s/g,""))&&!!val("fAddr");var e=$("#e"+s);if(e)e.hidden=ok;return ok}
-  next.addEventListener("click",function(){if(step===4){$("#sent").hidden=false;next.hidden=true;back.hidden=true;return}if(check(step))show(step+1)});
-  back.addEventListener("click",function(){show(step-1)});
-  form.addEventListener("change",function(){var e=$("#e"+step);if(e)e.hidden=true;$("#dueWrap").hidden=(picked("line")!=="Mẹ bầu & Sau sinh")});
-  form.addEventListener("submit",function(e){e.preventDefault()});
-  document.addEventListener("click",function(e){var a=e.target.closest("[data-line]");if(!a)return;var r=form.querySelector('input[name="line"][value="'+a.dataset.line+'"]');if(r)r.checked=true});
-  /* menu điện thoại */
-  var mb=$("#menuBtn"),dr=$("#drawer");mb.addEventListener("click",function(){dr.hidden=!dr.hidden;mb.setAttribute("aria-expanded",String(!dr.hidden))});
-  /* điều hướng */
-  var VIEWS=["home","tu-do","bau","goi-va-gia","dang-ky"];
-  function route(){
-    dr.hidden=true;mb.setAttribute("aria-expanded","false");
-    var h=(location.hash||"").slice(1),v=VIEWS.indexOf(h)>-1?h:(h.indexOf("sp-")===0?"sp":"home");
-    VIEWS.concat(["sp"]).forEach(function(k){$("#v-"+k).hidden=(k!==v)});
-    if(v==="sp")detail(h.slice(3).toUpperCase());
-    if(v==="dang-ky")show(1);
-    if(h==="cach-hoat-dong"){var el=$("#cach-hoat-dong");if(el)el.scrollIntoView();return}
-    window.scrollTo(0,0);
-  }
-  window.addEventListener("hashchange",route);
-  /* tải dữ liệu thật nếu đã có đường dẫn; không được thì dùng dữ liệu mẫu */
-  function load(){
-    if(!OFFICE.api)return Promise.resolve(SAMPLE);
-    return new Promise(function(ok){var cb="__of"+Date.now(),s=document.createElement("script"),t=setTimeout(function(){ok(SAMPLE)},15000);
-      window[cb]=function(r){clearTimeout(t);try{delete window[cb]}catch(e){}s.remove();
-        var rows=(r&&r.rows)||[],sp=rows.filter(function(x){return x.c==="sp"&&String(x.d.id).indexOf(OFFICE.prefix)===0}).map(function(x){return x.d}),
-            an=rows.filter(function(x){return x.c==="anh"&&String(x.d.sp).indexOf(OFFICE.prefix)===0}).map(function(x){return x.d});
-        ok(sp.length?{sp:sp,anh:an}:SAMPLE)};
-      s.onerror=function(){clearTimeout(t);ok(SAMPLE)};
-      s.src=OFFICE.api+"?api=pubLoad&q=%7B%7D&cb="+cb;document.head.appendChild(s)})
-  }
-  render();route();
-  load().then(function(d){if(d!==SAMPLE){DATA=d;render();route()}});
+  return out}
+function renderMomResult(r){
+  var T=TYPES[r.type]||TYPES["Mềm mại"],a=r.a,plan=momPlan(a);
+  var h='<div class="typecard" style="background:#8E432B"><span class="k" style="color:rgba(255,255,255,.75)">Lộ trình tủ đồ · Mẹ bầu &amp; Sau sinh</span><span class="fr-name">'+esc(T.fr)+'</span><h1>'+esc(a.giaiDoan==="Đang mang bầu"?"Tủ đồ đi cùng mẹ suốt thai kỳ":"Tủ đồ cho ngày mẹ quay lại công sở")+'</h1><p>Phong cách mẹ chọn: '+esc(T.ten.replace("Nàng","nàng").toLowerCase())+'. '+esc(T.mo.split(":")[0])+'.</p><div class="pal">'+T.pal.map(function(c){return '<i style="background:'+c+'"></i>'}).join("")+'</div></div>';
+  h+='<section class="sec" style="padding-top:30px"><h2>Từng giai đoạn, tủ đồ thay theo</h2><div class="timeline">'+plan.map(function(p){return '<div class="it"><span class="when">'+esc(p[0])+'</span><b>'+esc(p[1])+'</b><p>'+esc(p[2])+'</p></div>'}).join("")+'</div></section>';
+  h+='<div class="cta-box"><span class="k muted">Bước tiếp theo</span><h2>Mở tủ đồ cho mẹ</h2><p class="muted">1.290.000đ/tháng · 10 bộ, trả trước 3 tháng. Stylist dùng lộ trình này, mẹ không phải kể lại.</p><div class="row"><a class="pill" href="#dang-ky" style="background:#8E432B;border-color:#8E432B">Gửi đăng ký</a><a class="pill ghost" href="#chan-doan-me">Trò chuyện lại</a></div></div>';
+  $("#res").innerHTML=h}
+
+/* ---------- tủ đồ & chi tiết ---------- */
+var filt="Tất cả";
+function renderAll(){
+  var keys=["Tất cả"].concat(LINES.map(function(l){return l.k}));
+  $("#chips").innerHTML=keys.map(function(k){return '<button type="button" class="c" aria-pressed="'+(k===filt)+'">'+esc(k)+'</button>'}).join("");
+  var list=DATA.sp.filter(function(s){return filt==="Tất cả"||s.loai===filt});
+  $("#count").textContent=list.length+" BỘ";
+  $("#allGrid").innerHTML=list.length?list.map(card).join(""):'<p class="muted">Dòng này đang tuyển đồ. <a class="ul" href="#nhom-'+(byKey(filt)||{}).slug+'">Làm trắc nghiệm</a> để được giữ chỗ.</p>'}
+$("#chips").addEventListener("click",function(e){var b=e.target.closest(".c");if(!b)return;filt=b.textContent;renderAll()});
+function detail(id){
+  var s=DATA.sp.filter(function(x){return x.id===id})[0];if(!s){location.hash="tu-do";return}
+  var p=pics(id),l=byKey(s.loai)||LINES[5];var have=String(s.size||"").split(",").map(function(x){return x.trim()});
+  var shots=p.length?p.slice(0,4).map(function(a){return frame(a.src||a.th,"",l.ph)}).join(""):[frame("","Ảnh chính diện",l.ph),frame("","Ảnh sau lưng",l.ph)].join("");
+  $("#pd").innerHTML='<div class="gal">'+shots+'</div><div class="pinfo"><span class="k muted">'+esc(s.brand||"CHÉRIE Office")+'</span><h1 style="font-size:32px">'+esc(s.ten)+'</h1><span class="muted">'+esc(s.mau||"")+'</span>'+
+    '<div class="sizes">'+["S","M","L","XL"].map(function(z){return '<span class="sz'+(have.indexOf(z)>-1?'':' off')+'">'+z+'</span>'}).join("")+'</div>'+
+    '<div class="inplan"><span class="k" style="color:var(--gold)">Có trong gói '+esc(l.k)+'</span><span style="font-size:14px">'+vnd(l.price)+' '+esc(l.unit)+'. Stylist có thể xếp bộ này vào tủ của nàng.</span></div>'+
+    '<a class="pill block" href="#nhom-'+l.slug+'">Xem dòng '+esc(l.k)+'</a>'+
+    (p.length&&s.brand?'<p class="muted" style="font-size:13px">Ảnh mẫu của '+esc(s.brand)+'. Ảnh tụi mình tự chụp đang được cập nhật.</p>':'')+
+    '<div class="dl">'+(s.brand?'<div><span>Thương hiệu</span><span>'+esc(s.brand)+'</span></div>':'')+'<div><span>Mã đồ</span><span class="num">'+esc(s.id)+'</span></div><div><span>Giặt</span><span>Giặt hấp tại CHÉRIE Care</span></div></div></div>'}
+
+/* ---------- đăng ký ---------- */
+var form=$("#reg"),step=1,steps=form.querySelectorAll("fieldset"),bars=document.querySelectorAll(".prog i"),back=$("#back"),next=$("#next");
+function val(id){return ($("#"+id).value||"").trim()}
+function picked(n){var r=form.querySelector('input[name="'+n+'"]:checked');return r?r.value:""}
+function lineOpts(){$("#lineOpts").innerHTML=LINES.map(function(l){return '<label class="ro"><input type="radio" name="line" value="'+esc(l.k)+'"><div><b>'+esc(l.k)+' · '+(l.from?"từ ":"")+vnd(l.price)+' '+esc(l.unit)+'</b><span>'+esc(l.who)+'</span></div></label>'}).join("")}
+function show(s){step=s;steps.forEach(function(f){f.hidden=(+f.dataset.step!==s)});bars.forEach(function(b,i){b.classList.toggle("on",i<Math.min(s,3))});
+  back.hidden=(s===1);next.hidden=false;next.disabled=false;next.textContent=(s===4?"Gửi đăng ký":"Tiếp tục");$("#dueWrap").hidden=(picked("line")!==MOM);$("#sent").hidden=true;if(s===4)summary();window.scrollTo(0,0)}
+function calc(){var l=byKey(picked("line"))||LINES[5];var ship=picked("ship")==="Nhà riêng"&&l.monthly?150000:0;
+  if(!l.monthly)return {l:l,goi:l.price,ship:0,coc:0,tot:l.price};
+  var three=l.price*3,disc=l.price===1290000?280000:Math.round(three*0.0723/1000)*1000;return {l:l,goi:three-disc,ship:ship*3,coc:1000000,tot:three-disc+ship*3+1000000}}
+function summary(){var c=calc(),r=ss("of-result");
+  var rows=[["Dòng",c.l.k],["Size",val("fSize")+(val("fH")?" · "+val("fH")+"cm":"")],["Phong cách",r&&r.line===c.l.k?(TYPES[r.type]||{}).ten||"":"Stylist hỏi thêm qua Zalo"],["Giao",picked("ship")==="Nhà riêng"?"Nhà riêng, chiều chủ nhật":"Văn phòng, sáng thứ 2"],[c.l.monthly?"3 tháng gói":"Giá",vnd(c.goi)]];
+  if(c.l.monthly){rows.push(["Phí giao 3 tháng",c.ship?vnd(c.ship):"Miễn phí"]);rows.push(["Cọc, hoàn lại sau",vnd(c.coc)])}
+  $("#sum").innerHTML=rows.map(function(x){return '<div class="r"><span>'+esc(x[0])+'</span><span>'+esc(x[1])+'</span></div>'}).join("")+'<div class="r tot"><span>'+(c.l.monthly?"Tổng chuyển khi xác nhận":"Tạm tính")+'</span><span class="num">'+vnd(c.tot)+'</span></div>'}
+function check(s){var ok=true;if(s===1)ok=!!picked("line");if(s===2)ok=!!val("fSize");if(s===3)ok=!!val("fName")&&/^0\d{9}$/.test(val("fZalo").replace(/\s/g,""))&&!!val("fAddr");var e=$("#e"+s);if(e)e.hidden=ok;return ok}
+function submit(){
+  var c=calc(),r=ss("of-result");var useR=r&&r.line===c.l.k;
+  var body={fn:"webDangKy",dong:c.l.k,ten:val("fName"),zalo:val("fZalo").replace(/\s/g,""),noiLam:val("fWork"),diaChi:val("fAddr"),giaoTai:picked("ship"),size:val("fSize"),chieuCao:val("fH"),duSinh:val("fDue"),ghiChu:val("fNote"),
+    kieu:useR?((TYPES[r.type]||{}).ten||"")+(r.mode?" · "+r.mode:""):"",traLoi:useR?r.a:{},tamTinh:c.tot,loai:"Đăng ký"};
+  next.disabled=true;next.textContent="Đang gửi…";
+  fetch(API,{method:"POST",redirect:"follow",body:JSON.stringify(body)}).then(function(x){return x.json()}).then(function(x){
+    if(x&&x.err)throw new Error(x.err);
+    $("#sent").innerHTML='<b>Đã nhận đăng ký của '+esc(body.ten)+'.</b><span class="muted">Mã '+esc(x.ma||"")+'. Tụi mình nhắn Zalo '+esc(body.zalo)+' trong 24 giờ để xác nhận và hẹn stylist.</span>';
+    $("#sent").hidden=false;next.hidden=true;back.hidden=true;try{sessionStorage.removeItem("of-result")}catch(e){}
+  }).catch(function(e){next.disabled=false;next.textContent="Gửi lại";$("#sent").innerHTML='<b>Chưa gửi được.</b><span class="muted">'+esc(e.message||"Mạng chậm")+'. Thử lại, hoặc nhắn Zalo 0377 159 189.</span>';$("#sent").hidden=false})}
+next.addEventListener("click",function(){if(step===4){submit();return}if(check(step))show(step+1)});
+back.addEventListener("click",function(){show(step-1)});
+form.addEventListener("change",function(){var e=$("#e"+step);if(e)e.hidden=true;$("#dueWrap").hidden=(picked("line")!==MOM)});
+form.addEventListener("submit",function(e){e.preventDefault()});
+function prefill(){
+  var r=ss("of-result"),pf=$("#prefill");if(!r){pf.hidden=true;return}
+  var radio=form.querySelector('input[name="line"][value="'+r.line.replace(/"/g,'\\"')+'"]');if(radio)radio.checked=true;
+  var sz=r.mom?(r.a.sizeNay||r.a.sizeTruoc):(r.a.size&&r.a.size.size);if(sz&&/^(S|M|L|XL)$/.test(sz))$("#fSize").value=sz;
+  if(r.mom&&(r.a.duSinh||r.a.diLam)){var d=r.a.duSinh&&r.a.duSinh!=="Chưa chắc"?r.a.duSinh:"";if(d)$("#fDue").value=d}
+  pf.innerHTML='Đã có kết quả trắc nghiệm dòng <b>'+esc(r.line)+'</b>'+(TYPES[r.type]&&!r.mom?' · '+esc(TYPES[r.type].ten):'')+'. Stylist sẽ dùng hồ sơ này.';pf.hidden=false;
+  show(radio?2:1)}
+
+/* ---------- điều hướng ---------- */
+var mb=$("#menuBtn"),dr=$("#drawer");
+mb.addEventListener("click",function(){dr.hidden=false;mb.setAttribute("aria-expanded","true")});
+$("#drawerX").addEventListener("click",function(){dr.hidden=true;mb.setAttribute("aria-expanded","false")});
+document.addEventListener("click",function(e){var a=e.target.closest("[data-filter]");if(a)filt=a.dataset.filter;var rd=e.target.closest("[data-redo]");if(rd){try{sessionStorage.removeItem("of-quiz-"+rd.dataset.redo)}catch(x){}}});
+function view(id){document.querySelectorAll(".view").forEach(function(v){v.hidden=v.id!=="v-"+id});document.querySelector("footer.site").hidden=(id==="quiz"||id==="chat")}
+function route(){
+  dr.hidden=true;mb.setAttribute("aria-expanded","false");
+  var h=decodeURIComponent((location.hash||"").slice(1));
+  document.querySelectorAll("#catNav a").forEach(function(a){a.classList.toggle("on",a.dataset.nav===h)});
+  if(h.indexOf("nhom-")===0||h==="bau"){var l=bySlug(h==="bau"?"bau":h.slice(5));if(l){view("nhom");renderNhom(l);window.scrollTo(0,0);return}}
+  if(h==="chan-doan-me"){view("chat");startChat();window.scrollTo(0,0);return}
+  if(h.indexOf("chan-doan-")===0){var q=bySlug(h.slice(10));if(q&&!q.mom){view("quiz");startQuiz(q);return}}
+  if(h==="ket-qua"){view("ket-qua");renderResult();window.scrollTo(0,0);return}
+  if(h.indexOf("sp-")===0){view("sp");detail(h.slice(3).toUpperCase());window.scrollTo(0,0);return}
+  if(h==="tu-do"){view("tu-do");renderAll();window.scrollTo(0,0);return}
+  if(h==="goi-va-gia"){view("goi-va-gia");window.scrollTo(0,0);return}
+  if(h==="dang-ky"){view("dang-ky");show(1);prefill();return}
+  view("home");
+  if(h==="chon-nhom"||h==="cach-hoat-dong"){var el=document.getElementById(h);if(el)setTimeout(function(){el.scrollIntoView({behavior:"smooth"})},30);return}
+  window.scrollTo(0,0)}
+window.addEventListener("hashchange",route);
+renderChrome();renderHome();lineOpts();route();
 })();
 </script>
-
 </body>
 </html>
