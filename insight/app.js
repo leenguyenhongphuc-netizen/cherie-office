@@ -157,7 +157,7 @@ function vLogin(){var h='<div class="eyebrow">CHÉRIE Insight</div><h1>Đăng nh
   if(!staff)return h+'<div class="list">'+'<div class="skel"></div>'.repeat(3)+'</div>';
   return h+'<form class="form panel" id="fLogin"><div class="f"><label for="lgN">Bạn là</label><select id="lgN">'+staff.map(function(n){return '<option value="'+esc(n.id)+'">'+esc(n.ten)+'</option>'}).join("")+'</select></div><div class="f"><label for="lgP">Mã PIN</label><input id="lgP" type="password" inputmode="numeric" autocomplete="current-password" required></div><p class="small" id="lgE" role="alert" style="color:var(--bad)"></p><button class="btn full" type="submit">Vào Insight</button></form>'}
 function render(){
-  var m=$("#main"),sync=$("#sync");
+  var m=$("#main"),sync=$("#sync");$("#logout").hidden=!token;$("#reload").hidden=!token;
   if(!token||!me){m.innerHTML=vLogin();sync.textContent="";if(!staff&&!staffErr)api("staff").then(function(r){staff=r.staff||[];render()},function(e){staffErr=e;render()});return}
   if(!can("Insight")){m.innerHTML='<div class="banner warn"><div><b>Bạn chưa có quyền xem Insight</b>Hiện mục này chỉ dành cho chủ tiệm.</div></div>';return}
   sync.innerHTML=esc(me.ten||"")+(S.at?"<br>Cập nhật "+("0"+S.at.getHours()).slice(-2)+":"+("0"+S.at.getMinutes()).slice(-2):"");
