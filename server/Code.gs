@@ -4,15 +4,16 @@
    Đăng nhập và phân quyền RIÊNG của Office (tab NhanSu, PhanQuyen), không dùng chung với cherie.io.vn. */
 
 var SHEET_ID = "1_o3wqoBTCaTwD3WKa7QmPcK3pcrG7-ka1ae3FX8l0aM";
-var DATA_TABS = ["NhapTuLink", "SanPham", "Anh", "Dong", "KhachHang", "DangKy", "TuDo", "GiaoNhan", "DangKyWeb", "KetQuaWeb", "SuKienWeb", "InsightAI"];
+var DATA_TABS = ["NhapTuLink", "SanPham", "Anh", "Dong", "KhachHang", "DangKy", "TuDo", "GiaoNhan", "DangKyWeb", "KetQuaWeb", "SuKienWeb", "InsightAI", "Goi", "GiaNhap", "ChiPhi", "ThamSo"];
 /* mục quyền đọc của từng tab */
 var READ_SEC = { NhapTuLink: ["NhapHang"], Anh: ["NhapHang", "Kho"], SanPham: ["Kho", "NhapHang", "KhachGoi", "TongQuan"],
   Dong: null, KhachHang: ["KhachGoi", "GiaoNhan", "TongQuan"], DangKy: ["KhachGoi", "GiaoNhan", "TongQuan"],
   TuDo: ["KhachGoi", "Kho", "TongQuan"], GiaoNhan: ["GiaoNhan", "TongQuan"], DangKyWeb: ["KhachGoi", "TongQuan"],
-  KetQuaWeb: ["KhachGoi", "TongQuan", "Insight"], SuKienWeb: ["Insight"], InsightAI: ["Insight"] };
+  KetQuaWeb: ["KhachGoi", "TongQuan", "Insight"], SuKienWeb: ["Insight"], InsightAI: ["Insight"],
+  Goi: null, GiaNhap: ["Kho", "TongQuan"], ChiPhi: ["TongQuan"], ThamSo: ["Kho", "TongQuan"] };
 /* mục cần quyền Sửa để ghi từng tab (một trong các mục) */
 var WRITE_SEC = { NhapTuLink: ["NhapHang"], Anh: ["NhapHang", "Kho"], SanPham: ["Kho", "NhapHang", "KhachGoi"],
-  KhachHang: ["KhachGoi"], DangKy: ["KhachGoi"], TuDo: ["KhachGoi"], GiaoNhan: ["GiaoNhan", "KhachGoi"], DangKyWeb: ["KhachGoi"] , InsightAI: ["Insight"] };
+  KhachHang: ["KhachGoi"], DangKy: ["KhachGoi"], TuDo: ["KhachGoi"], GiaoNhan: ["GiaoNhan", "KhachGoi"], DangKyWeb: ["KhachGoi"] , InsightAI: ["Insight"], ThamSo: ["TongQuan"] };
 var SECS = ["TongQuan", "NhapHang", "Kho", "KhachGoi", "GiaoNhan", "HoSoRieng", "Insight"];
 var TOKEN_DAYS = 30;
 
@@ -41,6 +42,7 @@ function handle(q) {
     case "load": var me = auth(q.token); return { me: me, tabs: load(me, q.tabs) };
     case "set": return setRow(auth(q.token), q);
     case "append": return appendRows(auth(q.token), q.tab, q.rows);
+    case "giaNhap": return setGiaNhap(auth(q.token), q);
   }
   fail("Không rõ yêu cầu", "bad_request");
 }
@@ -139,6 +141,24 @@ function cell(v) {
   if (typeof v === "string" && /^0\d+$/.test(v)) return "'" + v; /* giữ số 0 đầu của số điện thoại */
   if (typeof v === "string" && /^[=+\-@]/.test(v)) return "'" + v; /* chặn công thức */
   return v;
+}
+/* Ghi giá nhập thật của một mẫu trong danh mục. Chỉ ghi cột A-D, giữ nguyên công thức tự điền ở E-H. */
+function setGiaNhap(me, q) {
+  if (!canAny(me, ["Kho"], "Sửa")) fail("Vai trò " + me.vaiTro + " chưa được quyền Sửa phần Kho", "forbidden");
+  var ma = txt(q.ma, 20), gia = Math.round(+q.gia || 0);
+  if (!/^OF-[A-Z]{2}-\d{3}$/.test(ma)) fail("Mã danh mục không hợp lệ", "bad_request");
+  if (gia < 0 || gia > 100000000) fail("Giá nhập không hợp lệ", "bad_request");
+  var lock = LockService.getScriptLock(); lock.waitLock(20000);
+  try {
+    var sh = ss().getSheetByName("GiaNhap"); if (!sh) fail("Thiếu tab GiaNhap", "setup");
+    var n = Math.max(sh.getMaxRows() - 1, 1), col = sh.getRange(2, 1, n, 1).getValues(), row = 0, empty = 0;
+    for (var i = 0; i < col.length; i++) { var v = String(col[i][0]); if (v === ma) { row = i + 2; break; } if (!v && !empty) empty = i + 2; }
+    if (!row) row = empty || sh.getMaxRows() + 1;
+    if (row > sh.getMaxRows()) sh.insertRowsAfter(sh.getMaxRows(), 20);
+    var now = Utilities.formatDate(new Date(), "Asia/Ho_Chi_Minh", "yyyy-MM-dd");
+    sh.getRange(row, 1, 1, 4).setValues([[ma, gia || "", now, cell(txt(q.ghiChu, 200))]]);
+    return { ok: true, row: row };
+  } finally { lock.releaseLock(); }
 }
 function guardWrite(me, tab) {
   if (DATA_TABS.indexOf(tab) < 0 || tab === "Dong") fail("Không được ghi tab này", "forbidden");
