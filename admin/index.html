@@ -211,8 +211,8 @@ a.lk{color:var(--care);overflow-wrap:anywhere}
 (function(){
 "use strict";
 var TABS=["NhapTuLink","SanPham","Anh","Dong","KhachHang","DangKy","TuDo","GiaoNhan"];
-var MA_DONG={"Classic":"CL","Bầu":"BA","Sau sinh":"SS","Lead":"LD","Áo dài":"AD","Travel":"TR","Ngày quan trọng":"NQ"};
-var DONG_DEFAULT=["Bầu","Sau sinh","Lead","Áo dài","Travel","Ngày quan trọng","Classic"];
+var MA_DONG={"Classic":"CL","Mẹ bầu & Sau sinh":"ME","Lead":"LD","Áo dài":"AD","Travel":"TR","Ngày quan trọng":"NQ"};
+var DONG_DEFAULT=["Mẹ bầu & Sau sinh","Lead","Áo dài","Travel","Ngày quan trọng","Classic"];
 var LISTS={
   Loai:["Áo sơ mi","Áo kiểu","Quần tây","Chân váy","Đầm công sở","Vest, blazer"],
   Form:["Ôm sát","Co giãn nhẹ","Suông"],
@@ -584,7 +584,7 @@ function khachFields(p,r){r=r||{};return fld(p+"Ten","Tên khách",inp(p+"Ten",r
   '<div class="two">'+fld(p+"Zalo","Số Zalo",inp(p+"Zalo",r.Zalo,"tel",'inputmode="tel" placeholder="09…"'))+fld(p+"Size","Size",sel(p+"Size",LISTS.Size,r.Size,"Chọn"))+'</div>'+
   fld(p+"NoiLam","Nơi làm",inp(p+"NoiLam",r.NoiLam,"text",'placeholder="Công ty, tòa nhà"'))+fld(p+"DiaChi","Địa chỉ giao",inp(p+"DiaChi",r.DiaChiGiao))+
   '<div class="two">'+fld(p+"Gu","Gu",sel(p+"Gu",LISTS.Gu,r.Gu,"Chọn"))+fld(p+"Nguon","Biết qua",sel(p+"Nguon",LISTS.Nguon,r.NguonKhach,"Chọn"))+'</div>'+
-  '<div class="two">'+fld(p+"Cao","Chiều cao (cm)",inp(p+"Cao",r.ChieuCao,"number",'inputmode="numeric"'))+fld(p+"DuSinh","Ngày dự sinh",inp(p+"DuSinh",r.NgayDuSinh,"date"),"Chỉ dòng Bầu")+'</div>'+
+  '<div class="two">'+fld(p+"Cao","Chiều cao (cm)",inp(p+"Cao",r.ChieuCao,"number",'inputmode="numeric"'))+fld(p+"DuSinh","Ngày dự sinh / ngày sinh bé",inp(p+"DuSinh",r.NgayDuSinh,"date"),"Chỉ dòng Mẹ bầu & Sau sinh")+'</div>'+
   fld(p+"Tranh","Điều cần tránh",inp(p+"Tranh",r.DieuTranh,"text",'placeholder="Ví dụ: không mặc màu vàng"'))}
 function khachObj(p){var z=val(p+"Zalo").replace(/\D/g,"");return {MaKH:z,Ten:val(p+"Ten"),Zalo:z,NoiLam:val(p+"NoiLam"),DiaChiGiao:val(p+"DiaChi"),Size:val(p+"Size"),ChieuCao:val(p+"Cao"),Gu:val(p+"Gu"),DieuTranh:val(p+"Tranh"),NgayDuSinh:val(p+"DuSinh"),NguonKhach:val(p+"Nguon")}}
 function formKH(ma){var r=ma?khachBy(ma):null;
