@@ -1062,7 +1062,10 @@ function buildCapsule(l,a){
   var W=N===10?5:N;
   var bot=(a.vayQuan==="Quần"?quan.concat(cv):a.vayQuan==="Váy"?cv.concat(quan):[]);
   if(!bot.length){var i=0;while(quan[i]||cv[i]){if(cv[i])bot.push(cv[i]);if(quan[i])bot.push(quan[i]);i++}}
-  var T=Math.min(ao.length,P),B=Math.min(bot.length,P);
+  /* Áo không lặp trong tuần (giữa tuần không giặt). Gói theo tuần: mỗi tuần 3 quần/váy cho 5 bộ, xoay thứ 2 → thứ 5, thứ 3 → thứ 6,
+     tức 20% lượt-món lặp lại: ít vốn, ít món giặt hơn. Travel và Ngày quan trọng giữ không lặp. */
+  var BW=l.monthly&&W>=5?Math.ceil(W*0.6):W;
+  var T=Math.min(ao.length,P),B=Math.min(bot.length,(N===10?2:1)*BW);
   var pk=pool.filter(function(x){return x.s.nhom==="Phụ kiện"}).slice(0,3).map(function(x){return x.s});
   if(!T||!B){P=0}
   var pick={dam:dam.slice(0,D),ao:ao.slice(0,T),bot:bot.slice(0,B)};
@@ -1078,7 +1081,7 @@ function buildCapsule(l,a){
   if(P){var tops=pick.ao.slice().sort(function(x,y){return y.sc-x.sc}),bots=pick.bot.slice();
     /* chia món tốt đều cho 2 tuần: món hạng 1, 3, 5… vào tuần A; hạng 2, 4, 6… vào tuần B */
     var weekOf=function(i){return N===10?(i%2):0},tw=[[],[]],bw=[[],[]];
-    tops.forEach(function(x,i){tw[weekOf(i)].push(x)});bots.forEach(function(x,i){bw[weekOf(i)].push(x)});
+    tops.forEach(function(x,i){tw[weekOf(i)].push(x)});bots.slice().sort(function(x,y){return y.sc-x.sc}).forEach(function(x,i){bw[weekOf(i)].push(x)});
     var weeks=N===10?2:1;
     for(var w=0;w<weeks;w++){var tt=tw[w].length?tw[w]:tw[1-w],bb=bw[w].length?bw[w]:bw[1-w],used={};
       for(var k=0;k<W&&bo.length<N;k++){
@@ -1104,7 +1107,7 @@ function capsuleHtml(l,cap){
   if(!cap.bo.length)return '';
   var weeks=cap.N===10?[["Tuần A","Mặc tuần 1 và tuần 3",cap.bo.slice(0,5)],["Tuần B","Mặc tuần 2 và tuần 4",cap.bo.slice(5)]]:[["",(cap.N===4?"4 bộ áo dài cho tháng":"Trọn bộ cho chuyến đi"),cap.bo]];
   var perWear=l.monthly&&cap.N===10?Math.round(l.price/5/500)*500:0;
-  return '<section class="sec" style="padding-top:36px"><div class="sh"><div><span class="k" style="color:var(--gold)">Tủ đồ của nàng</span><h2 style="margin-top:6px">'+(cap.N===10?"Tủ của nàng: 10 bộ, đổi xen kẽ mỗi tuần":cap.N===4?"Áo dài cho 4 thứ 2 đầu tiên":"Gợi ý cho nàng")+'</h2><p class="sub muted">Stylist chọn từ đồ đang có trong kho theo câu trả lời của nàng'+(cap.muon?", có mượn thêm từ tủ Classic":"")+'.'+(cap.N===10?' 10 áo và 10 quần, váy khác nhau: không món nào lặp lại trong 2 tuần.':'')+' Nàng đổi bộ nào cũng được trước ngày giao.</p></div></div>'+
+  return '<section class="sec" style="padding-top:36px"><div class="sh"><div><span class="k" style="color:var(--gold)">Tủ đồ của nàng</span><h2 style="margin-top:6px">'+(cap.N===10?"Tủ của nàng: 10 bộ, đổi xen kẽ mỗi tuần":cap.N===4?"Áo dài cho 4 thứ 2 đầu tiên":"Gợi ý cho nàng")+'</h2><p class="sub muted">Stylist chọn từ đồ đang có trong kho theo câu trả lời của nàng'+(cap.muon?", có mượn thêm từ tủ Classic":"")+'.'+(cap.N===10?' 10 áo khác nhau, không áo nào lặp lại. Mỗi tuần 3 quần, váy phối xoay, mặc lại cách nhau 3 ngày.':'')+' Nàng đổi bộ nào cũng được trước ngày giao.</p></div></div>'+
     weeks.map(function(w){return (w[0]?'<p class="k muted" style="margin:18px 0 12px">'+esc(w[0])+' · '+esc(w[1])+'</p>':'')+'<div class="grid caps">'+w[2].map(function(o){return outfitCard(o,cap.bo.indexOf(o))}).join("")+'</div>'}).join("")+
 (cap.pk&&cap.pk.length?'<div style="margin-top:26px"><p class="k muted" style="margin-bottom:12px">Thêm 1 phụ kiện mỗi ngày · dịch vụ thêm, stylist báo giá</p><div class="grid">'+cap.pk.map(card).join("")+'</div></div>':'')+'</section>'}
 function offerHtml(l,a){
@@ -1372,7 +1375,7 @@ function sbar(id){var b=$("#sbar"),h="",l=null;
   b.innerHTML=h;document.body.classList.toggle("has-sbar",!!h)}
 function view(id){sbar(id);document.querySelectorAll(".view").forEach(function(v){v.hidden=v.id!=="v-"+id});var f=(id==="quiz"||id==="chat");document.querySelector("footer.site").hidden=f;document.body.classList.toggle("focus",f)}
 /* tự nhận bản website mới: trang mở lâu vẫn chuyển sang bản mới ở lần chuyển trang kế tiếp (không ngắt trắc nghiệm, đăng ký) */
-var VER="20261030165221",NEWV=false,VCHK=0;
+var VER="20261031114220",NEWV=false,VCHK=0;
 function chkVer(){if(VER==="dev"||Date.now()-VCHK<90000)return;VCHK=Date.now();try{fetch("ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=(t||"").trim();if(t&&t!==VER)NEWV=true}).catch(function(){})}catch(e){}}
 document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chkVer()});
 function route(){
