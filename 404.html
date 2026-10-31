@@ -259,7 +259,9 @@ details p{margin-top:8px;color:var(--muted)}
 .savebar{margin-top:16px;border:1px solid var(--line);border-radius:var(--r-l);padding:clamp(18px,3vw,26px);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px 24px;align-items:center;background:var(--bg)}
 .savebar .k{color:var(--gold)}
 .doitu{margin-top:30px;display:grid;gap:12px;padding:16px;border:1px dashed var(--line);border-radius:var(--r-l)}
-.doitu .chips{padding-bottom:0}
+.doitu .chips{padding-bottom:0;flex-wrap:wrap;overflow:visible}
+.doitu .chips{gap:6px}
+.doitu .chips .c{min-height:44px;padding:8px 12px;flex:1 1 0;min-width:0}
 .doitu .row{display:flex;flex-wrap:wrap;gap:10px}
 @media (max-width:560px){.doitu .row{display:grid}.doitu .row .pill{width:100%;justify-content:center}}
 .savebar b{display:block;font-family:var(--f-d);font-size:22px;font-weight:400;margin-top:4px}
@@ -1145,12 +1147,13 @@ function rulesOf(a){
 /* tủ đang xem: lấy theo danh sách bộ đã lưu (r.bo) để đổi tủ, xem lại tủ cũ mà không mất */
 function capOf(l,r){var base=buildCapsule(l,r.a);if(!r.bo)return base;var bo=boParse(r.bo);if(!bo.length)return base;var seen={},mua=0,ids=[];bo.forEach(function(o){o.forEach(function(x){if(!seen[x.id]){seen[x.id]=1;mua+=+x.giaNiemYet||0;ids.push(x.id)}})});return {bo:bo,N:base.N,mua:mua,muon:base.muon,pk:base.pk,u:base.u,ids:ids}}
 function lichOf(r,l){return r.lich||[{bo:r.bo||boStr(buildCapsule(l,r.a).bo),maKQ:r.maKQ||"",xem:r.xem||"",at:r.at}]}
-function doiTuHtml(r,l){var lich=lichOf(r,l),cur=r.cur==null?lich.length-1:r.cur;
+var MAX_TU=5;
+function doiTuHtml(r,l){var lich=lichOf(r,l),cur=r.cur==null?lich.length-1:r.cur,het=lich.length>=MAX_TU;
   return '<div class="doitu" id="doiTu">'+(lich.length>1?'<div class="chips" role="group" aria-label="Các tủ đã đề xuất">'+lich.map(function(e,i){return '<button type="button" class="c" data-xemtu="'+i+'" aria-pressed="'+(i===cur)+'">Tủ '+(i+1)+'</button>'}).join("")+'</div>':'')+
-    '<div class="row"><button type="button" class="pill" data-doitu="1"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:6px;vertical-align:-3px"><path d="M20 12a8 8 0 1 1-2.3-5.6"/><path d="M20 4v5h-5"/></svg>Đề xuất tủ khác</button><a class="pill ghost" href="'+(l.mom?'#chan-doan-me':'#chan-doan-'+l.slug)+'" data-redo="'+(l.mom?'me':l.slug)+'">Làm lại trắc nghiệm</a></div>'+
-    '<p class="muted" style="font-size:13.5px;margin:0">Giữ nguyên câu trả lời của nàng, stylist chọn bộ khác từ kho. Các tủ trước vẫn bấm xem lại được.</p></div>'}
+    '<div class="row">'+(het?'<a class="pill" href="https://zalo.me/0377159189" target="_blank" rel="noopener">Nhắn stylist chọn riêng</a>':'<button type="button" class="pill" data-doitu="1"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:6px;vertical-align:-3px"><path d="M20 12a8 8 0 1 1-2.3-5.6"/><path d="M20 4v5h-5"/></svg>Đề xuất tủ khác ('+lich.length+'/'+MAX_TU+')</button>')+'<a class="pill ghost" href="'+(l.mom?'#chan-doan-me':'#chan-doan-'+l.slug)+'" data-redo="'+(l.mom?'me':l.slug)+'">Làm lại trắc nghiệm</a></div>'+
+    '<p class="muted" style="font-size:13.5px;margin:0">'+(het?'Nàng đã xem đủ '+MAX_TU+' tủ. Chạm Tủ 1 đến Tủ '+MAX_TU+' để so lại, giữ tủ ưng nhất, hoặc nhắn stylist chọn riêng theo ý nàng.':'Giữ nguyên câu trả lời của nàng, stylist chọn bộ khác từ kho. Xem được tối đa '+MAX_TU+' tủ, tủ trước vẫn chạm xem lại được.')+'</p></div>'}
 function doiTu(){var r=ss("of-result");if(!r)return;var l=r.mom?LINES.filter(function(x){return x.mom})[0]:byKey(r.line);if(!l)return;
-  var lich=lichOf(r,l),avoid={};lich.forEach(function(e){String(e.bo||"").split(/[;+]/).forEach(function(id){if(id)avoid[id]=1})});
+  var lich=lichOf(r,l),avoid={};if(lich.length>=MAX_TU)return;lich.forEach(function(e){String(e.bo||"").split(/[;+]/).forEach(function(id){if(id)avoid[id]=1})});
   var cp=buildCapsule(l,r.a,avoid),at=Date.now(),bo=boStr(cp.bo);lich.push({bo:bo,maKQ:"",xem:"",at:at});
   r.lich=lich;r.cur=lich.length-1;r.bo=bo;r.cap=cp.ids;r.at=at;r.maKQ="";r.xem="";ss("of-result",r);
   track("doi_tu",lich.length);saveKQ(r,"Đề xuất lại",0,!!r.zalo);renderResult();goTu()}
@@ -1394,7 +1397,7 @@ function sbar(id){var b=$("#sbar"),h="",l=null;
   b.innerHTML=h;document.body.classList.toggle("has-sbar",!!h)}
 function view(id){sbar(id);document.querySelectorAll(".view").forEach(function(v){v.hidden=v.id!=="v-"+id});var f=(id==="quiz"||id==="chat");document.querySelector("footer.site").hidden=f;document.body.classList.toggle("focus",f)}
 /* tự nhận bản website mới: trang mở lâu vẫn chuyển sang bản mới ở lần chuyển trang kế tiếp (không ngắt trắc nghiệm, đăng ký) */
-var VER="20261031114731",NEWV=false,VCHK=0;
+var VER="20261031115912",NEWV=false,VCHK=0;
 function chkVer(){if(VER==="dev"||Date.now()-VCHK<90000)return;VCHK=Date.now();try{fetch("ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=(t||"").trim();if(t&&t!==VER)NEWV=true}).catch(function(){})}catch(e){}}
 document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chkVer()});
 function route(){
