@@ -445,6 +445,16 @@ footer .c .k{color:#B79A6A}
 footer .base{margin-top:36px;padding-top:18px;border-top:1px solid #3A3033;font-size:12px;color:#A3989C}
 @media (max-width:760px){footer .cols{grid-template-columns:1fr 1fr}}
 
+/* menu con Mẹ bầu & Sau sinh */
+.r2 .ddb{flex:none;border:0;background:none;color:var(--mom);width:32px;height:44px;margin-left:-22px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.r2 .ddb svg{width:13px;height:13px;transition:transform .2s}
+.r2 .ddb[aria-expanded="true"] svg{transform:rotate(180deg)}
+.ddm{position:fixed;z-index:65;background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:6px;box-shadow:0 14px 34px rgba(0,0,0,.16);display:grid}
+.ddm[hidden]{display:none}
+.ddm a{display:flex;align-items:center;min-height:48px;padding:0 14px;border-radius:10px;text-decoration:none;font-size:14.5px}
+.ddm a:active,.ddm a:hover{background:var(--soft)}
+.ddm a.new::after{content:"Mới";margin-left:auto;font-size:11px;font-weight:600;color:var(--mom);border:1px solid var(--mom);border-radius:99px;padding:2px 8px}
+.drawer a.sub{font-family:var(--f-b);font-size:16px;padding:11px 0 11px 18px;color:var(--muted);border-bottom:1px solid var(--line)}
 /* menu điện thoại */
 .drawer{position:fixed;inset:0;z-index:70;background:var(--bg);padding:calc(16px + env(safe-area-inset-top,0px)) max(20px,env(safe-area-inset-right,0px)) 24px max(20px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:4px;overflow-y:auto}
 .drawer a{font-family:var(--f-d);font-size:24px;text-decoration:none;padding:10px 0;border-bottom:1px solid var(--line)}
@@ -594,6 +604,7 @@ footer .base{margin-top:36px;padding-top:18px;border-top:1px solid #3A3033;font-
   <nav class="r2 wrap" id="catNav" aria-label="Các dòng"></nav>
 </header>
 
+<div class="ddm" id="momMenu" hidden role="menu" aria-label="Mẹ bầu &amp; Sau sinh"></div>
 <div class="drawer" id="drawer" hidden>
   <button class="x" type="button" id="drawerX" aria-label="Đóng menu">×</button>
   <div id="drawerLinks" style="display:grid"></div>
@@ -919,9 +930,13 @@ function lineImgs(l,n){var out=[],f=DATA.sp.filter(function(s){return s.id===HER
 function lineImg(l){var f=DATA.sp.filter(function(s){return s.id===HERO[l.k]&&pics(s.id).length})[0]||DATA.sp.filter(function(s){return inLine(s,l)&&pics(s.id).length&&!s.phu&&(!l.mom||s.nhom==="Đầm")})[0];return f?imgOf(f,0):""}
 
 /* ---------- khung chung ---------- */
+/* mục con của Mẹ bầu & Sau sinh trên thanh menu */
+var MOM_SUB=[["#nhom-me-bau-sau-sinh","Tủ đồ cho mẹ · 127 món"],["/mom/","Số đặc biệt cho mẹ đi làm"],["#chan-doan-me","Trò chuyện với stylist của mẹ"]];
+function momMenu(open){var m=$("#momMenu"),b=$("#momDdb");if(!m||!b)return;if(open==null)open=m.hidden;m.hidden=!open;b.setAttribute("aria-expanded",String(open));
+  if(open){var r=b.getBoundingClientRect(),w=Math.min(300,innerWidth-24);m.style.width=w+"px";m.style.top=(r.bottom+6)+"px";m.style.left=Math.max(12,Math.min(innerWidth-w-12,r.right-w/2-10))+"px"}}
 function renderChrome(){
-  $("#catNav").innerHTML='<a href="#tu-do" data-nav="tu-do">Tủ đồ</a>'+LINES.map(function(l){return '<a href="#nhom-'+l.slug+'" data-nav="nhom-'+l.slug+'"'+(l.mom?' class="mom"':'')+'>'+esc(l.k)+'</a>'}).join("")+'<a href="#goi-va-gia" data-nav="goi-va-gia">Gói và giá</a>';
-  $("#drawerLinks").innerHTML='<a href="#">Trang chủ</a>'+$("#catNav").innerHTML+'<a href="#cach-hoat-dong">Cách hoạt động</a><a href="#chinh-sach">Dữ liệu của nàng</a><div class="dcta"><a class="pill" href="#chon-nhom">Tìm tủ đồ của nàng</a><a class="pill ghost" href="https://zalo.me/0377159189" target="_blank" rel="noopener">Nhắn Zalo 0377 159 189</a></div>';drawerSaved();
+  $("#catNav").innerHTML='<a href="#tu-do" data-nav="tu-do">Tủ đồ</a>'+LINES.map(function(l){return l.mom?'<a href="#nhom-'+l.slug+'" data-nav="nhom-'+l.slug+'" class="mom">'+esc(l.k)+'</a><button type="button" class="ddb" id="momDdb" aria-expanded="false" aria-controls="momMenu" aria-label="Mục con của Mẹ bầu &amp; Sau sinh"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>':'<a href="#nhom-'+l.slug+'" data-nav="nhom-'+l.slug+'">'+esc(l.k)+'</a>'}).join("")+'<a href="#goi-va-gia" data-nav="goi-va-gia">Gói và giá</a>';
+  $("#drawerLinks").innerHTML='<a href="#">Trang chủ</a><a href="#tu-do">Tủ đồ</a>'+LINES.map(function(l){return '<a href="#nhom-'+l.slug+'"'+(l.mom?' class="mom"':'')+'>'+esc(l.k)+'</a>'+(l.mom?MOM_SUB.map(function(x){return '<a class="sub" href="'+x[0]+'">'+x[1]+'</a>'}).join(""):"")}).join("")+'<a href="#goi-va-gia">Gói và giá</a>'+'<a href="#cach-hoat-dong">Cách hoạt động</a><a href="#chinh-sach">Dữ liệu của nàng</a><div class="dcta"><a class="pill" href="#chon-nhom">Tìm tủ đồ của nàng</a><a class="pill ghost" href="https://zalo.me/0377159189" target="_blank" rel="noopener">Nhắn Zalo 0377 159 189</a></div>';drawerSaved();
   $("#footLines").innerHTML=LINES.map(function(l){return '<a href="#nhom-'+l.slug+'">'+esc(l.k)+'</a>'}).join("");
   var words=["Giặt hấp hằng tuần","Giao văn phòng miễn phí","Đổi size trong 48 giờ","Tag đếm số lần mặc","Stylist chọn theo gu","Mỗi lần, một chiếc mới"];
   var one=words.map(function(w){return '<span>'+esc(w)+'</span><i>·</i>'}).join("");$("#marq").innerHTML=one+one;
@@ -1570,6 +1585,10 @@ function prefill(){
 /* ---------- điều hướng ---------- */
 var mb=$("#menuBtn"),dr=$("#drawer");
 mb.addEventListener("click",function(){dr.hidden=false;mb.setAttribute("aria-expanded","true")});
+$("#momMenu").innerHTML=MOM_SUB.map(function(x){return '<a role="menuitem" href="'+x[0]+'"'+(x[0]==="/mom/"?' class="new"':'')+'>'+x[1]+'</a>'}).join("");
+document.addEventListener("click",function(e){if(e.target.closest("#momDdb")){momMenu();return}if(!e.target.closest("#momMenu"))momMenu(false);else momMenu(false)});
+document.addEventListener("keydown",function(e){if(e.key==="Escape")momMenu(false)});
+$("#catNav").addEventListener("scroll",function(){momMenu(false)},{passive:true});addEventListener("scroll",function(){momMenu(false)},{passive:true});
 $("#drawerX").addEventListener("click",function(){dr.hidden=true;mb.setAttribute("aria-expanded","false")});
 document.addEventListener("click",function(e){var rb=e.target.closest("[data-rail]");if(rb){var r=$("#"+rb.dataset.rail),w=(r.children[0]||{}).offsetWidth||r.clientWidth;r.scrollBy({left:(+rb.dataset.dir)*(w+16),behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});return}var gn=e.target.closest("[data-gal]");if(gn){var g=$(".gal"),f=g.children[0];g.scrollBy({left:(+gn.dataset.gal)*((f&&f.offsetWidth||300)+8),behavior:"smooth"});return}var pk=e.target.closest("[data-pick]");if(pk){e.preventDefault();goPick(pk.dataset.pick,pk.dataset.goi);return}var a=e.target.closest("[data-filter]");if(a)filt=a.dataset.filter;var rd=e.target.closest("[data-redo]");if(rd){try{sessionStorage.removeItem("of-quiz-"+rd.dataset.redo)}catch(x){}}});
 function sbar(id){var b=$("#sbar"),h="",l=null;
@@ -1583,7 +1602,7 @@ function sbar(id){var b=$("#sbar"),h="",l=null;
   b.innerHTML=h;document.body.classList.toggle("has-sbar",!!h)}
 function view(id){sbar(id);document.querySelectorAll(".view").forEach(function(v){v.hidden=v.id!=="v-"+id});var f=(id==="quiz"||id==="chat");document.querySelector("footer.site").hidden=f;document.body.classList.toggle("focus",f)}
 /* tự nhận bản website mới: trang mở lâu vẫn chuyển sang bản mới ở lần chuyển trang kế tiếp (không ngắt trắc nghiệm, đăng ký) */
-var VER="20261031145949",NEWV=false,VCHK=0;
+var VER="20261031165842",NEWV=false,VCHK=0;
 function chkVer(){if(VER==="dev"||Date.now()-VCHK<90000)return;VCHK=Date.now();try{fetch("ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=(t||"").trim();if(t&&t!==VER)NEWV=true}).catch(function(){})}catch(e){}}
 document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chkVer()});
 function route(){ga("page_view",{page_location:location.href,page_path:location.pathname+location.hash,page_title:document.title});
