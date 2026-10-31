@@ -121,11 +121,13 @@ body.focus .hd .r .pill{display:none}
 @media (prefers-reduced-motion:reduce){.marq .t{animation:none}}
 
 /* 3 giá trị */
-.vals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
-.val{display:grid;gap:8px;align-content:start}
-.val .ic{width:44px;height:44px;border-radius:50%;background:var(--soft2);display:flex;align-items:center;justify-content:center}
-.val .ic svg{width:22px;height:22px;fill:none;stroke:var(--espresso);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-@media (max-width:760px){.vals{grid-template-columns:1fr}}
+.vls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.vl{display:grid;grid-template-columns:44px minmax(0,1fr);column-gap:14px;row-gap:4px;align-content:start;background:var(--soft);border-radius:var(--r-l);padding:20px}
+.vl .ic{grid-row:span 2;width:44px;height:44px;border-radius:50%;background:var(--soft2);display:flex;align-items:center;justify-content:center}
+.vl .ic svg{width:22px;height:22px;fill:none;stroke:var(--espresso);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.vl h3{font-size:19px;line-height:1.3;margin:0;align-self:center}
+.vl p{margin:0;font-size:14.5px;line-height:1.5}
+@media (max-width:760px){.vls{grid-template-columns:1fr;gap:10px}.vl{padding:16px 18px}}
 
 /* lưới đồ */
 .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:26px 16px}
@@ -482,6 +484,27 @@ footer .base{margin-top:36px;padding-top:18px;border-top:1px solid #3A3033;font-
 .ro span{display:block}
 .hero .cta .pill.ghost{background:rgba(27,22,24,.42);color:#FFF;border-color:rgba(255,255,255,.85);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
 .drawer .dcta .pill.ghost{border:1.5px solid var(--ink);background:transparent}
+
+/* --- cân xứng, bớt khoảng trống (31/10) --- */
+.how-bot{display:none}
+@media (max-width:600px){.how .sh .how-top{display:none}.how-bot{display:flex;margin-top:24px}
+ .steps{grid-template-columns:1fr 1fr;gap:22px 16px;margin-top:20px}.stp .n{font-size:32px}.stp h3{font-size:17px;line-height:1.3}.stp p{font-size:14px;margin:0}}
+/* thẻ sản phẩm: các dòng chữ thẳng hàng giữa 2 thẻ cạnh nhau, không chừa dòng trống */
+@supports (grid-template-rows:subgrid){.grid:not(.caps)>.pc{grid-row:span 4;grid-template-rows:subgrid;row-gap:6px}.grid:not(.caps)>.pc .nm{min-height:0}}
+.pc .in{-webkit-line-clamp:1}
+/* hero trang chủ: hai nút bằng nhau, chữ nằm trên nền tối dưới ảnh */
+.hero .cta{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hero .cta .pill{justify-content:center;width:100%}
+@media (max-width:760px){.hero{min-height:700px}.hero .shade{background:linear-gradient(180deg,rgba(20,12,8,0) 28%,rgba(20,12,8,.55) 52%,rgba(20,12,8,.82) 100%)}}
+/* footer: logo cả hàng, 2 cột danh sách, liên hệ cả hàng */
+@media (max-width:760px){footer .cols>.c:first-child,footer .cols>.c:last-child{grid-column:1/-1}}
+/* danh sách "đã gồm": một khối gọn, mỗi ý một dòng, thay cho chip so le */
+.incl{display:grid;gap:0;background:var(--soft);border-radius:var(--r-l);padding:4px 18px}
+.incl li{display:flex;gap:10px;align-items:flex-start;border:0;border-bottom:1px solid var(--line);border-radius:0;padding:11px 0;background:none;font-size:14.5px}
+.incl li:last-child{border-bottom:0}
+.sh .ul{white-space:nowrap}
+/* bảng giá: link phụ canh giữa dưới nút */
+.plan.r6 .act .ul{justify-self:center}
 </style>
 </head>
 <body>
@@ -531,10 +554,10 @@ footer .base{margin-top:36px;padding-top:18px;border-top:1px solid #3A3033;font-
 
   <section class="sec wrap">
     <div class="sh c"><h2>Tủ của tụi mình là tủ của nàng</h2></div>
-    <div class="vals">
-      <div class="val"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3v3"/><path d="M8 7l-5 4 3 2 1-1v9h10v-9l1 1 3-2-5-4z"/></svg></div><h3>Luôn có đồ mới để mặc</h3><p class="muted">Mặc đồ mới mỗi tuần, không lặp lại trước đồng nghiệp, không phải sắm thêm.</p></div>
-      <div class="val"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></svg></div><h3>Thử phong cách mới, không rủi ro</h3><p class="muted">Muốn thử vest màu đậm hay chân váy xếp ly? Mặc thử một tuần, không hợp thì đổi.</p></div>
-      <div class="val"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div><h3>Đúng đồ cho từng lịch</h3><p class="muted">Họp đối tác, thứ 2 mặc áo dài, chuyến công tác hay buổi phỏng vấn đều có dòng riêng.</p></div>
+    <div class="vls">
+      <div class="vl"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3v3"/><path d="M8 7l-5 4 3 2 1-1v9h10v-9l1 1 3-2-5-4z"/></svg></div><h3>Luôn có đồ mới để mặc</h3><p class="muted">Mặc đồ mới mỗi tuần, không lặp lại trước đồng nghiệp, không phải sắm thêm.</p></div>
+      <div class="vl"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></svg></div><h3>Thử phong cách mới, không rủi ro</h3><p class="muted">Muốn thử vest màu đậm hay chân váy xếp ly? Mặc thử một tuần, không hợp thì đổi.</p></div>
+      <div class="vl"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div><h3>Đúng đồ cho từng lịch</h3><p class="muted">Họp đối tác, thứ 2 mặc áo dài, chuyến công tác hay buổi phỏng vấn đều có dòng riêng.</p></div>
     </div>
   </section>
 
@@ -545,13 +568,14 @@ footer .base{margin-top:36px;padding-top:18px;border-top:1px solid #3A3033;font-
 
   <section class="sec wrap" id="cach-hoat-dong">
     <div class="how">
-      <div class="sh" style="margin:0"><div><span class="k muted">Cách hoạt động</span><h2 style="margin-top:6px">Một tuần của tủ đồ</h2></div><a class="pill" href="#chon-nhom">Chọn dòng của nàng</a></div>
+      <div class="sh" style="margin:0"><div><span class="k muted">Cách hoạt động</span><h2 style="margin-top:6px">Một tuần của tủ đồ</h2></div><a class="pill how-top" href="#chon-nhom">Chọn dòng của nàng</a></div>
       <div class="steps">
         <div class="stp"><span class="n">01</span><span class="t">Ngày đầu</span><h3>Chọn dòng, trả lời 3 phút</h3><p class="muted">Stylist hiểu gu, size, lịch làm việc của nàng.</p></div>
         <div class="stp"><span class="n">02</span><span class="t">Thứ 2 – thứ 6</span><h3>Mặc 5 bộ đi làm</h3><p class="muted">Mỗi ngày một bộ, không phải nghĩ mặc gì.</p></div>
         <div class="stp"><span class="n">03</span><span class="t">Tối thứ 6</span><h3>Tụi mình lấy đồ đã mặc</h3><p class="muted">Không cần giặt. CHÉRIE Care giặt hấp, niêm phong.</p></div>
         <div class="stp"><span class="n">04</span><span class="t">Chiều CN · sáng T2</span><h3>Tủ tuần mới tới nơi</h3><p class="muted">Tại nhà chiều chủ nhật, hoặc văn phòng sáng thứ 2.</p></div>
       </div>
+      <a class="pill block how-bot" href="#chon-nhom">Chọn dòng của nàng</a>
     </div>
   </section>
 
@@ -813,7 +837,10 @@ function xenDam(list){var d=list.filter(function(s){return s.nhom==="Đầm"}),o
 function inLine(s,l){return l.mom?!!s.hopMe:s.loai===l.k}
 /* xếp xen kẽ thương hiệu để danh sách không dồn một hãng; trong mỗi hãng giữ thứ tự gốc */
 function mix(list){var g={},order=[];list.forEach(function(s){var b=s.brand||"";if(!g[b]){g[b]=[];order.push(b)}g[b].push(s)});var out=[],i=0,more=true;while(more){more=false;order.forEach(function(b){if(g[b][i]){out.push(g[b][i]);more=true}});i++}return out}
-function lineImg(l){var f=DATA.sp.filter(function(s){return inLine(s,l)&&pics(s.id).length&&(!l.mom||s.nhom==="Đầm")})[0];return f?imgOf(f,0):""}
+/* ảnh "phụ" (mẫu mặc short, váy ngắn, jean, ảnh chỉ có sản phẩm) xếp cuối danh sách, không dùng làm ảnh đại diện */
+function tot(list){return list.filter(function(s){return !s.phu}).concat(list.filter(function(s){return s.phu}))}
+var HERO={"Classic":"OF-IV-020","Lead":"OF-IV-085","Travel":"OF-IV-091","Mẹ bầu & Sau sinh":"OF-ID-001"};
+function lineImg(l){var f=DATA.sp.filter(function(s){return s.id===HERO[l.k]&&pics(s.id).length})[0]||DATA.sp.filter(function(s){return inLine(s,l)&&pics(s.id).length&&!s.phu&&(!l.mom||s.nhom==="Đầm")})[0];return f?imgOf(f,0):""}
 
 /* ---------- khung chung ---------- */
 function renderChrome(){
@@ -827,10 +854,10 @@ function renderHome(){
   var hi=DATA.sp.filter(function(s){return pics(s.id).length>1})[3];var h=$("#heroImg");if(hi){h.src=imgOf(hi,0);h.hidden=false}
   $("#groupRail").innerHTML=LINES.map(function(l){var im=lineImg(l);return '<a class="tile" href="#nhom-'+l.slug+'"><div class="fr" style="background:var('+l.ph+')">'+(im?'<img src="'+esc(im)+'" alt="" loading="lazy">':'<span class="cap">'+esc(l.cap)+'</span>')+(l.mom?'<span class="tag">Cho mẹ</span>':'')+'</div><b>'+esc(l.k)+'</b><span class="w">'+esc(l.who)+'</span><span class="p">'+(l.from?"từ ":"")+vnd(l.price)+' '+esc(l.unit)+'</span></a>'}).join("");
   railInit("groupRail");
-  $("#homeGrid").innerHTML=mix(DATA.sp.filter(function(s){return pics(s.id).length&&s.nhom!=="Phụ kiện"&&s.nhom!=="Đầm"})).slice(0,8).map(card).join("");
+  $("#homeGrid").innerHTML=mix(DATA.sp.filter(function(s){return pics(s.id).length&&s.nhom!=="Phụ kiện"&&s.nhom!=="Đầm"&&!s.phu&&!/2 dây|hai dây/i.test(s.ten)})).slice(0,8).map(card).join("");
   var ORD=["Classic","Mẹ bầu & Sau sinh","Lead","Áo dài","Travel","Ngày quan trọng"];
   $("#plans").innerHTML='<div class="plans main" style="grid-column:1/-1">'+LINES.slice().sort(function(a,b){return ORD.indexOf(a.k)-ORD.indexOf(b.k)}).map(function(l){return '<div class="plan r6'+(l.mom?' mom':'')+'"><span class="k muted">'+esc(l.who)+'</span><h3>'+esc(l.k)+'</h3><span class="p num">'+(l.from?'<small>từ </small>':'')+vnd(l.price)+'<br><small>'+esc(l.unit)+'</small></span><span class="muted p5">'+(l.p5?'Gói 5 bộ (mặc lại mỗi tuần): <b class="num" style="color:var(--ink)">'+vnd(l.p5)+'</b>/tuần':'')+'</span><div class="act"><button type="button" class="pill block" data-pick="'+esc(l.k)+'">Chọn gói này</button>'+'<a class="ul" href="#nhom-'+l.slug+'">Xem dòng '+esc(l.k)+'</a></div></div>'}).join("")+'</div>'+
-    '<div class="plan" style="grid-column:1/-1;background:var(--soft)"><span class="k muted">Bắt đầu nhẹ hơn</span><h3>Chưa cần đủ 10 bộ?</h3><div class="plans" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">'+NHE.map(function(g){return '<div class="plan" style="background:var(--bg)"><h3 style="font-size:20px">'+esc(g.k)+'</h3><span class="p num">'+vnd(g.price)+'<br><small>'+esc(g.unit)+'</small></span><span class="muted" style="font-size:14px">'+esc(g.who)+'</span><button type="button" class="ul" data-pick="'+esc(g.k)+'" style="background:none;border:0;padding:0;text-align:left">Đăng ký gói này</button></div>'}).join("")+'</div></div>';
+    '<div class="plan" style="grid-column:1/-1;background:var(--soft)"><span class="k muted">Bắt đầu nhẹ hơn</span><h3>Chưa cần đủ 10 bộ?</h3><div class="plans" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">'+NHE.map(function(g){return '<div class="plan" style="background:var(--bg)"><h3 style="font-size:20px">'+esc(g.k)+'</h3><span class="p num">'+vnd(g.price)+'<br><small>'+esc(g.unit)+'</small></span><span class="muted" style="font-size:14px">'+esc(g.who)+'</span><button type="button" class="pill ghost block" data-pick="'+esc(g.k)+'">Đăng ký gói này</button></div>'}).join("")+'</div></div>';
 }
 
 /* ---------- trang nhóm ---------- */
@@ -838,13 +865,13 @@ function renderNhom(l){
   var items=DATA.sp.filter(function(s){return inLine(s,l)});var im=lineImg(l);
   var qLabel=l.mom?"Trò chuyện với stylist của mẹ":"Tìm phong cách của nàng";
   var qHref=l.mom?"#chan-doan-me":"#chan-doan-"+l.slug;
-  $("#nhomBody").innerHTML='<section class="gh"><div class="fr" style="background:var('+l.ph+')">'+(im?'<img src="'+esc(im)+'" alt=""'+(l.mom?' style="object-position:50% 12%"':'')+'>':'<span class="cap">'+esc(l.cap)+'</span>')+'</div>'+
+  $("#nhomBody").innerHTML='<section class="gh"><div class="fr" style="background:var('+l.ph+')">'+(im?'<img src="'+esc(im)+'" alt=""'+' style="object-position:50% 14%"'+'>':'<span class="cap">'+esc(l.cap)+'</span>')+'</div>'+
     '<div class="tx"><span class="k" style="color:'+(l.mom?"var(--mom)":"var(--gold)")+'">CHÉRIE Office · '+esc(l.k)+'</span><h1>'+esc(l.lead)+'</h1><p class="muted" style="font-size:16px">'+esc(l.intro)+'</p>'+
     '<div class="price"><b class="num">'+(l.from?"từ ":"")+vnd(l.price)+'</b><span class="muted">'+esc(l.unit)+'</span>'+(l.p5?'<span class="muted" style="display:block;flex-basis:100%;margin-top:4px">Hoặc Gói 5 bộ mặc lại mỗi tuần: <b class="num" style="color:var(--ink);font:600 15px var(--f-b)">'+vnd(l.p5)+'/tuần</b></span>':'')+(l.monthly?'<span class="muted" style="display:block;flex-basis:100%;margin-top:4px">Trả trước 12 tuần, giảm 7%</span>':'')+'</div>'+
     '<div class="quizcard"><a class="pill block" href="'+qHref+'">'+qLabel+'</a><span class="muted" style="font-size:13.5px;text-align:center">'+(l.mom?"3 phút trò chuyện, nhận lộ trình tủ đồ theo từng tháng.":"9 câu, khoảng 2 phút. Nhận ngay tủ đồ chọn sẵn cho nàng.")+'</span></div>'+
     '<ul class="incl">'+l.incl.map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ul></div></section>'+
     '<section class="sec"><div class="sh"><div><h2>Trong tủ '+esc(l.k)+'</h2><p class="sub muted">'+(items.length?items.length+" món đang có.":"Đồ dòng này đang được tuyển, ảnh thật sẽ cập nhật sớm.")+'</p></div>'+(items.length?'<a class="ul" href="#tu-do" data-filter="'+esc(l.k)+'">Xem tất cả</a>':'')+'</div>'+
-    (items.length?'<div class="grid">'+(l.mom?xenDam(mix(items)).slice(0,8):mix(items).slice(0,8)).map(function(s){return card(s,l)}).join("")+'</div>':'')+'</section>'+
+    (items.length?'<div class="grid">'+(l.mom?xenDam(tot(mix(items))).slice(0,8):tot(mix(items)).slice(0,8)).map(function(s){return card(s,l)}).join("")+'</div>':'')+'</section>'+
     '<section class="sec"><h2 style="margin-bottom:14px">Hay được hỏi</h2>'+faq(l).map(function(q){return '<details><summary>'+esc(q[0])+'</summary><p>'+esc(q[1])+'</p></details>'}).join("")+'</section>';
 }
 function faq(l){
@@ -1060,7 +1087,7 @@ function buildCapsule(l,a,avoid){
   var N=boSize(l);
   var pool=DATA.sp.filter(function(s){return pics(s.id).length&&(inLine(s,l)||s.nhom==="Phụ kiện")});
   var muon=false,coDuoi=pool.some(function(s){return s.nhom==="Quần"||s.nhom==="Chân váy"}),coAo=pool.some(function(s){return s.nhom==="Áo"});if(l.k!=="Áo dài"&&!l.mom&&(pool.length<N*3||!coDuoi||!coAo)){pool=pool.concat(DATA.sp.filter(function(s){return pics(s.id).length&&s.loai==="Classic"&&!inLine(s,l)}));muon=true}
-  pool=pool.map(function(s){return {s:s,p:prefScore(s,a),sc:prefScore(s,a)+1.2*(+s.dl||.5)-(avoid&&avoid[s.id]?3:0)}}).filter(function(x){return x.p>-50});
+  pool=pool.map(function(s){return {s:s,p:prefScore(s,a),sc:prefScore(s,a)+1.2*(+s.dl||.5)-(avoid&&avoid[s.id]?3:0)-(s.phu?2:0)}}).filter(function(x){return x.p>-50});
   var grp=function(g){var seen={};return pool.filter(function(x){return x.s.nhom===g}).map(function(x){if(g==="Vest"&&(l.k==="Lead"||l.k==="Ngày quan trọng"))x.sc+=1.5;if(x.s.ngan&&(a.tranh||[]).indexOf("Váy trên gối")>-1)x.sc-=3;if(l.mom&&/^Có/.test(a.hutSua||"")&&/sơ mi|khuy|nút|cardigan|cổ v/i.test(x.s.ten))x.sc+=1.5;if(l.mom&&x.s.loai===MOM&&a.giaiDoan==="Đang mang bầu")x.sc+=1;if(l.mom&&g==="Đầm"){var tn=(x.s.tenGoc||x.s.ten).toLowerCase();if(/^Suông/.test(a.dang||"")&&/suông|chữ a|dáng a|tay liền|sơ mi|cổ đức/.test(tn))x.sc+=1;if(/^Babydoll/.test(a.dang||"")&&/babydoll|nhún|tầng|smocking|mocking|xếp ly|tay bồng|tay phồng/.test(tn))x.sc+=1;if(/^Ôm nhẹ/.test(a.dang||"")&&/wrap|đắp chéo|ráp chéo|cổ v|cổ tim|thắt dây|rút dây|dây nơ/.test(tn))x.sc+=1}if(l.mom&&/cho con bú/.test(a.giaiDoan||"")&&/khóa|khoá|khuy|sơ mi|vạt chéo/i.test(x.s.ten))x.sc+=1;return x}).sort(function(x,y){return y.sc-x.sc}).filter(function(x){var k=x.s.ten.toLowerCase();if(seen[k])return false;seen[k]=1;return true})};
   /* Office không có đầm: mỗi bộ = áo (hoặc vest, áo khoác tuỳ dòng) + quần hoặc chân váy. Riêng Áo dài là bộ trọn.
      Ngoại lệ dòng Mẹ: có đầm suông, chữ A, đắp chéo (kiểu Isabella Oliver), mỗi tuần 2 ngày mặc đầm. */
@@ -1298,7 +1325,7 @@ function renderAll(){
   var keys=["Tất cả"].concat(LINES.map(function(l){return l.k}));if(filt==="Phụ kiện"){filt="Tất cả";loaiF="Phụ kiện"}
   $("#chips").innerHTML=keys.map(function(k){return '<button type="button" class="c" aria-pressed="'+(k===filt)+'">'+esc(k)+'</button>'}).join("");
   $("#chips2").innerHTML=LOAI.map(function(k){return '<button type="button" class="c c2" aria-pressed="'+(k===loaiF)+'">'+esc(k)+'</button>'}).join("");
-  var L=byKey(filt);var list=mix(DATA.sp).filter(function(s){return (filt==="Tất cả"||(L&&inLine(s,L)))&&(loaiF==="Mọi loại"||s.nhom===loaiF||(loaiF==="Áo dài"&&s.nhom==="Quần áo dài"))});if(L&&L.mom)list=xenDam(list);
+  var L=byKey(filt);var list=mix(DATA.sp).filter(function(s){return (filt==="Tất cả"||(L&&inLine(s,L)))&&(loaiF==="Mọi loại"||s.nhom===loaiF||(loaiF==="Áo dài"&&s.nhom==="Quần áo dài"))});list=tot(list);if(L&&L.mom)list=xenDam(list);
   $("#count").textContent=list.length+" MÓN";
   var shown=list.slice(0,showN);
   $("#allGrid").innerHTML=list.length?shown.map(function(s){return card(s,L)}).join("")+(list.length>showN?'<p style="grid-column:1/-1;text-align:center"><button type="button" class="pill ghost" id="more">Xem thêm '+Math.min(24,list.length-showN)+' món</button></p>':''):'<p class="muted">Dòng này đang tuyển đồ. <a class="ul" href="#nhom-'+(byKey(filt)||{}).slug+'">Làm trắc nghiệm</a> để được giữ chỗ.</p>'}
@@ -1399,14 +1426,14 @@ function sbar(id){var b=$("#sbar"),h="",l=null;
   if(id==="nhom")l=bySlug(decodeURIComponent(location.hash.slice(6)))||null;
   if(id==="sp"){var it=DATA.sp.filter(function(x){return x.id===location.hash.slice(4).toUpperCase()})[0];l=it?(byKey(it.loai)||LINES[5]):null}
   var z='<a class="z" href="https://zalo.me/0377159189" target="_blank" rel="noopener" aria-label="Nhắn Zalo cho stylist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1.1-4.6A8 8 0 1 1 21 12z"/></svg></a>';
-  if(l)h='<div class="p">'+esc(l.k)+'<b>Từ '+vnd(giaTu(l))+(l.monthly?'/tuần':' '+esc(l.unit))+'</b></div>'+z+'<a class="pill" href="'+(l.mom?"#chan-doan-me":"#chan-doan-"+l.slug)+'">Bắt đầu 3 phút</a>';
+  if(l)h='<div class="p">'+esc(l.k)+'<b>Từ '+vnd(giaTu(l))+(l.monthly?'/tuần':' '+esc(l.unit.split(" ")[0]))+'</b></div>'+z+'<a class="pill" href="'+(l.mom?"#chan-doan-me":"#chan-doan-"+l.slug)+'">Bắt đầu 3 phút</a>';
   else if(id==="tu-do")h='<div class="p">Thích bộ nào?<b>Để stylist chọn cho nàng</b></div>'+z+'<a class="pill" href="#chon-nhom">Bắt đầu</a>';
   else if(id==="ket-qua")h='<div class="p">Tủ đồ của nàng<b>Lưu lại, giữ tủ</b></div><button type="button" class="z" data-save="anh" aria-label="Lưu ảnh tủ đồ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0l-4-4m4 4l4-4M5 19h14"/></svg></button><a class="pill" href="#dang-ky" data-su="giu_tu">Giữ tủ này</a>';
   else if(id==="goi-va-gia")h='<div class="p">Trả trước 12 tuần<b>Giảm 7%</b></div>'+z+'<a class="pill" href="#dang-ky">Đăng ký</a>';
   b.innerHTML=h;document.body.classList.toggle("has-sbar",!!h)}
 function view(id){sbar(id);document.querySelectorAll(".view").forEach(function(v){v.hidden=v.id!=="v-"+id});var f=(id==="quiz"||id==="chat");document.querySelector("footer.site").hidden=f;document.body.classList.toggle("focus",f)}
 /* tự nhận bản website mới: trang mở lâu vẫn chuyển sang bản mới ở lần chuyển trang kế tiếp (không ngắt trắc nghiệm, đăng ký) */
-var VER="20261031123134",NEWV=false,VCHK=0;
+var VER="20261031125038",NEWV=false,VCHK=0;
 function chkVer(){if(VER==="dev"||Date.now()-VCHK<90000)return;VCHK=Date.now();try{fetch("ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=(t||"").trim();if(t&&t!==VER)NEWV=true}).catch(function(){})}catch(e){}}
 document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chkVer()});
 function route(){
