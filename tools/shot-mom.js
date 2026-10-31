@@ -6,7 +6,7 @@ const {chromium}=require('playwright');const [,,BASE='http://localhost:8765/',OU
   const hs=[];
   for(let i=0;i<7;i++){await p.evaluate(i=>document.querySelectorAll('#tabs button')[i].click(),i);await p.waitForTimeout(900);
     await p.evaluate(()=>scrollTo(0,document.getElementById('doc').getBoundingClientRect().top+scrollY-document.getElementById('hd').offsetHeight));await p.waitForTimeout(500);
-    hs.push(await p.evaluate(()=>document.getElementById('deck').offsetHeight));
+    hs.push(await p.evaluate(i=>{const b=document.querySelectorAll('#deck .bd')[i];return document.getElementById('deck').offsetHeight+'/'+(b.scrollHeight-b.clientHeight)},i));
     await p.screenshot({path:`${OUT}/${sc}-${w}-c${i+1}.png`})}
   await p.evaluate(()=>scrollTo(0,document.body.scrollHeight));await p.waitForTimeout(500);await p.screenshot({path:`${OUT}/${sc}-${w}-end.png`});
   const r=await p.evaluate(()=>({sw:document.documentElement.scrollWidth,page:document.body.scrollHeight,cta:Math.round(document.querySelector('.cover .cta .btn').getBoundingClientRect().bottom),chat:document.querySelector('.js-chat').getAttribute('href'),thumbs:document.querySelectorAll('#lk .th button').length,ct:document.getElementById('ct').textContent,small:[...document.querySelectorAll('a,button,summary')].filter(x=>x.offsetParent&&x.getBoundingClientRect().height<44&&!x.closest('.nums,.box,footer')).map(x=>x.textContent.trim().slice(0,24))}));
