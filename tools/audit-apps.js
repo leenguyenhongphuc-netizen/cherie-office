@@ -9,7 +9,7 @@ const T={
   ['G-CL-10','Classic','Gói 10 bộ','10','','1','369000','/tuần','12','1000000','','Có'],['G-CL-5','Classic','Gói 5 bộ','5','','2','319000','/tuần','12','1000000','','Có'],
   ['G-NQ','Ngày quan trọng','Thuê 1 bộ','1','','0','199000','/bộ','0','500000','','Có']],
  KhuyenMai:[['MaKM','Ten','ApDung','Loai','GiaTri','ToiDa','DieuKien','TuNgay','DenNgay','Kenh','TrangThai'],['KM-001','Khách sáng lập','Gói tuần','pt','10','','','2026-01-01','2027-12-31','','Bật']],
- KhachHang:[['MaKH','Ten','Zalo','NoiLam','DiaChiGiao','Size','ChieuCao','Gu','DieuTranh','NgayDuSinh','NguonKhach','GhiChu','NgayTao'],['0905111222','Ngọc Anh','0905111222','Tòa Vĩnh Trung','','M','160','','','','Website','','2026-10-01']],
+ KhachHang:[['MaKH','Ten','Zalo','NoiLam','DiaChiGiao','Size','ChieuCao','Gu','DieuTranh','NgayDuSinh','NguonKhach','GhiChu','NgayTao'],['0905111222','Ngọc Anh','0905111222','Tòa Vĩnh Trung','','M','160','','','','Website','','2026-10-01'],['0905333444','Thu Trang','0905333444','Tòa Indochina','','M','158','','',ymd(new Date(today.getTime()+84*864e5)),'Website','','2026-10-10'],['0905555666','Hồng Nhung','0905555666','','','L','162','','',ymd(new Date(today.getTime()-20*864e5)),'Quầy','','2026-06-10']],
  DangKy:[['MaDK','MaKH','Dong','NgayBatDau','SoThang','GiaThang','TraTruoc','Coc','GiaoTai','VungGiao','PhiGiaoThang','TongChuyen','TrangThai','NgayHetHan','NgayTao','GhiChu','MaGoi','MaKM','GiamGia','TongThu','NgayGiaHan','LyDoHuy','NguonDon','NhanVien','SoTuan','GiaTuan','PhiGiaoTuan'],
   ['DK-0001','0905111222','Classic','2026-10-05','','','4118000','1000000','Văn phòng','Trung tâm','','24','Đang dùng',ymd(new Date(today.getTime()+8*864e5)),'2026-10-01','','G-CL-10','','310000','5118000','','','Online','Phúc','12','369000','0'],
   ['DK-0002','0905111222','Classic','2026-11-02','','','4118000','1000000','Văn phòng','Trung tâm','','24','Chờ xác nhận','2027-01-24','2026-10-30','','G-CL-10','','310000','5118000','','','Online','Phúc','12','369000','0']],
@@ -42,7 +42,7 @@ const T={
  await p.goto(BASE+'sale/');await p.waitForTimeout(2000);await shot('sale');await overflow('sale');
  await p.click('[data-web="WEB-0001"]');await shot('sale-lead',1);await p.click('[data-act=tuChoi]');await p.click('#fTuChoi button[type=submit]');await p.waitForTimeout(1000);
  await p.click('[data-web="WEB-0002"]');await p.click('[data-act=chotWeb]');await p.waitForTimeout(1500);await shot('sale-chot',1);
- await p.keyboard.press('Escape');await p.goto(BASE+'admin/?app=sale#cham-soc');await p.waitForTimeout(1500);await shot('cham-soc');
+ await p.keyboard.press('Escape');await p.goto(BASE+'admin/?app=sale#cham-soc');await p.waitForTimeout(1500);await shot('cham-soc',1);const tk=await p.$('[data-tk]');if(tk){await tk.click();await p.waitForTimeout(600);console.log('Tin thai kỳ:',(await p.evaluate(()=>navigator.clipboard.readText().catch(()=>''))).slice(0,90))}
  /* GIAO */
  await p.goto(BASE+'giao/');await p.waitForTimeout(2000);await shot('tuyen');await overflow('tuyen');
  await p.click('[data-stop="GN-0001"]');await shot('diem-dung',1);await p.check('input[name=ma]');await p.click('#fStop button[type=submit]');await p.waitForTimeout(1500);

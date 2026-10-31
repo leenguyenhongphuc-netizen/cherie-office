@@ -533,6 +533,42 @@ footer .base{margin-top:36px;padding-top:18px;border-top:1px solid #3A3033;font-
 
 .gh .pnote b{font:600 14px/1.4 var(--f-b);color:var(--ink)}
 .op:has(.sw){align-content:start}
+
+/* trò chuyện mẹ: lựa chọn xếp lưới gọn, có sticker minh hoạ */
+.replies .cg{flex-basis:100%}
+.replies .cg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.replies .cg>.chip:last-child:nth-child(odd){grid-column:1/-1}
+.replies .cg.pic.c3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.replies .cg.pic.c3>.chip:last-child:nth-child(odd){grid-column:auto}
+.replies .chip{display:flex;align-items:center;justify-content:center;gap:8px;min-height:46px;border-radius:16px;text-align:center;line-height:1.3;padding:8px 10px}
+.replies .cg.pic .chip{flex-direction:column;padding:10px 6px 12px;border-radius:18px}
+.replies .chip .stk{width:56px;height:56px;background:#FBEFE9;border-radius:14px}
+.replies .chip .dots{display:inline-flex;gap:3px}.replies .chip .dots i{width:12px;height:12px;border-radius:50%;box-shadow:0 0 0 1px rgba(0,0,0,.12)}
+.replies .chip[aria-pressed="true"] .stk{background:#FFF}
+.replies .send.wide{flex-basis:100%;min-height:48px}
+.msg.stkm{background:none;padding:0}
+.msg.stkm .stk{width:112px;height:112px;background:#FBEFE9;border-radius:24px;display:block}
+.msg.tip{border-left:3px solid var(--mom)}
+
+/* hướng dẫn mẹ theo tuần */
+.wk{display:grid;grid-template-columns:72px minmax(0,1fr);gap:14px;align-items:center;background:var(--soft);border-radius:var(--r-l);padding:16px;margin-top:16px}
+.wk .stk{width:72px;height:72px;background:#FBEFE9;border-radius:18px}
+.wk .k{color:var(--mom)}.wk b{display:block;font-family:var(--f-d);font-weight:500;font-size:22px;margin:2px 0}
+.wk span:not(.k){font-size:14px;color:var(--muted)}
+.wk .bar{height:6px;border-radius:9px;background:color-mix(in srgb,var(--ink) 10%,transparent);margin-top:8px;overflow:hidden}.wk .bar i{display:block;height:100%;background:var(--mom)}
+.tl2{display:grid;gap:12px;margin-top:16px}
+.tl2 .it{border:1px solid var(--line);border-radius:var(--r-l);padding:16px 18px}
+.tl2 .it.cur{border-color:var(--mom);box-shadow:0 0 0 1px var(--mom)}
+.tl2 .when{font-family:var(--f-m);font-size:11px;letter-spacing:.08em;color:var(--mom);text-transform:uppercase}
+.tl2 b{display:block;font-size:17px;margin:4px 0 10px}
+.tl2 .two{display:grid;gap:12px}
+@media (min-width:700px){.tl2 .two{grid-template-columns:1fr 1fr}}
+.tl2 .lb{display:inline-block;font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.tl2 p{margin:0;font-size:14.5px;line-height:1.55}
+.tl2 ul,.warn ul{margin:0;padding-left:18px;font-size:14.5px;line-height:1.55;display:grid;gap:4px}
+.warn{margin-top:14px;border-radius:var(--r-l);padding:16px 18px;background:color-mix(in srgb,var(--wine) 10%,var(--bg));border:1px solid color-mix(in srgb,var(--wine) 35%,transparent)}
+.warn b{display:block;margin-bottom:6px;color:var(--wine)}
+.warn p{font-size:12.5px;color:var(--muted);margin:10px 0 0}
 </style>
 </head>
 <body>
@@ -1255,46 +1291,86 @@ function renderResult(){
   h+=offerHtml(l,r.a);
   $("#res").innerHTML=h;sbar("ket-qua")}
 
+/* ---------- sticker vẽ tay cho trò chuyện Mẹ (SVG, nét nâu đất trên nền hồng phấn, đọc rõ cả sáng lẫn tối) ---------- */
+var SK="#8E432B",SF="#F2C9BA",SF2="#F8E7DF";
+function bumpS(b){return '<path d="M34 20a11 11 0 1 1 20 6" fill="'+SF2+'"/><circle cx="44" cy="19" r="10" fill="'+SF2+'"/><path d="M36 31Q29 52 34 68L33 88H55L54 71Q'+(56+2.4*b)+' '+(62-b/3)+' 55 50Q62 41 53 31Z" fill="'+SF+'"/><path d="M40 31q4 5 9 0" fill="none"/>'+(b>4?'<path d="M'+(55+b)+' 58q'+(b/3)+' 4 0 8" fill="none"/>':'')}
+var STK={
+  chao:'<path d="M48 18a6 6 0 1 1 6 6c-3 0-6 2-6 5"/><path d="M48 29L16 45h64z" fill="'+SF2+'"/><path d="M38 45l-7 37h34l-7-37" fill="'+SF+'"/><path d="M40 45q8 8 16 0" fill="none"/><path d="M74 16c2-4 8-2 6 2l-6 6-6-6c-2-4 4-6 6-2z" fill="'+SF+'"/>',
+  lich:'<rect x="18" y="24" width="60" height="54" rx="10" fill="'+SF2+'"/><path d="M18 40h60M34 18v12M62 18v12"/><path d="M48 66c4-6 14-3 10 4l-10 8-10-8c-4-7 6-10 10-4z" fill="'+SF+'"/>',
+  thuoc:'<circle cx="48" cy="48" r="28" fill="'+SF2+'"/><path d="M48 20v10M48 66v10M20 48h10M66 48h10"/><path d="M48 48l12-10" /><circle cx="48" cy="48" r="4" fill="'+SF+'"/>',
+  b0:bumpS(0),b1:bumpS(6),b2:bumpS(12),
+  bau:bumpS(10),
+  binh:'<rect x="36" y="34" width="24" height="46" rx="8" fill="'+SF2+'"/><path d="M40 34v-6h16v6"/><path d="M44 28q4-12 8 0" fill="'+SF+'"/><path d="M36 50h10M36 60h10M36 70h10"/>',
+  be:'<circle cx="48" cy="50" r="24" fill="'+SF2+'"/><path d="M48 26q-6-6 0-10" fill="none"/><circle cx="40" cy="48" r="2" fill="'+SK+'"/><circle cx="56" cy="48" r="2" fill="'+SK+'"/><path d="M42 58q6 5 12 0" fill="none"/><circle cx="35" cy="56" r="3" fill="'+SF+'" stroke="none"/><circle cx="61" cy="56" r="3" fill="'+SF+'" stroke="none"/>',
+  suong:'<path d="M37 20h22l5 10-5 4 5 46H32l5-46-5-4z" fill="'+SF+'"/><path d="M42 20q6 7 12 0" fill="none"/>',
+  om:'<path d="M36 20l12 15 12-15 5 10-5 4q7 22 2 46H34q-5-24 2-46l-5-4z" fill="'+SF+'"/><path d="M38 47q10 6 22 0"/><path d="M58 49l6 10M58 49l-1 11"/>',
+  baby:'<path d="M38 20h20l3 16H35z" fill="'+SF2+'"/><path d="M35 36h26l12 44H23z" fill="'+SF+'"/><path d="M42 20q6 6 12 0" fill="none"/>',
+  nong:'<circle cx="48" cy="44" r="14" fill="'+SF+'"/><path d="M48 18v6M48 64v6M22 44h6M68 44h6M30 26l4 4M62 58l4 4M66 26l-4 4M34 58l-4 4"/><path d="M40 82q4-6 8 0q4 6 8 0" fill="none"/>',
+  phu:'<path d="M34 24q-6 26 2 44q6 12 18 10q10-2 8-12q-2-8-10-12q-6-4-6-30z" fill="'+SF+'"/><circle cx="62" cy="22" r="3" fill="'+SF2+'"/><circle cx="68" cy="30" r="2.5" fill="'+SF2+'"/>',
+  da:'<path d="M24 70Q24 26 72 22Q72 66 24 70z" fill="'+SF+'"/><path d="M24 70L60 34"/>',
+  ok:'<path d="M48 16l8 20 20 2-15 13 5 21-18-11-18 11 5-21-15-13 20-2z" fill="'+SF+'"/>',
+  tui:'<path d="M26 36h44l-4 44H30z" fill="'+SF+'"/><path d="M38 36q0-14 10-14t10 14" fill="none"/><path d="M42 54c3-5 12-3 9 4l-9 7-9-7c-3-6 6-9 9-4z" fill="'+SF2+'"/>'
+};
+var STK_VB={b0:"12 4 72 88",b1:"12 4 72 88",b2:"12 4 72 88",bau:"12 4 72 88"};
+function stk(k,c){var b=STK[k];if(!b)return "";return '<svg class="stk'+(c?" "+c:"")+'" viewBox="'+(STK_VB[k]||"0 0 96 96")+'" fill="none" stroke="'+SK+'" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+b+'</svg>'}
+/* bé lớn cỡ nào theo tuần (bảng so sánh quen thuộc), tuần thai tính từ ngày dự sinh */
+var BE_TUAN=[[8,"quả mâm xôi"],[12,"quả chanh"],[16,"quả bơ"],[20,"trái chuối"],[24,"bắp ngô"],[28,"quả cà tím"],[32,"quả bí ngô nhỏ"],[36,"quả đu đủ"],[40,"quả dưa hấu nhỏ"]];
+function tuanThai(d){if(!d)return 0;var t=new Date(d);if(isNaN(t))return 0;var w=40-Math.ceil((t-new Date())/(7*864e5));return Math.max(1,Math.min(42,w))}
+function beCo(w){var r="";BE_TUAN.forEach(function(x){if(w>=x[0])r=x[1]});return r}
+function tcn(w){return w<=13?1:w<=27?2:3}
+
 /* ---------- bản trò chuyện cho Mẹ bầu & Sau sinh ---------- */
 var CH=null;
 var MOM_FLOW={
-  start:{say:["Chào mẹ! Mình là stylist dòng Mẹ bầu & Sau sinh của CHÉRIE Office.","Mình hỏi vài câu để vẽ lộ trình tủ đồ theo từng tháng cho mẹ nhé. Mẹ đang ở giai đoạn nào?"],
-    key:"giaiDoan",chips:["Đang mang bầu","Đã sinh, đang cho con bú","Đã sinh, không cho con bú"],next:function(v){return v==="Đang mang bầu"?"duSinh":"beThang"}},
-  duSinh:{say:["Chúc mừng mẹ! Mẹ dự sinh ngày nào?"],key:"duSinh",date:1,skip:"Chưa chắc",next:"sizeTruoc"},
+  start:{stk:"chao",say:["Chào mẹ! Mình là stylist dòng Mẹ bầu & Sau sinh của CHÉRIE Office.","Mình hỏi vài câu để vẽ lộ trình tủ đồ theo từng tháng, kèm vài lưu ý sức khoẻ cho mẹ đi làm nhẹ nhàng hơn. Mẹ đang ở giai đoạn nào?"],
+    pics:{"Đang mang bầu":"bau","Đã sinh, đang cho con bú":"binh","Đã sinh, không cho con bú":"be"},key:"giaiDoan",chips:["Đang mang bầu","Đã sinh, đang cho con bú","Đã sinh, không cho con bú"],next:function(v){return v==="Đang mang bầu"?"duSinh":"beThang"}},
+  duSinh:{stk:"lich",say:["Chúc mừng mẹ! Mẹ dự sinh ngày nào?"],key:"duSinh",date:1,skip:"Chưa chắc",next:"sizeTruoc",
+    after:function(v){var w=tuanThai(v);if(!w)return ["Không sao, stylist sẽ hỏi lại mẹ sau lần khám tới."];return ["Vậy mẹ đang ở tuần "+w+", tam cá nguyệt thứ "+["","nhất","hai","ba"][tcn(w)]+"."+(beCo(w)?" Bé lúc này lớn cỡ "+beCo(w)+" rồi đó.":""),w<=13?"Ba tháng đầu hay mệt, nghén. Mình ưu tiên đồ mềm, không mùi vải, mặc vào là thấy dễ chịu.":w<=27?"Đây là giai đoạn dễ chịu nhất, bụng bắt đầu lộ. Mình sẽ chuẩn bị đồ lên size dần.":"Ba tháng cuối mình ưu tiên đồ rộng bụng, nhẹ và thoáng, giày đế bằng."]}},
   sizeTruoc:{say:["Trước khi bầu, mẹ thường mặc size gì?"],key:"sizeTruoc",chips:["S","M","L","XL"],next:"bung"},
-  bung:{say:["Hiện giờ bụng của mẹ thế nào?"],key:"bung",chips:["Chưa lộ","Lộ nhẹ","Đã rõ"],next:"coThe"},
-  coThe:{say:["Dạo này cơ thể mẹ hay thế nào? Chọn nhiều cũng được."],key:"coThe",multi:1,chips:["Hay nóng, ra mồ hôi","Phù chân","Da nhạy cảm với vải","Không có gì đặc biệt"],none:"Không có gì đặc biệt",next:"dangBau"},
-  dangBau:{say:["Mẹ thích dáng nào khi đi làm?"],key:"dang",chips:["Suông, che bụng","Ôm nhẹ, khoe bụng bầu","Babydoll, chiết dưới ngực"],next:"nghi"},
-  nghi:{say:["Mẹ dự định nghỉ thai sản từ khi nào?"],key:"nghi",chips:["Tháng thứ 8","Tháng thứ 9","Sát ngày sinh","Chưa biết"],next:"anTuong"},
+  bung:{say:["Hiện giờ bụng của mẹ thế nào?"],key:"bung",chips:["Chưa lộ","Lộ nhẹ","Đã rõ"],pics:{"Chưa lộ":"b0","Lộ nhẹ":"b1","Đã rõ":"b2"},next:"coThe",
+    after:function(v){return [v==="Chưa lộ"?"Giai đoạn này mẹ mặc đồ thường size cũ, chỉ cần vải co giãn và cạp không siết.":v==="Lộ nhẹ"?"Lộ nhẹ là lúc đầm suông, đầm đắp chéo đẹp nhất, vừa gọn vừa thoải mái.":"Bụng rõ rồi thì mình chọn đầm chữ A, babydoll và quần cạp chun cao qua bụng cho mẹ."]}},
+  coThe:{say:["Dạo này cơ thể mẹ hay thế nào? Chọn nhiều cũng được."],key:"coThe",multi:1,chips:["Hay nóng, ra mồ hôi","Phù chân","Da nhạy cảm với vải","Không có gì đặc biệt"],pics:{"Hay nóng, ra mồ hôi":"nong","Phù chân":"phu","Da nhạy cảm với vải":"da","Không có gì đặc biệt":"ok"},none:"Không có gì đặc biệt",next:"dangBau",
+    after:function(v){var o=[];v=v||[];if(v.indexOf("Hay nóng, ra mồ hôi")>-1)o.push("Hay nóng: mình chọn lụa, linen, tencel thấm hút, màu sáng. Mẹ nhớ để sẵn chai nước ở bàn, uống từng ngụm.");if(v.indexOf("Phù chân")>-1)o.push("Phù nhẹ ở chân khá thường gặp. Mẹ tránh đứng lâu, gác chân lên ghế thấp khi ngồi, đi lại nhẹ mỗi giờ. Mình sẽ tránh quần bó gấu và gợi ý giày đế bằng, mềm.");if(v.indexOf("Da nhạy cảm với vải")>-1)o.push("Da nhạy cảm: tụi mình giặt đồ của mẹ bằng nước giặt không hương liệu và xả kỹ, ưu tiên cotton, tencel.");if(!o.length)o.push("Tuyệt quá! Mình vẫn ưu tiên đồ co giãn để mẹ thoải mái cả ngày.");return o}},
+  dangBau:{say:["Mẹ thích dáng nào khi đi làm?"],key:"dang",chips:["Suông, che bụng","Ôm nhẹ, khoe bụng bầu","Babydoll, chiết dưới ngực"],pics:{"Suông, che bụng":"suong","Ôm nhẹ, khoe bụng bầu":"om","Babydoll, chiết dưới ngực":"baby"},next:"nghi"},
+  nghi:{say:["Mẹ dự định nghỉ thai sản từ khi nào?"],key:"nghi",chips:["Tháng thứ 8","Tháng thứ 9","Sát ngày sinh","Chưa biết"],next:"anTuong",
+    after:function(){return ["Ngày nghỉ là gói tự tạm dừng, không tính tiền. Mẹ cũng nhớ: từ tháng thứ 7, mẹ không phải làm thêm giờ, làm đêm hay đi công tác xa nếu không muốn."]}},
   beThang:{say:["Chúc mừng mẹ và bé! Bé được mấy tháng rồi?"],key:"beThang",chips:["Dưới 4 tháng","4 – 6 tháng","6 – 12 tháng","Trên 12 tháng"],next:"diLam"},
-  diLam:{say:["Mẹ đi làm lại từ ngày nào?"],key:"diLam",date:1,skip:"Đã đi làm rồi",next:function(){return CH.a.giaiDoan==="Đã sinh, đang cho con bú"?"hutSua":"sizeNay"}},
-  hutSua:{say:["Ở công ty mẹ có hút sữa không? Mình sẽ chọn áo mở khuy trước hoặc khoá kéo cho tiện."],key:"hutSua",chips:["Có, cần áo mở nhanh","Thỉnh thoảng","Không"],next:"sizeNay"},
+  diLam:{stk:"tui",say:["Mẹ đi làm lại từ ngày nào?"],key:"diLam",date:1,skip:"Đã đi làm rồi",next:function(){return CH.a.giaiDoan==="Đã sinh, đang cho con bú"?"hutSua":"sizeNay"}},
+  hutSua:{say:["Ở công ty mẹ có hút sữa không? Mình sẽ chọn áo mở khuy trước hoặc khoá kéo cho tiện."],key:"hutSua",chips:["Có, cần áo mở nhanh","Thỉnh thoảng","Không"],next:"sizeNay",
+    after:function(v){return v==="Không"?[]:["Mẹ nuôi con dưới 12 tháng được nghỉ 60 phút mỗi ngày trong giờ làm, vẫn hưởng đủ lương. Mẹ có thể dùng khoảng này để hút sữa."]}},
   sizeNay:{say:["Size hiện tại của mẹ là gì?"],key:"sizeNay",chips:["S","M","L","XL","Chưa chắc, cần đo"],next:"che"},
   che:{say:["Mẹ muốn khéo che vùng nào? Chọn nhiều cũng được."],key:"che",multi:1,chips:["Bụng","Hông","Bắp tay","Không cần che"],none:"Không cần che",next:"anTuong"},
   anTuong:{say:["Ở công ty, mẹ muốn trông thế nào?"],key:"anTuong",chips:PERSONA.map(function(p){return p.b}),next:"mau"},
-  mau:{say:["Mẹ hay mặc bảng màu nào?"],key:"mau",chips:PALETTE.map(function(p){return p.b}),next:"nganh"},
+  mau:{say:["Mẹ hay mặc bảng màu nào?"],key:"mau",chips:PALETTE.map(function(p){return p.b}),sw:1,next:"nganh"},
   nganh:{say:["Mẹ làm trong lĩnh vực nào?"],key:"nganh",chips:["Ngân hàng, tài chính","Kế toán, hành chính","Giáo viên, giảng viên","Cơ quan nhà nước","Y tế, dược","Nghề khác"],next:"diLai"},
   diLai:{say:["Mẹ đi làm bằng gì?"],key:"diLai",chips:["Xe máy","Ô tô, Grab","Đi bộ, xe buýt"],next:"lienHe"},
   lienHe:{say:["Xong rồi! Mẹ cho mình xin tên và số Zalo để stylist giữ hồ sơ và gửi lộ trình tủ đồ nhé."],key:"lienHe",contact:1,next:"end"},
-  end:{say:["Cảm ơn mẹ! Mình đã vẽ xong lộ trình tủ đồ. Mẹ xem bên dưới nhé."],end:1}};
+  end:{stk:"tui",say:["Cảm ơn mẹ! Mình đã vẽ xong lộ trình tủ đồ và lưu ý sức khoẻ từng giai đoạn. Mẹ xem bên dưới nhé."],end:1}};
 function startChat(){CH={a:{},node:"start",t0:Date.now()};$("#chat").innerHTML='<h1 class="sr">Trò chuyện với stylist Mẹ bầu &amp; Sau sinh</h1><div class="top"><div class="av" aria-hidden="true">C</div><div><b>Stylist Mẹ bầu &amp; Sau sinh</b><small>CHÉRIE Office · thường trả lời ngay</small></div><a class="back" href="#nhom-me-bau-sau-sinh">Thoát</a></div>';runNode("start")}
-function bubble(t,who){var d=document.createElement("div");d.className="msg "+who;d.textContent=t;$("#chat").appendChild(d);d.scrollIntoView({block:"end",behavior:"smooth"});return d}
+function toEnd(){requestAnimationFrame(function(){var r=$("#replies");if(r)$("#chat").style.paddingBottom=(r.offsetHeight+28)+"px";window.scrollTo({top:document.documentElement.scrollHeight,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"})})}
+function bubble(t,who){var d=document.createElement("div");d.className="msg "+who;d.textContent=t;$("#chat").appendChild(d);toEnd();return d}
+function stkBubble(k){var d=document.createElement("div");d.className="msg bot stkm";d.innerHTML=stk(k);$("#chat").appendChild(d);toEnd()}
 function runNode(id){
   if(id==="end")leaveStep(false);else enterStep("me|"+id);
   CH.node=id;var n=MOM_FLOW[id];$("#repliesIn").innerHTML="";var i=0;
   var typing=bubble("","bot typing");typing.innerHTML="<i></i><i></i><i></i>";typing.setAttribute("aria-label","Stylist đang trả lời");
   (function step(){
+    if(i===0&&n.stk&&!CH["s_"+id]){CH["s_"+id]=1;setTimeout(function(){typing.remove();stkBubble(n.stk);typing=bubble("","bot typing");typing.innerHTML="<i></i><i></i><i></i>";step()},400);return}
     if(i<n.say.length){setTimeout(function(){if(i===0)typing.remove();bubble(n.say[i],"bot");i++;step()},i===0?500:650);return}
     if(n.end){setTimeout(finishChat,700);return}
     drawReplies(n)})()}
-function padChat(){var r=$("#replies");if(r)$("#chat").style.paddingBottom=(r.offsetHeight+28)+"px";var last=$("#chat").lastElementChild;if(last)last.scrollIntoView({block:"end"})}
+function padChat(){toEnd()}
 function drawReplies(n){
   var sel=CH.a[n.key]||(n.multi?[]:"");var h="";
   if(n.contact){h+='<input id="chTen" autocomplete="name" placeholder="Tên của mẹ" aria-label="Tên"><input id="chZalo" type="tel" inputmode="tel" placeholder="Số Zalo" aria-label="Số Zalo"><button class="send" type="button" data-send="contact">Gửi</button><span style="font-size:12px;color:var(--muted);width:100%">Bấm Gửi là mẹ đồng ý để CHÉRIE lưu câu trả lời và nhắn Zalo về lộ trình tủ đồ.</span>'}
   else if(n.date){h+='<input id="chDate" type="date" aria-label="Chọn ngày"><button class="send" type="button" data-send="date">Gửi</button>'+(n.skip?'<button class="chip" type="button" data-c="'+esc(n.skip)+'">'+esc(n.skip)+'</button>':'')}
-  else{h+=n.chips.map(function(c){return '<button class="chip" type="button" data-c="'+esc(c)+'" aria-pressed="'+(n.multi?sel.indexOf(c)>-1:false)+'">'+esc(c)+'</button>'}).join("");if(n.multi)h+='<button class="send" type="button" data-send="multi">Xong</button>'}
+  else{var pal={};PALETTE.forEach(function(p){pal[p.b]=p.sw});
+    h+='<div class="cg'+(n.pics?' pic c'+Math.min(n.chips.length,n.chips.length===4?2:3):'')+'">'+n.chips.map(function(c){return '<button class="chip" type="button" data-c="'+esc(c)+'" aria-pressed="'+(n.multi?sel.indexOf(c)>-1:false)+'">'+(n.pics&&n.pics[c]?stk(n.pics[c]):'')+(n.sw&&pal[c]?'<span class="dots">'+pal[c].map(function(x){return '<i style="background:'+x+'"></i>'}).join("")+'</span>':'')+'<span>'+esc(c)+'</span></button>'}).join("")+'</div>';
+    if(n.multi)h+='<button class="send wide" type="button" data-send="multi">Xong'+(sel.length?' ('+sel.length+')':'')+'</button>'}
   $("#repliesIn").innerHTML=h;padChat()}
-function answer(v,label){var n=MOM_FLOW[CH.node];CH.a[n.key]=v;bubble(label||String(v),"me");var nx=typeof n.next==="function"?n.next(v):n.next;runNode(nx)}
+function answer(v,label){var n=MOM_FLOW[CH.node];CH.a[n.key]=v;bubble(label||String(v),"me");var nx=typeof n.next==="function"?n.next(v):n.next;
+  var extra=n.after?n.after(v)||[]:[];if(!extra.length){runNode(nx);return}
+  $("#repliesIn").innerHTML="";var j=0;(function more(){var ty=bubble("","bot typing");ty.innerHTML="<i></i><i></i><i></i>";setTimeout(function(){ty.remove();bubble(extra[j],"bot tip");j++;if(j<extra.length)more();else runNode(nx)},700)})()}
 $("#repliesIn").addEventListener("click",function(e){
   if(!CH)return;var n=MOM_FLOW[CH.node];var c=e.target.closest("[data-c]"),s=e.target.closest("[data-send]");
   if(c){var v=c.dataset.c;
@@ -1310,24 +1386,46 @@ function finishChat(){
   var res={mom:1,line:MOM,slug:"me-bau-sau-sinh",type:p?p.v:"Mềm mại",a:a,at:Date.now(),ten:CH.ten||"",zalo:CH.zalo||""};try{var mc0=buildCapsule(LINES.filter(function(x){return x.mom})[0],a);res.cap=mc0.ids;res.bo=boStr(mc0.bo)}catch(e){}ss("of-result",res);saveKQ(res,"Trò chuyện mẹ",(Date.now()-CH.t0)/1000,!!res.zalo);
   if(res.zalo)sendLead(res,"Trò chuyện mẹ");location.hash="ket-qua"}
 function fmtD(d){return ("0"+d.getDate()).slice(-2)+"/"+("0"+(d.getMonth()+1)).slice(-2)+"/"+d.getFullYear()}
+/* lộ trình mẹ: mỗi giai đoạn có lời stylist (mặc gì) và lời nhắc sức khoẻ (theo hướng dẫn chung của NHS, Bộ luật Lao động 2019) */
 function momPlan(a){
-  var out=[],now=new Date();
+  var out=[],co=a.coThe||[],nong=co.indexOf("Hay nóng, ra mồ hôi")>-1,phu=co.indexOf("Phù chân")>-1,da=co.indexOf("Da nhạy cảm với vải")>-1,xm=a.diLai==="Xe máy";
+  var vai=nong?"lụa, linen, tencel thoáng":da?"cotton, tencel mềm, giặt không hương liệu":"vải co giãn mềm";
   if(a.giaiDoan==="Đang mang bầu"){
-    var due=a.duSinh&&a.duSinh!=="Chưa chắc"?new Date(a.duSinh):null;var sz=a.sizeTruoc||"M";var up={S:"M",M:"L",L:"XL",XL:"XL"}[sz]||sz;
-    if(due){var wk=40-Math.round((due-now)/(7*864e5));var m=Math.max(1,Math.ceil(wk/4.35));
-      if(m<=5)out.push(["Từ nay đến tháng thứ 5","Size "+sz+", vải co giãn","Đầm suông, áo cổ V, chân váy lưng thun, blazer mặc mở. Vẫn là đồ công sở thường ngày."]);
-      if(m<=7)out.push(["Tháng thứ 6 – 7","Lên size "+up+", phom rộng bụng","Đầm "+(a.dang||"suông").split(",")[0].toLowerCase()+", đầm đắp chéo, quần cạp chun. Đổi size miễn phí khi bụng lớn nhanh."]);
-      out.push(["Tháng thứ 8 – 9","Đầm rộng bụng là chính","Đầm chữ A, babydoll, vải thoáng"+((a.coThe||[]).indexOf("Hay nóng, ra mồ hôi")>-1?", thấm mồ hôi":"")+", không bó bụng"+((a.coThe||[]).indexOf("Phù chân")>-1?", stylist gửi kèm gợi ý giày êm":"")+"."]);
-      out.push(["Nghỉ thai sản"+(a.nghi&&a.nghi!=="Chưa biết"?" ("+a.nghi.toLowerCase()+")":""),"Tạm dừng gói","Trả đồ, không tính tiền. Dự sinh "+fmtD(due)+"."]);
-    }else{out.push(["Tháng đầu","Size "+sz+", vải co giãn","Stylist hỏi ngày dự sinh qua Zalo rồi xếp lộ trình chi tiết."]);out.push(["Khi bụng lớn","Lên size "+up,"Đổi size miễn phí ở chuyến giao kế tiếp."]);out.push(["Nghỉ thai sản","Tạm dừng gói","Không tính tiền trong thời gian nghỉ."])}
-    out.push(["Ngày đi làm lại","Tủ đồ sau sinh","Áo mở khuy trước cho con bú, cạp chun êm. Gói mở tiếp, không đăng ký lại."]);
+    var w=tuanThai(a.duSinh==="Chưa chắc"?"":a.duSinh),sz=a.sizeTruoc||"M",up={S:"M",M:"L",L:"XL",XL:"XL"}[sz]||sz,dang=(a.dang||"Suông").split(",")[0].toLowerCase();
+    var due=w?new Date(a.duSinh):null;
+    out.push({w:[1,13],when:"Tuần 1 – 13",t:"Size "+sz+", đồ mềm không mùi",
+      sty:"Áo suông, đầm "+dang+", chân váy lưng thun. Vải "+vai+". Mang theo cardigan mỏng cho phòng máy lạnh.",
+      hk:["Hay nghén thì ăn bữa nhỏ, nhiều lần; để sẵn bánh quy khô và nước ở bàn làm việc.","Mệt là chuyện bình thường. Mẹ tranh thủ nghỉ trưa, đi ngủ sớm hơn.","Áo lót mềm, không gọng khi ngực bắt đầu căng."]});
+    out.push({w:[14,27],when:"Tuần 14 – 27",t:"Lên size "+up+" từ khoảng tuần 20",
+      sty:"Đầm "+dang+", đầm đắp chéo, quần cạp chun cao qua bụng. Giày đế bằng hoặc gót vuông thấp."+(xm?" Đi xe máy: tránh váy quá dài dễ vướng, mang áo khoác chống nắng mỏng.":""),
+      hk:["Đau lưng: đi giày đế bằng, ngồi lưng thẳng có gối tựa, không nhấc đồ nặng, quay người thì xoay cả bàn chân.","Cứ mỗi giờ đứng dậy đi lại vài phút, uống nước đều."]});
+    out.push({w:[28,40],when:"Tuần 28 – 40",t:"Đầm rộng bụng là chính",
+      sty:"Đầm chữ A, babydoll, vải "+(nong?"thoáng mát":"nhẹ")+". Tránh quần bó gấu, giày quai siết."+(phu?" Chân hay phù: giày rộng hơn nửa size, đế mềm.":""),
+      hk:["Phù chân: tránh đứng lâu, gác chân khi ngồi, đi bộ nhẹ, xoay cổ chân 8 vòng mỗi bên vài lần trong ngày.","Từ tháng thứ 7, mẹ không phải làm thêm giờ, làm đêm, đi công tác xa nếu không đồng ý.","Ợ nóng: ăn bữa nhỏ, không nằm ngay sau khi ăn."]});
+    out.push({w:[37,42],when:"Nghỉ thai sản"+(a.nghi&&a.nghi!=="Chưa biết"?" ("+a.nghi.toLowerCase()+")":""),t:"Tạm dừng gói, không tính tiền",
+      sty:"Tụi mình lấy lại đồ ở chuyến cuối trước ngày nghỉ."+(due?" Dự sinh "+fmtD(due)+".":""),hk:["Chuẩn bị sẵn túi đi sinh từ khoảng tuần 36."]});
+    out.push({w:[99,99],when:"Ngày đi làm lại",t:"Tủ đồ sau sinh mở tiếp",
+      sty:"Áo mở khuy trước, đầm sơ mi, cardigan; màu trung tính dễ phối. Gói mở tiếp, không đăng ký lại.",
+      hk:["Mẹ nuôi con dưới 12 tháng được nghỉ 60 phút mỗi ngày trong giờ làm, vẫn hưởng đủ lương."]});
+    out.forEach(function(x){x.cur=w&&w>=x.w[0]&&w<=x.w[1]&&x.w[0]<37});
   }else{
-    var back=a.diLam&&a.diLam!=="Đã đi làm rồi"?new Date(a.diLam):null;var nurse=a.giaiDoan==="Đã sinh, đang cho con bú";
-    out.push([back?"Trước "+fmtD(back):"Tuần đầu","Đo lại size","Stylist hẹn đo hoặc gửi bảng size "+(a.sizeNay&&a.sizeNay!=="Chưa chắc, cần đo"?"quanh size "+a.sizeNay:"để mẹ tự đo")+"."]);
-    out.push(["Tháng đầu đi làm",nurse?"Áo mở nhanh cho con bú":"Phom che khéo, đứng dáng",(nurse&&a.hutSua!=="Không"?"Sơ mi khuy trước, áo khoá kéo, áo cài vạt. ":"")+"Cạp chun êm"+((a.che||[]).length&&(a.che||[])[0]!=="Không cần che"?", che khéo "+a.che.join(", ").toLowerCase():"")+"."]);
-    out.push(["Tháng 2 – 3","Về dần size cũ","Đổi size miễn phí. Khi sẵn sàng, chuyển sang Classic hoặc Lead cùng giá gốc."]);
+    var back=a.diLam&&a.diLam!=="Đã đi làm rồi"?new Date(a.diLam):null,nurse=a.giaiDoan==="Đã sinh, đang cho con bú",che=(a.che||[]).filter(function(x){return x!=="Không cần che"});
+    out.push({when:back?"Trước "+fmtD(back):"Tuần đầu",t:"Đo lại size",cur:1,
+      sty:"Stylist hẹn đo hoặc gửi bảng size "+(a.sizeNay&&a.sizeNay!=="Chưa chắc, cần đo"?"quanh size "+a.sizeNay:"để mẹ tự đo")+". Cơ thể sau sinh thay đổi từng tuần, mình chọn vải co giãn để mặc vừa lâu hơn.",
+      hk:["Cơ thể cần khoảng 6 tuần để hồi phục sau sinh. Mẹ đi làm lại thì tăng dần nhịp, đừng ép mình."]});
+    out.push({when:"Tháng đầu đi làm",t:nurse?"Áo mở nhanh cho con bú":"Phom che khéo, đứng dáng",
+      sty:(nurse&&a.hutSua!=="Không"?"Sơ mi khuy trước, áo khoá kéo, áo cài vạt; màu họa tiết nhỏ dễ che vết sữa. ":"")+"Cạp chun êm"+(che.length?", che khéo "+che.join(", ").toLowerCase():"")+".",
+      hk:nurse?["Mẹ nuôi con dưới 12 tháng được nghỉ 60 phút mỗi ngày trong giờ làm, vẫn hưởng đủ lương: dùng để hút sữa.","Hút sữa đều giờ, mang túi giữ lạnh, uống đủ nước. Nên báo trước để công ty bố trí chỗ riêng tư."]:["Ngủ chưa đủ là chuyện chung của mẹ bỉm. Ưu tiên đồ không cần ủi, sáng mặc nhanh."]});
+    out.push({when:"Tháng 2 – 3",t:"Về dần size cũ",sty:"Đổi size miễn phí. Khi sẵn sàng, chuyển sang Classic hoặc Lead cùng giá gốc.",hk:["Đau lưng khi bế bé: giữ lưng thẳng, khuỵu gối khi nhấc bé lên."]});
   }
   return out}
+function momGuide(a,plan){
+  var w=a.giaiDoan==="Đang mang bầu"?tuanThai(a.duSinh==="Chưa chắc"?"":a.duSinh):0,h='<section class="sec" style="padding-top:30px"><span class="k" style="color:var(--mom)">Stylist và lời nhắc sức khoẻ</span><h2 style="margin-top:6px">Từng giai đoạn, tủ đồ thay theo</h2>';
+  if(w)h+='<div class="wk">'+stk(w<=13?"b0":w<=27?"b1":"b2")+'<div><span class="k">Mẹ đang ở</span><b>Tuần '+w+' · ba tháng '+["","đầu","giữa","cuối"][tcn(w)]+'</b><span>'+(beCo(w)?'Bé lớn cỡ '+beCo(w)+'. ':'')+'Còn khoảng '+Math.max(0,40-w)+' tuần.</span><div class="bar" aria-hidden="true"><i style="width:'+Math.round(Math.min(w,40)*100/40)+'%"></i></div></div></div>';
+  h+='<div class="tl2">'+plan.map(function(p){return '<div class="it'+(p.cur?' cur':'')+'"><span class="when">'+esc(p.when)+(p.cur?' · mẹ đang ở đây':'')+'</span><b>'+esc(p.t)+'</b><div class="two"><div><span class="lb">Stylist</span><p>'+esc(p.sty)+'</p></div>'+(p.hk&&p.hk.length?'<div><span class="lb">Sức khoẻ</span><ul>'+p.hk.map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ul></div>':'')+'</div></div>'}).join("")+'</div>';
+  if(a.giaiDoan==="Đang mang bầu")h+='<div class="warn"><b>Gọi bác sĩ hoặc đến viện ngay nếu</b><ul><li>Mặt, tay hoặc chân phù lên đột ngột.</li><li>Đau đầu dữ dội, mắt nhìn mờ hoặc thấy chớp sáng.</li><li>Đau nhiều ngay dưới xương sườn, hoặc thấy rất mệt, buồn nôn.</li></ul><p>Lời khuyên trên là hướng dẫn chung, không thay cho khám thai định kỳ. Tham khảo: NHS (Anh), Bộ luật Lao động 2019 Điều 137.</p></div>';
+  else h+='<p class="muted" style="font-size:13px;margin-top:14px">Lời khuyên chung, không thay cho tư vấn của bác sĩ. Tham khảo: NHS (Anh), Bộ luật Lao động 2019 Điều 137.</p>';
+  return h+'</section>'}
 function renderDone(){var d=ss("of-dk-done");if(!d){location.hash="";return}
   var mon=new Date();mon.setDate(mon.getDate()+((8-mon.getDay())%7||7));if(d.nha)mon.setDate(mon.getDate()-1);var ngay=fmtD(mon);
   var msg="Chào CHÉRIE, mình vừa đăng ký "+d.goi+", mã "+d.ma+(d.maKQ?" (tủ "+d.maKQ+")":"")+". Nhờ stylist liên hệ giúp mình.";
@@ -1359,7 +1457,7 @@ function renderMomResult(r){
   var T=TYPES[r.type]||TYPES["Mềm mại"],a=r.a,plan=momPlan(a);
   var h='<div class="typecard" style="background:#8E432B"><span class="k" style="color:rgba(255,255,255,.75)">Lộ trình tủ đồ · Mẹ bầu &amp; Sau sinh</span><span class="fr-name">'+esc(T.fr)+'</span><h1>'+esc(a.giaiDoan==="Đang mang bầu"?"Tủ đồ đi cùng mẹ suốt thai kỳ":"Tủ đồ cho ngày mẹ quay lại công sở")+'</h1><p>Phong cách mẹ chọn: '+esc(T.ten.replace("Nàng","nàng").toLowerCase())+'. '+esc(T.mo.split(":")[0])+'.</p><div class="pal">'+T.pal.map(function(c){return '<i style="background:'+c+'"></i>'}).join("")+'</div></div>';
   var ml=LINES.filter(function(x){return x.mom})[0],mc=capOf(ml,r);r.cap=mc.ids;CUR={at:r.at,ma:r.maKQ||"",xem:r.xem||"",ten:r.ten||"",dong:MOM,kieu:T.ten,bo:mc.bo};if(mc.bo.length)h+=doiTuHtml(r,ml)+capsuleHtml(ml,mc).replace("Stylist chọn từ đồ đang có trong kho","Phối từ những món trong kho mặc được khi bầu và sau sinh: đầm suông, chữ A, đắp chéo; áo suông, cổ V; quần, váy cạp chun");
-  h+='<section class="sec" style="padding-top:30px"><h2>Từng giai đoạn, tủ đồ thay theo</h2><div class="timeline">'+plan.map(function(p){return '<div class="it"><span class="when">'+esc(p[0])+'</span><b>'+esc(p[1])+'</b><p>'+esc(p[2])+'</p></div>'}).join("")+'</div></section>';
+  h+=momGuide(a,plan);
   if(mc.bo.length)h+=saveBarHtml(CUR);
   h+='<div class="cta-box"><span class="k muted">Bước tiếp theo</span><h2>Mở tủ đồ cho mẹ</h2><p class="muted">389.000đ/tuần cho 10 bộ, hoặc 349.000đ/tuần cho 5 bộ. Trả trước 12 tuần, giảm 7%. Stylist dùng lộ trình này, mẹ không phải kể lại.</p><div class="row"><a class="pill" href="#dang-ky" style="background:#8E432B;border-color:#8E432B">Gửi đăng ký</a><a class="pill ghost" href="#chan-doan-me">Trò chuyện lại</a></div></div>';
   $("#res").innerHTML=h;sbar("ket-qua")}
@@ -1478,7 +1576,7 @@ function sbar(id){var b=$("#sbar"),h="",l=null;
   b.innerHTML=h;document.body.classList.toggle("has-sbar",!!h)}
 function view(id){sbar(id);document.querySelectorAll(".view").forEach(function(v){v.hidden=v.id!=="v-"+id});var f=(id==="quiz"||id==="chat");document.querySelector("footer.site").hidden=f;document.body.classList.toggle("focus",f)}
 /* tự nhận bản website mới: trang mở lâu vẫn chuyển sang bản mới ở lần chuyển trang kế tiếp (không ngắt trắc nghiệm, đăng ký) */
-var VER="20261031131348",NEWV=false,VCHK=0;
+var VER="20261031143059",NEWV=false,VCHK=0;
 function chkVer(){if(VER==="dev"||Date.now()-VCHK<90000)return;VCHK=Date.now();try{fetch("ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=(t||"").trim();if(t&&t!==VER)NEWV=true}).catch(function(){})}catch(e){}}
 document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chkVer()});
 function route(){

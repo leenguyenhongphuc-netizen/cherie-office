@@ -1045,8 +1045,38 @@ function chotWeb(){var r=S.saleCur;if(!r)return;var z=String(r.Zalo||"").replace
 function vChamSoc(){var h='<div class="eyebrow">Giữ chân khách</div><h1>Chăm sóc</h1>'+banner();if(!S.loaded)return h+(mcp&&!S.err?skeleton():"");var t0=today();
   var dk=rows("DangKy"),sap=dk.filter(function(r){var d=parseD(r.NgayHetHan);return r.TrangThai==="Đang dùng"&&d&&daysBetween(t0,d)<=14&&daysBetween(t0,d)>=0}),dung=dk.filter(function(r){return r.TrangThai==="Tạm dừng"}),het=dk.filter(function(r){var d=parseD(r.NgayHetHan);return r.TrangThai==="Hết hạn"&&d&&daysBetween(d,t0)<=60});
   var sec=function(t,L,mau){return '<div class="group">'+t+' · '+L.length+'</div>'+(L.length?'<div class="list">'+L.map(function(r){var k=khachBy(r.MaKH)||{};return '<button class="item noimg wrap" type="button" data-cs="'+esc(r.MaDK)+'" data-csm="'+mau+'"><div style="min-width:0"><div class="t1">'+esc(k.Ten||r.MaKH)+' · '+esc(r.Dong)+'</div><div class="t2">hết hạn '+dmy(r.NgayHetHan)+'</div></div><div class="r"><span class="small">Chép tin, mở Zalo</span></div></button>'}).join("")+'</div>':'<div class="empty">Không có.</div>')};
+  h+=vThaiKy();
   h+=sec("Sắp hết hạn trong 14 ngày",sap,"giaHan")+sec("Đang tạm dừng",dung,"quayLai")+sec("Hết hạn trong 60 ngày qua",het,"quayLai");
   return h}
+/* ---------- chăm sóc mẹ theo thai kỳ: mỗi mẹ có ngày dự sinh thì biết tuần này cần làm gì, tin nhắn soạn sẵn (nhân viên tự gửi) ---------- */
+function meList(){var t0=today(),seen={},o=[];
+  var add=function(ten,zalo,du,nguon){var d=parseD(du);var z=String(zalo||"").replace(/\D/g,"");if(!d||!z||seen[z])return;seen[z]=1;var con=daysBetween(t0,d);o.push({ten:ten||z,zalo:z,du:d,con:con,w:40-Math.ceil(con/7),nguon:nguon})};
+  rows("KhachHang").forEach(function(k){add(k.Ten,k.Zalo||k.MaKH,k.NgayDuSinh,"Khách")});
+  rows("DangKyWeb").forEach(function(r){add(r.Ten,r.Zalo,r.NgayDuSinh,"Web")});
+  return o}
+function thaiKyViec(m){var w=m.w,p=-m.con;
+  if(m.con>=0){if(w<=13)return ["Ba tháng đầu","Hỏi thăm nghén, ưu tiên đồ mềm, không mùi vải",0];
+    if(w<=19)return ["Tuần "+w,"Hỏi bụng đã lộ chưa, báo trước sẽ lên size từ tuần 20",w>=18];
+    if(w<=27)return ["Tuần "+w,"Đồ còn vừa không? Đổi lên 1 size ở chuyến tới nếu chật",w===20||w===21];
+    if(w<=33)return ["Tuần "+w,"Chuyển sang tủ ba tháng cuối: đầm chữ A, babydoll; nhắc lưu ý phù chân",w===28||w===29];
+    if(w<=38)return ["Tuần "+w,"Chốt ngày nghỉ thai sản, hẹn chuyến lấy đồ cuối, tạm dừng gói",w>=34&&w<=36];
+    return ["Tuần "+w,"Sắp sinh: chỉ hỏi thăm, không nhắc gói",0]}
+  if(p<=30)return ["Sau sinh "+p+" ngày","Gửi lời chúc mừng, không bán hàng",p<=7];
+  if(p<=150)return ["Sau sinh "+Math.round(p/7)+" tuần","Hỏi ngày đi làm lại, gửi bảng đo size sau sinh",p>=90];
+  return ["Sau sinh "+Math.round(p/30)+" tháng","Mời mở lại tủ sau sinh hoặc chuyển Classic",0]}
+function thaiKyMsg(m){var ten=String(m.ten||"mẹ").split(" ").pop(),w=m.w,p=-m.con;
+  if(m.con>=0){if(w<=13)return "Chào mẹ "+ten+", tụi mình là CHÉRIE Office. Ba tháng đầu hay mệt, mẹ nhớ nghỉ ngơi và ăn bữa nhỏ nhé. Tuần này mẹ cần tụi mình chọn đồ mềm, không mùi vải hơn không ạ?";
+    if(w<=19)return "Chào mẹ "+ten+", mẹ đang ở tuần "+w+" rồi. Bụng đã lộ chưa mẹ? Từ khoảng tuần 20 tụi mình sẽ chuẩn bị đồ lên size cho mẹ, mẹ báo số đo khi tiện nhé.";
+    if(w<=27)return "Chào mẹ "+ten+", tuần "+w+" rồi, đồ trong tủ mẹ còn thoải mái không? Nếu hơi chật, tụi mình đổi lên 1 size ngay chuyến giao tới, không tính thêm tiền.";
+    if(w<=33)return "Chào mẹ "+ten+", mẹ vào ba tháng cuối rồi. Tụi mình chuyển tủ sang đầm chữ A, babydoll cho nhẹ bụng. Nếu chân hay phù, mẹ nhớ gác chân khi ngồi và đi lại nhẹ mỗi giờ nhé.";
+    if(w<=38)return "Chào mẹ "+ten+", mẹ dự định nghỉ thai sản từ ngày nào ạ? Tụi mình hẹn chuyến lấy đồ cuối và tạm dừng gói từ hôm đó, không tính tiền thời gian nghỉ.";
+    return "Chào mẹ "+ten+", CHÉRIE chúc mẹ và bé thật khoẻ, mẹ tròn con vuông nhé. Có gì cần mẹ cứ nhắn tụi mình."}
+  if(p<=30)return "Chúc mừng mẹ "+ten+" và bé! Cả nhà CHÉRIE Office chúc mẹ hồi phục thật nhanh. Mẹ cứ nghỉ ngơi, khi nào sẵn sàng đi làm lại tụi mình sẽ chuẩn bị tủ đồ sau sinh cho mẹ.";
+  if(p<=150)return "Chào mẹ "+ten+", bé dạo này ngoan không mẹ? Mẹ dự định đi làm lại từ ngày nào ạ? Tụi mình gửi mẹ bảng đo size sau sinh để chọn đồ vừa, có áo mở khuy tiện cho con bú.";
+  return "Chào mẹ "+ten+", tủ đồ sau sinh và tủ Classic đang có nhiều mẫu mới. Mẹ muốn mở lại tủ từ thứ 2 tới không ạ?"}
+function vThaiKy(){var L=meList();if(!L.length)return '<div class="group">Theo thai kỳ · 0</div><p class="sub">Chưa có mẹ nào có ngày dự sinh. Khi khách nhập ngày dự sinh ở website hoặc quầy, danh sách sẽ hiện ở đây.</p>';
+  L.forEach(function(m){m.v=thaiKyViec(m)});L.sort(function(a,b){return (b.v[2]?1:0)-(a.v[2]?1:0)||a.con-b.con});var gap=L.filter(function(m){return m.v[2]}).length;
+  return '<div class="group">Theo thai kỳ · '+L.length+(gap?' · '+gap+' việc tuần này':'')+'</div><div class="list">'+L.map(function(m){return '<button class="item noimg wrap" type="button" data-tk="'+esc(m.zalo)+'"><div style="min-width:0"><div class="t1">'+esc(m.ten)+' · '+esc(m.v[0])+(m.v[2]?' <span class="pill p-warn">Tuần này</span>':'')+'</div><div class="t2">'+esc(m.v[1])+' · dự sinh '+dmy(ymd(m.du))+'</div></div><div class="r"><span class="small">Chép tin, mở Zalo</span></div></button>'}).join("")+'</div>'}
 function csMsg(ma,mau){var r=dkBy(ma);if(!r)return;var k=khachBy(r.MaKH)||{},ten=(k.Ten||"nàng").split(" ").pop();
   var t=mau==="giaHan"?"Chào "+ten+", gói "+r.Dong+" của nàng hết hạn ngày "+dmy(r.NgayHetHan)+". Nàng gia hạn thêm 12 tuần để giữ giá "+money(N(r.GiaTuan)||0)+"/tuần và được giảm 7% nhé? Tủ tuần tới tụi mình đã chọn sẵn vài mẫu mới hợp gu nàng.":"Chào "+ten+", tủ "+r.Dong+" vừa có thêm mẫu mới của tháng này. Nàng mở lại gói từ thứ 2 tới không? Tụi mình giữ nguyên size và gu nàng đã chọn.";
   copyZaloMsg(t,k.Zalo||r.MaKH)}
@@ -1123,6 +1153,7 @@ document.addEventListener("click",function(ev){
   if(d.act==="tuChoi"){$("#saleX").innerHTML='<form class="form" id="fTuChoi">'+fld("tcLy","Lý do",sel("tcLy",["Giá cao","Chưa cần lúc này","Không hợp size","Không thích mặc đồ thuê","Đã mua đồ mới","Không trả lời","Khác"],"Giá cao"))+fld("tcNote","Ghi thêm",inp("tcNote",""))+'<button class="btn bad full" type="submit">Lưu từ chối</button></form>';return}
   if(d.mau!=null&&S.saleCur){copyZaloMsg(mauTin(S.saleCur)[+d.mau][1],d.z);return}
   if(d.cs){csMsg(d.cs,d.csm);return}
+  if(d.tk){var mm=meList().filter(function(x){return x.zalo===d.tk})[0];if(mm)copyZaloMsg(thaiKyMsg(mm),mm.zalo);return}
   if(d.tn){S.f.tuyenNgay=d.tn;render();return}
   if(d.stop){openStop(d.stop);return}
   if(d.act==="stopVang"){submitStop("vang");return}
