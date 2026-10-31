@@ -13,6 +13,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Be+Vietnam+Pro:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<script>
+/* Google Analytics 4: điền mã đo lường G-XXXXXXX vào GA_ID là bật. Để trống thì không tải gì. */
+var GA_ID="";
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}
+if(GA_ID){var g=document.createElement("script");g.async=1;g.src="https://www.googletagmanager.com/gtag/js?id="+GA_ID;document.head.appendChild(g);gtag("js",new Date());gtag("config",GA_ID,{send_page_view:false})}
+function ga(ev,p){try{if(GA_ID)gtag("event",ev,p||{})}catch(e){}}
+</script>
 <style>
 :root{
   --bg:#FFFFFF; --soft:#F5F3F2; --soft2:#EFE7E1; --ink:#1B1618; --muted:#6F6468; --line:#E6DFDB;
@@ -254,7 +261,7 @@ STK.vong='<path d="M26 44a22 22 0 0 1 40-10" fill="none"/><path d="M68 24v12H56"
 STK.giat='<path d="M20 64q4-22 30-22h26v22z" fill="'+SF+'"/><path d="M28 64h48"/><path d="M60 42v-8h16" fill="none"/><path d="M34 32q-4-6 0-12M46 30q-4-6 0-12M58 26q-4-6 0-10" fill="none"/><path d="M24 76h52" />';
 document.querySelectorAll("[data-stk]").forEach(function(e){e.outerHTML=stk(e.dataset.stk)});
 /* giữ nguồn quảng cáo (utm) khi chuyển sang trò chuyện */
-var q=location.search||"";document.querySelectorAll(".js-chat").forEach(function(a){a.href="/"+q+"#chan-doan-me"});
+var q=location.search||"";ga("page_view",{page_location:location.href,page_path:"/mom/",page_title:document.title});document.addEventListener("click",function(e){var a=e.target.closest(".js-chat");if(a)ga("bat_dau_tro_chuyen",{vi_tri:a.closest(".hd")?"dau_trang":a.closest(".sbar")?"thanh_duoi":a.closest(".plan")?"bang_gia":a.closest(".end")?"cuoi_trang":"mo_dau"})});document.querySelectorAll(".js-chat").forEach(function(a){a.href="/"+q+"#chan-doan-me"});
 document.querySelectorAll('a[href^="/#nhom-"]').forEach(function(a){a.href="/"+q+a.getAttribute("href").slice(1)});
 var D=window.OFFICE_DATA||{sp:[],anh:[]},img={};D.anh.forEach(function(a){(img[a.sp]=img[a.sp]||[]).push(a.src||a.th)});
 var by=function(id){return D.sp.filter(function(s){return s.id===id})[0]};

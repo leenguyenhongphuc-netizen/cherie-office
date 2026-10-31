@@ -8,6 +8,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Be+Vietnam+Pro:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<script>
+/* Google Analytics 4: điền mã đo lường G-XXXXXXX vào GA_ID là bật. Để trống thì không tải gì. */
+var GA_ID="";
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}
+if(GA_ID){var g=document.createElement("script");g.async=1;g.src="https://www.googletagmanager.com/gtag/js?id="+GA_ID;document.head.appendChild(g);gtag("js",new Date());gtag("config",GA_ID,{send_page_view:false})}
+function ga(ev,p){try{if(GA_ID)gtag("event",ev,p||{})}catch(e){}}
+</script>
 <style>
 /* Bố cục theo Rent the Runway: thanh trên gọn, hàng danh mục, hero bo tròn có thẻ giá, băng thẻ dọc bo tròn, các bước 01–04.
    Trắc nghiệm theo air Closet: mỗi màn một câu, thanh tiến độ, chọn là sang câu. Dòng Mẹ dùng giao diện trò chuyện. */
@@ -828,7 +835,7 @@ function saveKQ(res,loai,giay,dongY){
     thietBi:matchMedia("(max-width:760px)").matches?"Điện thoại":"Máy tính",giay:giay,dongY:!!dongY,ten:res.ten,zalo:res.zalo})
   .then(function(x){if(x&&x.ma){var r=ss("of-result");if(r&&r.lich)r.lich.forEach(function(e){if(e.at===res.at){e.maKQ=x.ma;e.xem=x.xem||""}});if(r&&r.at===res.at){r.maKQ=x.ma;r.xem=x.xem||""}if(r)ss("of-result",r);if(CUR&&CUR.at===res.at){CUR.ma=x.ma;CUR.xem=x.xem||"";paintSave()}}}).catch(function(){})}
 var EVQ=[];
-function track(su,giaTri){try{var r=ss("of-result")||{};EVQ.push({su:su,giaTri:String(giaTri==null?"":giaTri).slice(0,120),trang:location.hash.slice(1,40),maKQ:r.maKQ||"",luc:Date.now()});if(EVQ.length>=25)flushEv()}catch(e){}}
+function track(su,giaTri){ga(su,{gia_tri:String(giaTri==null?"":giaTri).slice(0,100)});try{var r=ss("of-result")||{};EVQ.push({su:su,giaTri:String(giaTri==null?"":giaTri).slice(0,120),trang:location.hash.slice(1,40),maKQ:r.maKQ||"",luc:Date.now()});if(EVQ.length>=25)flushEv()}catch(e){}}
 function flushEv(beacon){if(!EVQ.length)return;var ds=EVQ.splice(0,30),body=JSON.stringify({fn:"webSuKien",vid:VID,ds:ds});
   try{if(beacon&&navigator.sendBeacon&&navigator.sendBeacon(API,new Blob([body],{type:"text/plain"})))return}catch(e){}
   try{fetch(API,{method:"POST",redirect:"follow",body:body,keepalive:body.length<60000}).catch(function(){})}catch(e){}}
@@ -1137,7 +1144,7 @@ function finishQuiz(){
   saveKQ(res,"Trắc nghiệm",(Date.now()-QZ.t0)/1000,!!(a._wantSave&&a._dongY&&res.zalo));
   if(a._wantSave&&res.zalo){sendLead(res,"Trắc nghiệm")}
   location.hash="ket-qua"}
-function sendLead(r,loai){
+function sendLead(r,loai){ga("generate_lead",{dong:r.line,kenh:loai});
   var T=TYPES[r.type]||{};
   try{fetch(API,{method:"POST",redirect:"follow",body:JSON.stringify({fn:"webDangKy",loai:loai,dong:r.line,ten:r.ten,zalo:r.zalo,kieu:(T.ten||r.type)+(r.mode?" · "+r.mode:""),size:r.mom?(r.a.sizeNay||r.a.sizeTruoc||""):(r.a.size||""),chieuCao:r.a.cao||"",duSinh:r.a.duSinh||"",traLoi:r.a,bo:r.bo||""})}).catch(function(){})}catch(e){}}
 /* ---------- tủ đồ đề xuất trọn gói (10 bộ / tháng) ----------
@@ -1536,7 +1543,7 @@ function submit(){
     if(x&&x.err)throw new Error(x.err);
     suKien("dang_ky",x.ma||"Có");
     var rr=ss("of-result"),tc=ss("of-tu-chon"),pvi=[];var boS=(rr&&rr.line===c.l.k&&rr.bo)||(tc&&tc.dong===c.l.k&&tc.bo)||"";if(boS)boS.split(";").forEach(function(o){o.split("+").forEach(function(id){var sp=DATA.sp.filter(function(y){return y.id===id})[0];if(sp&&pvi.length<8&&imgOf(sp,0))pvi.push(imgOf(sp,0))})});
-    ss("of-dk-done",{ma:x.ma||"",ten:body.ten,zalo:body.zalo,goi:c.ten,tot:c.tot,coc:c.coc||0,giao:giaoText(),nha:picked("ship")==="Nhà riêng",pv:pvi,maKQ:(rr&&rr.maKQ)||(tc&&tc.ma)||"",xem:(rr&&rr.xem)||(tc&&tc.xem)||"",monthly:!!c.l.monthly});
+    ga("dang_ky_goi",{goi:c.ten,value:+c.tot||0,currency:"VND"});ss("of-dk-done",{ma:x.ma||"",ten:body.ten,zalo:body.zalo,goi:c.ten,tot:c.tot,coc:c.coc||0,giao:giaoText(),nha:picked("ship")==="Nhà riêng",pv:pvi,maKQ:(rr&&rr.maKQ)||(tc&&tc.ma)||"",xem:(rr&&rr.xem)||(tc&&tc.xem)||"",monthly:!!c.l.monthly});
     try{sessionStorage.removeItem("of-result")}catch(e){}
     next.disabled=false;next.textContent="Gửi đăng ký";location.hash="da-dang-ky";
   }).catch(function(e){next.disabled=false;next.textContent="Gửi lại";$("#sent").innerHTML='<b>Chưa gửi được.</b><span class="muted">'+esc(e.message||"Mạng chậm")+'. Thử lại, hoặc nhắn Zalo 0377 159 189.</span>';$("#sent").hidden=false})}
@@ -1576,10 +1583,10 @@ function sbar(id){var b=$("#sbar"),h="",l=null;
   b.innerHTML=h;document.body.classList.toggle("has-sbar",!!h)}
 function view(id){sbar(id);document.querySelectorAll(".view").forEach(function(v){v.hidden=v.id!=="v-"+id});var f=(id==="quiz"||id==="chat");document.querySelector("footer.site").hidden=f;document.body.classList.toggle("focus",f)}
 /* tự nhận bản website mới: trang mở lâu vẫn chuyển sang bản mới ở lần chuyển trang kế tiếp (không ngắt trắc nghiệm, đăng ký) */
-var VER="20261031143059",NEWV=false,VCHK=0;
+var VER="20261031145949",NEWV=false,VCHK=0;
 function chkVer(){if(VER==="dev"||Date.now()-VCHK<90000)return;VCHK=Date.now();try{fetch("ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=(t||"").trim();if(t&&t!==VER)NEWV=true}).catch(function(){})}catch(e){}}
 document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chkVer()});
-function route(){
+function route(){ga("page_view",{page_location:location.href,page_path:location.pathname+location.hash,page_title:document.title});
   if(NEWV&&!/^#(chan-doan-|bau$|dang-ky)/.test(location.hash)){NEWV=false;location.reload();return}chkVer();
   try{track("xem_trang",decodeURIComponent((location.hash||"#home").slice(1)).slice(0,40)||"home")}catch(e){}
   if(!/^#(chan-doan-|bau$)/.test(location.hash))leaveStep(true);
