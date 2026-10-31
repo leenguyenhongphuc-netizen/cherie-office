@@ -505,6 +505,34 @@ footer .base{margin-top:36px;padding-top:18px;border-top:1px solid #3A3033;font-
 .sh .ul{white-space:nowrap}
 /* bảng giá: link phụ canh giữa dưới nút */
 .plan.r6 .act .ul{justify-self:center}
+
+/* thao tác tủ đồ */
+.icb{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-width:56px;min-height:52px;padding:4px 6px;border:0;background:none;color:var(--ink);font:500 11px/1.1 var(--f-b);text-decoration:none;border-radius:12px;flex:none}
+.icb svg{width:22px;height:22px}
+.icb:active{background:var(--soft)}
+.sbar .icb+.pill,.rbar .icb+.pill{margin-left:auto}
+.sbar .icb~.pill{flex:1 1 auto;min-width:0;padding:0 16px}
+.rbar{display:none}
+@media (min-width:761px){.rbar{display:flex;align-items:center;gap:8px;position:sticky;top:76px;z-index:30;background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:6px 6px 6px 14px;margin:18px 0 0}.rbar .pill{flex:none}}
+#toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);opacity:0;pointer-events:none;background:var(--ink);color:var(--bg);font-size:14px;padding:10px 16px;border-radius:12px;max-width:calc(100% - 32px);z-index:60;transition:opacity .2s,transform .2s;text-align:center}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+.doitu{margin-top:18px}
+
+/* đầu trang dòng: điện thoại hiện dải 3 ảnh trọn người, máy tính hiện 1 ảnh lớn */
+.gh .fr .strip{display:none}
+@media (max-width:760px){.gh .fr img.one{display:none}.gh .fr .strip{position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px}
+ .gh .fr .strip i{position:relative;overflow:hidden;display:block;background:var(--ph-1)}.gh .fr .strip img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 20%}
+ .gh .fr{aspect-ratio:16/10}}
+.gh .pnote{display:block;flex-basis:100%;margin-top:2px;font-size:14px;color:var(--muted)}
+.gh .pnote b{color:var(--ink);font-weight:600}
+.doitu{border:0;padding:0}
+
+/* lựa chọn lẻ: ô cuối trải hết hàng, không để một ô đứng một mình */
+.opts:not(.three):not(.one):not(.four)>.op:last-child:nth-child(odd){grid-column:1/-1}
+@media (max-width:520px){.opts.three>.op:last-child:nth-child(odd),.opts.four>.op:last-child:nth-child(odd){grid-column:1/-1}}
+
+.gh .pnote b{font:600 14px/1.4 var(--f-b);color:var(--ink)}
+.op:has(.sw){align-content:start}
 </style>
 </head>
 <body>
@@ -537,7 +565,7 @@ footer .base{margin-top:36px;padding-top:18px;border-top:1px solid #3A3033;font-
       <div class="tx">
         <span class="k" style="color:rgba(255,255,255,.8)">Tủ đồ đi làm · Đà Nẵng</span>
         <h1>Một tủ đồ đi làm, <em>mỗi tuần một chiếc mới.</em></h1>
-        <p>Mỗi tuần nàng có một tủ đồ đi làm đã giặt hấp, giao tận văn phòng. Trả lời 3 phút để stylist chọn đúng gu.</p>
+        <p>Mỗi tuần nàng có một tủ đồ đi làm đã giặt hấp, giao tận văn phòng. Kể tụi mình nghe gu của nàng, stylist sẽ chọn đúng ý.</p>
         <div class="cta"><a class="pill" href="#chon-nhom">Tìm tủ đồ của nàng</a><a class="pill ghost" href="#goi-va-gia">Xem giá</a></div>
       </div>
       <div class="pricecard"><span class="k" style="color:#6F6468">Chỉ từ</span><b class="num">139.000đ<small style="font-size:14px">/tuần</small></b><span>Đã gồm giặt hấp và giao nhận</span></div>
@@ -570,7 +598,7 @@ footer .base{margin-top:36px;padding-top:18px;border-top:1px solid #3A3033;font-
     <div class="how">
       <div class="sh" style="margin:0"><div><span class="k muted">Cách hoạt động</span><h2 style="margin-top:6px">Một tuần của tủ đồ</h2></div><a class="pill how-top" href="#chon-nhom">Chọn dòng của nàng</a></div>
       <div class="steps">
-        <div class="stp"><span class="n">01</span><span class="t">Ngày đầu</span><h3>Chọn dòng, trả lời 3 phút</h3><p class="muted">Stylist hiểu gu, size, lịch làm việc của nàng.</p></div>
+        <div class="stp"><span class="n">01</span><span class="t">Ngày đầu</span><h3>Chọn dòng, kể về gu của nàng</h3><p class="muted">Stylist hiểu gu, size, lịch làm việc của nàng.</p></div>
         <div class="stp"><span class="n">02</span><span class="t">Thứ 2 – thứ 6</span><h3>Mặc 5 bộ đi làm</h3><p class="muted">Mỗi ngày một bộ, không phải nghĩ mặc gì.</p></div>
         <div class="stp"><span class="n">03</span><span class="t">Tối thứ 6</span><h3>Tụi mình lấy đồ đã mặc</h3><p class="muted">Không cần giặt. CHÉRIE Care giặt hấp, niêm phong.</p></div>
         <div class="stp"><span class="n">04</span><span class="t">Chiều CN · sáng T2</span><h3>Tủ tuần mới tới nơi</h3><p class="muted">Tại nhà chiều chủ nhật, hoặc văn phòng sáng thứ 2.</p></div>
@@ -719,7 +747,9 @@ function saveBarHtml(c){
   return '<div class="savebar" id="saveBar"><div><span class="k">Lưu tủ đồ này</span><b>'+(c.ma?'Mã <span class="num">'+esc(c.ma)+'</span>':'Đang tạo mã tủ đồ…')+'</b><p class="muted">Lưu ảnh vào máy hoặc giữ link để mở lại bất cứ lúc nào. Gửi mã cho stylist qua Zalo để được tư vấn và giữ đúng những bộ này.</p></div>'+
     '<div class="row"><button type="button" class="pill" data-save="anh">Lưu ảnh tủ đồ</button><button type="button" class="pill ghost" data-save="zalo"'+(c.ma?'':' disabled')+'>Gửi stylist qua Zalo</button><button type="button" class="pill ghost" data-save="link"'+(c.ma?'':' disabled')+'>Sao chép link tủ đồ</button></div><p class="msg" role="status" aria-live="polite"></p></div>'}
 function paintSave(){var b=$("#saveBar");if(b&&CUR)b.outerHTML=saveBarHtml(CUR)}
-function saveMsg(t){var m=document.querySelector("#saveBar .msg");if(m)m.textContent=t}
+function saveMsg(t){var m=document.querySelector("#saveBar .msg");if(m)m.textContent=t;
+  /* bấm từ thanh cố định thì báo nổi ngay trên thanh, không bắt kéo xuống tìm */
+  var ts=$("#toast");if(!ts){ts=document.createElement("div");ts.id="toast";ts.setAttribute("role","status");document.body.appendChild(ts)}ts.textContent=t;ts.className="on";clearTimeout(ts._t);ts._t=setTimeout(function(){ts.className=""},4200)}
 function copyText(t){if(navigator.clipboard&&navigator.clipboard.writeText)return navigator.clipboard.writeText(t);return new Promise(function(ok,no){var x=document.createElement("textarea");x.value=t;x.style.position="fixed";x.style.opacity="0";document.body.appendChild(x);x.select();try{document.execCommand("copy");ok()}catch(e){no(e)}x.remove()})}
 function loadImg(u){return new Promise(function(ok){if(!u)return ok(null);var tries=[u,"https://wsrv.nl/?url="+encodeURIComponent(u.replace(/^https?:\/\//,""))+"&w=640&output=jpg"],i=0;
   function nx(){if(i>=tries.length)return ok(null);var im=new Image(),done=false;im.crossOrigin="anonymous";var t=setTimeout(function(){if(done)return;done=true;i++;nx()},8000);
@@ -840,6 +870,9 @@ function mix(list){var g={},order=[];list.forEach(function(s){var b=s.brand||"";
 /* ảnh "phụ" (mẫu mặc short, váy ngắn, jean, ảnh chỉ có sản phẩm) xếp cuối danh sách, không dùng làm ảnh đại diện */
 function tot(list){return list.filter(function(s){return !s.phu}).concat(list.filter(function(s){return s.phu}))}
 var HERO={"Classic":"OF-IV-020","Lead":"OF-IV-085","Travel":"OF-IV-091","Mẹ bầu & Sau sinh":"OF-ID-001"};
+/* 3 ảnh cho đầu trang dòng trên điện thoại: thấy trọn bộ đồ, không cắt mất người */
+function lineImgs(l,n){var out=[],f=DATA.sp.filter(function(s){return s.id===HERO[l.k]&&pics(s.id).length}).concat(DATA.sp.filter(function(s){return inLine(s,l)&&pics(s.id).length&&!s.phu&&(!l.mom||s.nhom==="Đầm")}));
+  for(var i=0;i<f.length&&out.length<n;i++){var u=imgOf(f[i],0);if(u&&out.indexOf(u)<0)out.push(u)}return out}
 function lineImg(l){var f=DATA.sp.filter(function(s){return s.id===HERO[l.k]&&pics(s.id).length})[0]||DATA.sp.filter(function(s){return inLine(s,l)&&pics(s.id).length&&!s.phu&&(!l.mom||s.nhom==="Đầm")})[0];return f?imgOf(f,0):""}
 
 /* ---------- khung chung ---------- */
@@ -865,10 +898,10 @@ function renderNhom(l){
   var items=DATA.sp.filter(function(s){return inLine(s,l)});var im=lineImg(l);
   var qLabel=l.mom?"Trò chuyện với stylist của mẹ":"Tìm phong cách của nàng";
   var qHref=l.mom?"#chan-doan-me":"#chan-doan-"+l.slug;
-  $("#nhomBody").innerHTML='<section class="gh"><div class="fr" style="background:var('+l.ph+')">'+(im?'<img src="'+esc(im)+'" alt=""'+' style="object-position:50% 14%"'+'>':'<span class="cap">'+esc(l.cap)+'</span>')+'</div>'+
+  $("#nhomBody").innerHTML='<section class="gh"><div class="fr" style="background:var('+l.ph+')">'+(im?'<img class="one" src="'+esc(im)+'" alt=""'+' style="object-position:50% 14%"'+'><div class="strip" aria-hidden="true">'+lineImgs(l,3).map(function(u){return '<i><img src="'+esc(u)+'" alt=""></i>'}).join("")+'</div>':'<span class="cap">'+esc(l.cap)+'</span>')+'</div>'+
     '<div class="tx"><span class="k" style="color:'+(l.mom?"var(--mom)":"var(--gold)")+'">CHÉRIE Office · '+esc(l.k)+'</span><h1>'+esc(l.lead)+'</h1><p class="muted" style="font-size:16px">'+esc(l.intro)+'</p>'+
-    '<div class="price"><b class="num">'+(l.from?"từ ":"")+vnd(l.price)+'</b><span class="muted">'+esc(l.unit)+'</span>'+(l.p5?'<span class="muted" style="display:block;flex-basis:100%;margin-top:4px">Hoặc Gói 5 bộ mặc lại mỗi tuần: <b class="num" style="color:var(--ink);font:600 15px var(--f-b)">'+vnd(l.p5)+'/tuần</b></span>':'')+(l.monthly?'<span class="muted" style="display:block;flex-basis:100%;margin-top:4px">Trả trước 12 tuần, giảm 7%</span>':'')+'</div>'+
-    '<div class="quizcard"><a class="pill block" href="'+qHref+'">'+qLabel+'</a><span class="muted" style="font-size:13.5px;text-align:center">'+(l.mom?"3 phút trò chuyện, nhận lộ trình tủ đồ theo từng tháng.":"9 câu, khoảng 2 phút. Nhận ngay tủ đồ chọn sẵn cho nàng.")+'</span></div>'+
+    '<div class="price"><b class="num">'+(l.from?"từ ":"")+vnd(l.price)+'</b><span class="muted">'+esc(l.unit)+'</span>'+(l.p5||l.monthly?'<span class="pnote">'+(l.p5?'Gói 5 bộ <b class="num">'+vnd(l.p5)+'</b>/tuần':'')+(l.p5&&l.monthly?' · ':'')+(l.monthly?(l.p5?'trả':'Trả')+' trước 12 tuần giảm 7%':'')+'</span>':'')+'</div>'+
+    '<div class="quizcard"><a class="pill block" href="'+qHref+'">'+qLabel+'</a><span class="muted" style="font-size:13.5px;text-align:center">'+(l.mom?"Trò chuyện cùng stylist, nhận lộ trình tủ đồ từng tháng.":"Kể tụi mình nghe gu của nàng, stylist chọn sẵn tủ đồ.")+'</span></div>'+
     '<ul class="incl">'+l.incl.map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ul></div></section>'+
     '<section class="sec"><div class="sh"><div><h2>Trong tủ '+esc(l.k)+'</h2><p class="sub muted">'+(items.length?items.length+" món đang có.":"Đồ dòng này đang được tuyển, ảnh thật sẽ cập nhật sớm.")+'</p></div>'+(items.length?'<a class="ul" href="#tu-do" data-filter="'+esc(l.k)+'">Xem tất cả</a>':'')+'</div>'+
     (items.length?'<div class="grid">'+(l.mom?xenDam(tot(mix(items))).slice(0,8):tot(mix(items)).slice(0,8)).map(function(s){return card(s,l)}).join("")+'</div>':'')+'</section>'+
@@ -879,7 +912,7 @@ function faq(l){
     ["Giao ở đâu?","Văn phòng khu trung tâm Đà Nẵng sáng thứ 2, miễn phí. Hoặc nhà riêng chiều chủ nhật, 35.000đ/tuần khu trung tâm."],
     ["Làm hư đồ thì sao?","Vết bẩn thường, sứt chỉ: tụi mình lo. Rách lớn hoặc mất: tính theo giá trị bồi thường ghi trên tag, trừ vào cọc."]];
   if(l.mom)base.unshift(["Bụng lớn nhanh quá thì sao?","Nhắn Zalo cho tụi mình. Size mới tới ở chuyến giao kế tiếp, không tính thêm tiền."],["Nghỉ sinh có phải trả tiền không?","Không. Mẹ trả đồ và tạm dừng gói. Khi đi làm lại, gói mở tiếp với tủ đồ sau sinh."]);
-  if(!l.monthly)base.splice(1,1,["Đặt thế nào?","Làm trắc nghiệm 3 phút rồi gửi đăng ký, hoặc nhắn Zalo 0377 159 189 kèm ngày cần đồ."]);
+  if(!l.monthly)base.splice(1,1,["Đặt thế nào?","Làm trắc nghiệm ngắn rồi gửi đăng ký, hoặc nhắn Zalo 0377 159 189 kèm ngày cần đồ."]);
   return base}
 
 /* ---------- trắc nghiệm phong cách (5 dòng, không áp dụng Mẹ bầu & Sau sinh) ----------
@@ -893,8 +926,12 @@ var PERSONA=[
 var PALETTE=[
   {v:"Trung tính",b:"Kem, be, nâu",sw:["#EDE3D6","#CDBBA5","#8A6E57"]},
   {v:"Đen trắng",b:"Đen, trắng, xám",sw:["#FFFFFF","#9B9B9B","#1B1B1B"]},
-  {v:"Pastel",b:"Hồng phấn, xanh xô thơm",sw:["#F1D7D3","#CFE0D6","#D9DDF0"]},
-  {v:"Màu đậm",b:"Đỏ rượu, xanh cổ vịt",sw:["#7A1F3D","#1F5C63","#2B3A67"]}];
+  {v:"Pastel",b:"Pastel dịu",sw:["#F1D7D3","#CFE0D6","#D9DDF0"]},
+  {v:"Hồng",b:"Hồng đào, đất",sw:["#F6CFD3","#E79AAA","#B9606F"]},
+  {v:"Màu đậm",b:"Đỏ rượu, cổ vịt",sw:["#7A1F3D","#1F5C63","#2B3A67"]},
+  {v:"Xanh navy",b:"Navy, xanh dương",sw:["#1E2A47","#3E5F96","#AFC6E3"]},
+  {v:"Tông đất",b:"Rêu, olive, cam",sw:["#55633A","#8E8A55","#B2633D"]},
+  {v:"Tươi sáng",b:"Vàng bơ, đỏ son",sw:["#F3DB8E","#D6453E","#F2A35E"]}];
 var BODY={ /* vùng cơ thể và câu phụ hiện ngay dưới khi được chọn */
   "Vai":{q:"Vai của nàng",o:["Vai rộng","Vai xuôi"]},
   "Bắp tay":{q:"Bắp tay",o:["Hơi to","Săn chắc"]},
@@ -967,10 +1004,10 @@ function answered(q){if(!q.parts)return q.t!=="done"||doneOk();return parts(q).e
 function autoAdvance(q){var ps=parts(q);return ps.length===1&&ps[0].t==="single"}
 function drawQ(){
   var q=cur(),l=QZ.l,n=realCount(),k=idxReal(),h="";if(q.t!=="done")enterStep(l.slug+"|Q"+QZ.i+"|"+(q.id||q.t||""));else leaveStep(false);
-  h+='<div class="qbar" aria-hidden="true"><i style="width:'+(q.t==="intro"?0:q.t==="done"?100:Math.round(k*100/(n+1)))+'%"></i></div><div class="qmeta"><span>'+esc(l.k.toUpperCase())+'</span><span>'+(q.t==="intro"?"KHOẢNG 2 PHÚT":q.t==="done"?"HOÀN TẤT":k+" / "+n)+'</span></div>';
+  h+='<div class="qbar" aria-hidden="true"><i style="width:'+(q.t==="intro"?0:q.t==="done"?100:Math.round(k*100/(n+1)))+'%"></i></div><div class="qmeta"><span>'+esc(l.k.toUpperCase())+'</span><span>'+(q.t==="intro"?"BẮT ĐẦU":q.t==="done"?"HOÀN TẤT":k+" / "+n)+'</span></div>';
   if(q.t==="intro"){
-    var pv=mix(DATA.sp.filter(function(s){return inLine(s,l)&&pics(s.id).length&&s.nhom!=="Phụ kiện"})).slice(0,4);
-    h+='<div class="stylist" style="margin-top:22px">'+(pv.length?'<div class="intro-pv" aria-hidden="true">'+pv.map(function(s){return '<i><img src="'+esc(imgOf(s,0))+'" alt=""></i>'}).join("")+'</div>':'')+'<span class="k" style="color:var(--gold)">Stylist CHÉRIE Office · dòng '+esc(l.k)+'</span><h1 style="font-size:clamp(24px,3.4vw,34px);text-wrap:balance">'+n+' câu, 2 phút, nàng có ngay tủ đồ của riêng mình.</h1>'+
+    var pv=tot(mix(DATA.sp.filter(function(s){return inLine(s,l)&&pics(s.id).length&&s.nhom!=="Phụ kiện"}))).slice(0,4);
+    h+='<div class="stylist" style="margin-top:22px">'+(pv.length?'<div class="intro-pv" aria-hidden="true">'+pv.map(function(s){return '<i><img src="'+esc(imgOf(s,0))+'" alt=""></i>'}).join("")+'</div>':'')+'<span class="k" style="color:var(--gold)">Stylist CHÉRIE Office · dòng '+esc(l.k)+'</span><h1 style="font-size:clamp(24px,3.4vw,34px);text-wrap:balance">Kể tụi mình nghe về nàng một chút nhé.</h1>'+
       '<ul class="intro-get"><li><b>1</b><span>Trả lời theo cảm giác đầu tiên: gu, dáng, nhịp đi làm.</span></li><li><b>2</b><span>Nhận kiểu phong cách và '+boSize(l)+' bộ chọn sẵn từ đồ đang có trong kho.</span></li><li><b>3</b><span>Lưu ảnh tủ đồ, gửi stylist qua Zalo để giữ đúng những bộ đó.</span></li></ul></div>';
   }else if(q.t==="done"){
     h+=doneScreen();
@@ -993,7 +1030,7 @@ function partHtml(p,showLabel){
 function heartsHtml(v){
   /* lấy đồ thật có ảnh, ưu tiên dòng đang chọn, đảo ngẫu nhiên, đa dạng nhóm đồ */
   var pool=DATA.sp.filter(function(s){return pics(s.id).length});
-  pool=pool.filter(function(s){return s.nhom!=="Phụ kiện"});var mine=pool.filter(function(s){return inLine(s,QZ.l)}),rest=pool.filter(function(s){return !inLine(s,QZ.l)});
+  pool=pool.filter(function(s){return s.nhom!=="Phụ kiện"&&!s.phu&&s.nhom!=="Đầm"});var mine=pool.filter(function(s){return inLine(s,QZ.l)}),rest=pool.filter(function(s){return !inLine(s,QZ.l)});
   var sh=function(a){var r=QZ.seed,b=a.slice();for(var i=b.length-1;i>0;i--){r=(r*9301+49297)%233280/233280;var j=Math.floor(r*(i+1));var t=b[i];b[i]=b[j];b[j]=t}return b};
   var pick=sh(mine).concat(sh(rest)),seen={},out=[];
   pick.forEach(function(s){var g=s.nhom||"";seen[g]=(seen[g]||0)+1;if(out.length<12&&seen[g]<=4)out.push(s)});
@@ -1070,7 +1107,7 @@ function sendLead(r,loai){
 /* ---------- tủ đồ đề xuất trọn gói (10 bộ / tháng) ----------
    Chấm mỗi món theo sở thích (thả tim, màu, dáng, phong cách, điều tránh) cộng điểm lời (dl, từ tools/diem-loi.js),
    rồi giữ chi phí trung bình mỗi lần mặc dưới mức để đạt biên lãi mục tiêu (u ≤ 1) khi có món thay thế. */
-var MAU_TU={"Trung tính":["be","kem","nâu","trắng","ngà","bò"],"Đen trắng":["đen","trắng","ghi","xám"],"Pastel":["hồng","xanh nhạt","tím","vàng nhạt","xô thơm"],"Màu đậm":["đỏ","xanh","rượu","tím than","đô"]};
+var MAU_TU={"Trung tính":["be","kem","nâu","trắng","ngà","bò"],"Đen trắng":["đen","trắng","ghi","xám"],"Pastel":["hồng","xanh nhạt","tím","vàng nhạt","xô thơm"],"Màu đậm":["đỏ","xanh","rượu","tím than","đô"],"Hồng":["hồng","pink","rose","đào","phấn"],"Xanh navy":["navy","xanh than","xanh dương","xanh đen","blue"],"Tông đất":["rêu","olive","cam","gạch","khaki","nâu đất"],"Tươi sáng":["vàng","đỏ","cam","son","yellow"]};
 var PC_TU={"Quyền lực":["vest","blazer","đen","bút chì","ống đứng"],"Mềm mại":["bèo","phồng","xếp ly","hoa","nơ","voan"],"Hiện đại":["ống rộng","oversize","phối","cổ lạ","bất đối xứng"],"Thanh lịch":["sơ mi","cổ đức","trơn","suông","chữ a"]};
 var TRANH_TU={"Sát nách":["sát nách","hai dây","2 dây"],"Cổ sâu":["cổ v sâu","khoét","hở"],"Váy trên gối":["ngắn","mini"],"Vải mỏng":["voan","ren","mỏng"],"Họa tiết lớn":["họa tiết","hoa to","kẻ to"]};
 function boSize(l){return /4 bộ/.test(l.unit)?4:l.k==="Travel"?5:l.k==="Ngày quan trọng"?3:10}
@@ -1184,8 +1221,15 @@ function rulesOf(a){
 function capOf(l,r){var base=buildCapsule(l,r.a);if(!r.bo)return base;var bo=boParse(r.bo);if(!bo.length)return base;var seen={},mua=0,ids=[];bo.forEach(function(o){o.forEach(function(x){if(!seen[x.id]){seen[x.id]=1;mua+=+x.giaNiemYet||0;ids.push(x.id)}})});return {bo:bo,N:base.N,mua:mua,muon:base.muon,pk:base.pk,u:base.u,ids:ids}}
 function lichOf(r,l){return r.lich||[{bo:r.bo||boStr(buildCapsule(l,r.a).bo),maKQ:r.maKQ||"",xem:r.xem||"",at:r.at}]}
 var MAX_TU=5;
+/* các nút thao tác trên tủ đồ: Lưu ảnh, Tủ khác, Làm lại, Giữ tủ. Điện thoại: thanh dưới cố định; máy tính: thanh dính dưới header */
+var IC={save:'<path d="M12 4v11m0 0l-4-4m4 4l4-4M5 19h14"/>',doi:'<path d="M20 12a8 8 0 1 1-2.3-5.6"/><path d="M20 4v5h-5"/>',redo:'<path d="M4 7h11a5 5 0 0 1 0 10H8"/><path d="M8 3L4 7l4 4"/>',zalo:'<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1.1-4.6A8 8 0 1 1 21 12z"/>'};
+function icb(k,label,attr){return '<'+(attr.indexOf('href=')>-1?'a':'button type="button"')+' class="icb" '+attr+'><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+IC[k]+'</svg><span>'+label+'</span></'+(attr.indexOf('href=')>-1?'a':'button')+'>'}
+function tuActs(){var r=ss("of-result");if(!r)return "";var l=r.mom?LINES.filter(function(x){return x.mom})[0]:byKey(r.line);if(!l)return "";var lich=lichOf(r,l),het=lich.length>=MAX_TU,slug=l.mom?"me":l.slug;
+  return icb("save","Lưu ảnh",'data-save="anh"')+(het?icb("zalo","Stylist",'href="https://zalo.me/0377159189" target="_blank" rel="noopener"'):icb("doi","Tủ khác "+lich.length+"/"+MAX_TU,'data-doitu="1"'))+icb("redo","Làm lại",'href="#chan-doan-'+slug+'" data-redo="'+slug+'"')+'<a class="pill" href="#dang-ky" data-su="giu_tu"'+(l.mom?' data-pick="'+esc(MOM)+'"':' data-pick="'+esc(l.k)+'"')+'>Giữ tủ này</a>'}
 function doiTuHtml(r,l){var lich=lichOf(r,l),cur=r.cur==null?lich.length-1:r.cur,het=lich.length>=MAX_TU;
-  return '<div class="doitu" id="doiTu">'+(lich.length>1?'<div class="chips" role="group" aria-label="Các tủ đã đề xuất">'+lich.map(function(e,i){return '<button type="button" class="c" data-xemtu="'+i+'" aria-pressed="'+(i===cur)+'">Tủ '+(i+1)+'</button>'}).join("")+'</div>':'')+
+  return '<div class="rbar" aria-label="Thao tác với tủ đồ">'+tuActs()+'</div>'+(lich.length>1?'<div class="doitu" id="doiTu"><div class="chips" role="group" aria-label="Các tủ đã đề xuất">'+lich.map(function(e,i){return '<button type="button" class="c" data-xemtu="'+i+'" aria-pressed="'+(i===cur)+'">Tủ '+(i+1)+'</button>'}).join("")+'</div>'+(het?'<p class="muted" style="font-size:13.5px;margin:0">Nàng đã xem đủ '+MAX_TU+' tủ. Chạm từng tủ để so lại, hoặc nhắn stylist chọn riêng.</p>':'')+'</div>':'<div id="doiTu"></div>')}
+function doiTuOld(r,l){var lich=lichOf(r,l),cur=r.cur==null?lich.length-1:r.cur,het=lich.length>=MAX_TU;
+  return '<div class="doitu" id="doiTuX">'+(lich.length>1?'<div class="chips" role="group" aria-label="Các tủ đã đề xuất">'+lich.map(function(e,i){return '<button type="button" class="c" data-xemtu="'+i+'" aria-pressed="'+(i===cur)+'">Tủ '+(i+1)+'</button>'}).join("")+'</div>':'')+
     '<div class="row">'+(het?'<a class="pill" href="https://zalo.me/0377159189" target="_blank" rel="noopener">Nhắn stylist chọn riêng</a>':'<button type="button" class="pill" data-doitu="1"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:6px;vertical-align:-3px"><path d="M20 12a8 8 0 1 1-2.3-5.6"/><path d="M20 4v5h-5"/></svg>Đề xuất tủ khác ('+lich.length+'/'+MAX_TU+')</button>')+'<a class="pill ghost" href="'+(l.mom?'#chan-doan-me':'#chan-doan-'+l.slug)+'" data-redo="'+(l.mom?'me':l.slug)+'">Làm lại trắc nghiệm</a></div>'+
     '<p class="muted" style="font-size:13.5px;margin:0">'+(het?'Nàng đã xem đủ '+MAX_TU+' tủ. Chạm Tủ 1 đến Tủ '+MAX_TU+' để so lại, giữ tủ ưng nhất, hoặc nhắn stylist chọn riêng theo ý nàng.':'Giữ nguyên câu trả lời của nàng, stylist chọn bộ khác từ kho. Xem được tối đa '+MAX_TU+' tủ, tủ trước vẫn chạm xem lại được.')+'</p></div>'}
 function doiTu(){var r=ss("of-result");if(!r)return;var l=r.mom?LINES.filter(function(x){return x.mom})[0]:byKey(r.line);if(!l)return;
@@ -1203,13 +1247,13 @@ function renderResult(){
   var seenI={},col=[];cap0.bo.forEach(function(o){o.forEach(function(x){var p=imgOf(x,0);if(p&&!seenI[p]&&col.length<4){seenI[p]=1;col.push('<i><img src="'+esc(p)+'" alt=""></i>')}})});col=col.join("");
   var h='<div class="typecard rh" style="background:'+T.bg+'">'+(col?'<div class="rcol" aria-hidden="true">'+col+'</div>':'')+'<div class="rtx"><span class="k" style="color:rgba(255,255,255,.8)">'+(r.ten?esc(r.ten)+', nàng là':'Nàng là')+'</span><h1>'+esc(T.ten)+'</h1><span class="fr-name">'+esc(T.fr)+' · '+esc(r.mode)+' · dòng '+esc(l.k)+'</span><p>'+esc(T.mo)+'</p>'+
     '<div class="pal">'+T.pal.map(function(c){return '<i style="background:'+c+'"></i>'}).join("")+'</div></div></div>';CUR={at:r.at,ma:r.maKQ||"",xem:r.xem||"",ten:r.ten||"",dong:l.k,kieu:T.ten,bo:cap0.bo};
+  h+=doiTuHtml(r,l);
+  h+=capsuleHtml(l,cap0);
   if(cap0.bo.length)h+=saveBarHtml(CUR);
   h+=valHtml(l,cap0);
   r.a.__mode=r.mode;h+='<div class="rules">'+rulesOf(r.a).map(function(x){return '<div class="rule"><span class="k">'+esc(x[0])+'</span><b>'+esc(x[1])+'</b></div>'}).join("")+'</div>';
-  h+=doiTuHtml(r,l);
-  h+=capsuleHtml(l,cap0);
   h+=offerHtml(l,r.a);
-  $("#res").innerHTML=h}
+  $("#res").innerHTML=h;sbar("ket-qua")}
 
 /* ---------- bản trò chuyện cho Mẹ bầu & Sau sinh ---------- */
 var CH=null;
@@ -1314,10 +1358,11 @@ function openSaved(ma,xem){
 function renderMomResult(r){
   var T=TYPES[r.type]||TYPES["Mềm mại"],a=r.a,plan=momPlan(a);
   var h='<div class="typecard" style="background:#8E432B"><span class="k" style="color:rgba(255,255,255,.75)">Lộ trình tủ đồ · Mẹ bầu &amp; Sau sinh</span><span class="fr-name">'+esc(T.fr)+'</span><h1>'+esc(a.giaiDoan==="Đang mang bầu"?"Tủ đồ đi cùng mẹ suốt thai kỳ":"Tủ đồ cho ngày mẹ quay lại công sở")+'</h1><p>Phong cách mẹ chọn: '+esc(T.ten.replace("Nàng","nàng").toLowerCase())+'. '+esc(T.mo.split(":")[0])+'.</p><div class="pal">'+T.pal.map(function(c){return '<i style="background:'+c+'"></i>'}).join("")+'</div></div>';
+  var ml=LINES.filter(function(x){return x.mom})[0],mc=capOf(ml,r);r.cap=mc.ids;CUR={at:r.at,ma:r.maKQ||"",xem:r.xem||"",ten:r.ten||"",dong:MOM,kieu:T.ten,bo:mc.bo};if(mc.bo.length)h+=doiTuHtml(r,ml)+capsuleHtml(ml,mc).replace("Stylist chọn từ đồ đang có trong kho","Phối từ những món trong kho mặc được khi bầu và sau sinh: đầm suông, chữ A, đắp chéo; áo suông, cổ V; quần, váy cạp chun");
   h+='<section class="sec" style="padding-top:30px"><h2>Từng giai đoạn, tủ đồ thay theo</h2><div class="timeline">'+plan.map(function(p){return '<div class="it"><span class="when">'+esc(p[0])+'</span><b>'+esc(p[1])+'</b><p>'+esc(p[2])+'</p></div>'}).join("")+'</div></section>';
-  var ml=LINES.filter(function(x){return x.mom})[0],mc=capOf(ml,r);r.cap=mc.ids;CUR={at:r.at,ma:r.maKQ||"",xem:r.xem||"",ten:r.ten||"",dong:MOM,kieu:T.ten,bo:mc.bo};if(mc.bo.length)h+=saveBarHtml(CUR);if(mc.bo.length)h+=doiTuHtml(r,ml)+capsuleHtml(ml,mc).replace("Stylist chọn từ đồ đang có trong kho","Phối từ những món trong kho mặc được khi bầu và sau sinh: đầm suông, chữ A, đắp chéo; áo suông, cổ V; quần, váy cạp chun");
+  if(mc.bo.length)h+=saveBarHtml(CUR);
   h+='<div class="cta-box"><span class="k muted">Bước tiếp theo</span><h2>Mở tủ đồ cho mẹ</h2><p class="muted">389.000đ/tuần cho 10 bộ, hoặc 349.000đ/tuần cho 5 bộ. Trả trước 12 tuần, giảm 7%. Stylist dùng lộ trình này, mẹ không phải kể lại.</p><div class="row"><a class="pill" href="#dang-ky" style="background:#8E432B;border-color:#8E432B">Gửi đăng ký</a><a class="pill ghost" href="#chan-doan-me">Trò chuyện lại</a></div></div>';
-  $("#res").innerHTML=h}
+  $("#res").innerHTML=h;sbar("ket-qua")}
 
 /* ---------- tủ đồ & chi tiết ---------- */
 var filt="Tất cả",showN=24,loaiF="Mọi loại",LOAI=["Mọi loại","Áo","Quần","Chân váy","Đầm","Vest","Áo khoác","Áo dài","Phụ kiện"];
@@ -1349,7 +1394,7 @@ function detail(id){track("xem_mon",id);
   $("#pd").innerHTML='<div><a class="backlink" href="#tu-do">← Quay lại tủ đồ</a><div class="gal">'+shots+'</div>'+(p.length>1?'<div class="galnav rnav" style="margin-top:10px"><button type="button" data-gal="-1" aria-label="Ảnh trước"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button><span class="small muted">'+Math.min(p.length,4)+' ảnh · lướt để xem</span><button type="button" data-gal="1" aria-label="Ảnh sau"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button></div>':'')+'</div><div class="pinfo"><span class="k muted">'+esc(s.brand||"CHÉRIE Office")+'</span><h1 style="font-size:32px">'+esc(s.ten)+'</h1><span class="muted">'+esc(s.mau||"")+'</span>'+
     '<div class="sizes"><span class="lb">Size có sẵn</span>'+["S","M","L","XL"].map(function(z){return '<span class="sz'+(have.indexOf(z)>-1?'':' off')+'">'+z+'</span>'}).join("")+'</div>'+
     '<div class="inplan"><span class="k" style="color:var(--gold)">Có trong gói '+esc(l.k)+'</span><span style="font-size:14px">Từ '+vnd(giaTu(l))+(l.monthly?'/tuần':' '+esc(l.unit))+'. Muốn có bộ này trong tủ, làm trắc nghiệm và thả tim nó, stylist sẽ ưu tiên.</span></div>'+
-    '<a class="pill block" href="'+qh+'">Muốn mặc bộ này? Làm trắc nghiệm 3 phút</a><a class="pill ghost block" href="https://zalo.me/0377159189" target="_blank" rel="noopener">Hỏi stylist qua Zalo</a><a class="ul" href="#nhom-'+l.slug+'" style="justify-self:start">Xem dòng '+esc(l.k)+'</a>'+
+    '<a class="pill block" href="'+qh+'">Muốn mặc bộ này? Để stylist chọn cho nàng</a><a class="pill ghost block" href="https://zalo.me/0377159189" target="_blank" rel="noopener">Hỏi stylist qua Zalo</a><a class="ul" href="#nhom-'+l.slug+'" style="justify-self:start">Xem dòng '+esc(l.k)+'</a>'+
     (p.length&&s.brand?'<p class="muted" style="font-size:13px">Ảnh mẫu của '+esc(s.brand)+'. Ảnh tụi mình tự chụp đang được cập nhật.</p>':'')+
     '<div class="dl">'+(s.brand?'<div><span>Thương hiệu</span><span>'+esc(s.brand)+'</span></div>':'')+'<div><span>Mã đồ</span><span class="num">'+esc(s.id)+'</span></div><div><span>Giặt</span><span>Giặt hấp tại CHÉRIE Care</span></div></div></div>'}
 
@@ -1426,14 +1471,14 @@ function sbar(id){var b=$("#sbar"),h="",l=null;
   if(id==="nhom")l=bySlug(decodeURIComponent(location.hash.slice(6)))||null;
   if(id==="sp"){var it=DATA.sp.filter(function(x){return x.id===location.hash.slice(4).toUpperCase()})[0];l=it?(byKey(it.loai)||LINES[5]):null}
   var z='<a class="z" href="https://zalo.me/0377159189" target="_blank" rel="noopener" aria-label="Nhắn Zalo cho stylist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1.1-4.6A8 8 0 1 1 21 12z"/></svg></a>';
-  if(l)h='<div class="p">'+esc(l.k)+'<b>Từ '+vnd(giaTu(l))+(l.monthly?'/tuần':' '+esc(l.unit.split(" ")[0]))+'</b></div>'+z+'<a class="pill" href="'+(l.mom?"#chan-doan-me":"#chan-doan-"+l.slug)+'">Bắt đầu 3 phút</a>';
+  if(l)h='<div class="p">'+esc(l.k)+'<b>Từ '+vnd(giaTu(l))+(l.monthly?'/tuần':' '+esc(l.unit.split(" ")[0]))+'</b></div>'+z+'<a class="pill" href="'+(l.mom?"#chan-doan-me":"#chan-doan-"+l.slug)+'">Bắt đầu</a>';
   else if(id==="tu-do")h='<div class="p">Thích bộ nào?<b>Để stylist chọn cho nàng</b></div>'+z+'<a class="pill" href="#chon-nhom">Bắt đầu</a>';
-  else if(id==="ket-qua")h='<div class="p">Tủ đồ của nàng<b>Lưu lại, giữ tủ</b></div><button type="button" class="z" data-save="anh" aria-label="Lưu ảnh tủ đồ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0l-4-4m4 4l4-4M5 19h14"/></svg></button><a class="pill" href="#dang-ky" data-su="giu_tu">Giữ tủ này</a>';
+  else if(id==="ket-qua")h=tuActs();
   else if(id==="goi-va-gia")h='<div class="p">Trả trước 12 tuần<b>Giảm 7%</b></div>'+z+'<a class="pill" href="#dang-ky">Đăng ký</a>';
   b.innerHTML=h;document.body.classList.toggle("has-sbar",!!h)}
 function view(id){sbar(id);document.querySelectorAll(".view").forEach(function(v){v.hidden=v.id!=="v-"+id});var f=(id==="quiz"||id==="chat");document.querySelector("footer.site").hidden=f;document.body.classList.toggle("focus",f)}
 /* tự nhận bản website mới: trang mở lâu vẫn chuyển sang bản mới ở lần chuyển trang kế tiếp (không ngắt trắc nghiệm, đăng ký) */
-var VER="20261031125038",NEWV=false,VCHK=0;
+var VER="20261031131348",NEWV=false,VCHK=0;
 function chkVer(){if(VER==="dev"||Date.now()-VCHK<90000)return;VCHK=Date.now();try{fetch("ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=(t||"").trim();if(t&&t!==VER)NEWV=true}).catch(function(){})}catch(e){}}
 document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chkVer()});
 function route(){

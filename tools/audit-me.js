@@ -12,6 +12,6 @@ const [,,BASE='http://localhost:8765/',OUT='.',GD='Đang mang bầu',DANG='Suôn
   if(!hit)hit=await p.$('#repliesIn [data-c]');if(!hit)continue;await hit.click();
   if(await p.$('#repliesIn [data-send=multi]')){await p.click('#repliesIn [data-send=multi]')}}
  await p.waitForTimeout(1500);await p.screenshot({path:OUT+'/me-ket-qua.png',fullPage:true});
- const b1=await p.evaluate(()=>JSON.parse(sessionStorage.getItem("of-result")).bo);const dt=await p.$("[data-doitu]");if(dt){await dt.click();await p.waitForTimeout(1200);const r2=await p.evaluate(()=>{const x=JSON.parse(sessionStorage.getItem("of-result"));return [x.bo,document.querySelectorAll(".caps .pc").length]});console.log("Đề xuất tủ khác:",r2[0]!==b1?"đổi tủ":"KHÔNG ĐỔI",r2[1],"thẻ")}
+ const b1=await p.evaluate(()=>JSON.parse(sessionStorage.getItem("of-result")).bo);const dl=p.locator("[data-doitu]:visible").first();if(await dl.count()){await dl.click();await p.waitForTimeout(1200);const r2=await p.evaluate(()=>{const x=JSON.parse(sessionStorage.getItem("of-result"));return [x.bo,document.querySelectorAll(".caps .pc").length]});console.log("Đề xuất tủ khác:",r2[0]!==b1?"đổi tủ":"KHÔNG ĐỔI",r2[1],"thẻ")}
  const r=await p.evaluate(()=>{const x=JSON.parse(sessionStorage.getItem('of-result')||'{}');return {hash:location.hash,bo:x.bo,scrollW:document.documentElement.scrollWidth}});
  console.log(JSON.stringify(r,null,1));console.log('Lỗi JS:',errs.length?errs:'không');await b.close()})();

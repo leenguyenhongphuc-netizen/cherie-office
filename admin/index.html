@@ -17,6 +17,23 @@ a.btn{text-decoration:none}
 .tuxem div{display:grid;grid-template-columns:1fr 1fr;gap:2px;border-radius:10px;overflow:hidden}
 .tuxem img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}
 .tuxem span{grid-column:1/-1;font-size:12px;padding:4px 2px;color:var(--muted)}
+
+/* trang chọn app */
+body.launching .tabs,body.launching .top{display:none}
+.launch{max-width:640px;margin:0 auto;padding:28px 0 40px}
+.launch .lw{font-family:var(--display);font-size:30px;letter-spacing:.32em;line-height:1}
+.launch .lw small{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.42em;color:var(--gold);margin-top:8px}
+.launch h1{font-family:var(--display);font-weight:500;font-size:40px;line-height:1.1;margin:22px 0 4px}
+.launch .lr{color:var(--muted);margin:0 0 28px;font-size:16px}
+.launch .lk{font-family:var(--body);font-size:13px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin:26px 0 12px}
+.lcs{display:grid;gap:12px}
+.lc{display:grid;gap:6px;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:20px 22px}
+.lc b{font-family:var(--display);font-weight:500;font-size:24px;line-height:1.2}
+.lc span{color:var(--muted);font-size:14.5px;line-height:1.5}
+.lc.cur{border-color:var(--ink)}
+.lc.web{background:var(--ink);border-color:var(--ink)}.lc.web b{color:var(--bg)}.lc.web span{color:color-mix(in srgb,var(--bg) 72%,var(--ink))}
+.lc:active{opacity:.85}
+.lout{margin-top:28px;width:100%;min-height:48px;border-radius:999px;border:1px solid var(--line);background:none;color:var(--muted);font:500 14px var(--body)}
 </style>
 <style>
 /* Layout: app quản trị một cột cho điện thoại, thanh tab dưới, bảng trượt từ dưới lên cho chi tiết */
@@ -681,6 +698,7 @@ function nextDow(dow){var t=today();var add=(dow-t.getDay()+7)%7;return addDays(
 function render(){
   var v=S.view;var m=$("#main");
   if(!mcp){m.innerHTML=vLogin();return}
+  if(v==="ung-dung"){m.innerHTML=vLaunch();return}
   if(!can(SEC_OF_VIEW[v],"Xem")){m.innerHTML='<h1>Không có quyền</h1><p class="sub">Mục này chưa được cấp cho bạn.</p>';return}
   var html=v==="quay"?vQuay():v==="sale"?vSale():v==="cham-soc"?vChamSoc():v==="tuyen"?vTuyen():v==="nhap"?vNhap():v==="kho"?vKho():v==="khach"?vKhach():v==="giao"?vGiao():vTong()+(S.loaded?vLaiLo():"");
   var q=$("#q");var hadFocus=q&&document.activeElement===q;var pos=hadFocus?q.selectionStart:0;
@@ -913,7 +931,19 @@ function setGN(st){var f=$("#fGN");var r=rows("GiaoNhan").filter(function(g){ret
 /* ======================= 4 app: Quản trị · Quầy · Sale online · Giao nhận =======================
    Cùng một trang, cùng đăng nhập. ?app=quay|sale|giao chọn bộ màn hình. Giá tính theo tuần từ tab Goi. */
 var APPS={admin:{ten:"QUẢN TRỊ",views:["tong-quan","nhap","kho","khach","giao"]},quay:{ten:"QUẦY",views:["quay","khach","kho"]},sale:{ten:"SALE ONLINE",views:["sale","cham-soc","khach"]},giao:{ten:"GIAO NHẬN",views:["tuyen","giao"]}};
+/* vào /admin/ không kèm ?app= thì mở trang chọn app (giống Closet); có ?app= thì vào thẳng app đó */
+var LAUNCH=(function(){try{return !new URLSearchParams(location.search).get("app")}catch(e){return false}})();
 var MODE=(function(){var m="";try{m=new URLSearchParams(location.search).get("app")||""}catch(e){}if(!m)m=recall("of-app")||"admin";return APPS[m]?m:"admin"})();store("of-app",MODE);
+var APP_INFO=[["admin","Quản trị","Nhập hàng, kho đồ, khách và gói, lãi lỗ"],["quay","Quầy","Đăng ký tại tiệm, thu tiền, đổi size, gia hạn"],["sale","Sale online","Khách web và Zalo: tư vấn, chốt, gia hạn"],["giao","Giao nhận","Tuyến thứ 2 và thứ 6: giao, lấy, báo cáo"]];
+function appOk(k){return APPS[k].views.some(function(v){return can(SEC_OF_VIEW[v],"Xem")})}
+function vLaunch(){var last=recall("of-app")||"admin";
+  var cards=APP_INFO.filter(function(a){return appOk(a[0])}).map(function(a){return '<a class="lc'+(a[0]===last?' cur':'')+'" href="?app='+a[0]+'#'+APPS[a[0]].views[0]+'" data-app="'+a[0]+'"><b>'+esc(a[1])+'</b><span>'+esc(a[2])+'</span></a>'}).join("");
+  return '<div class="launch"><div class="lw">CHÉRIE<small>OFFICE</small></div><h1>Chào '+esc((me&&me.ten)||"bạn")+'</h1><p class="lr">Vai trò: '+esc((me&&me.vaiTro)||"")+'</p>'+
+    '<p class="lk">Ứng dụng của bạn</p><div class="lcs">'+(cards||'<p class="sub">Tài khoản chưa được cấp app nào. Nhờ chủ tiệm cấp quyền.</p>')+
+    '<a class="lc web" href="https://office.cherie.io.vn/" target="_blank" rel="noopener"><b>Website Office</b><span>Trang khách xem tủ đồ và đăng ký</span></a></div>'+
+    (me&&me.vaiTro==="Admin"?'<p class="lk">Chủ tiệm</p><div class="lcs"><div class="lc info"><b>Mã PIN nhân sự</b><span>Thêm người trong tab NhanSu của Sheet CHÉRIE Office (tên, vai trò Quầy, Sale, Giao nhận hoặc Admin), rồi đặt mã PIN cho từng người. Mỗi người chỉ thấy app được cấp.</span></div>'+
+    '<a class="lc" href="?app=admin#tong-quan"><b>Chi phí và lãi lỗ</b><span>Giặt, giao, thu hồi, số lần mặc của mỗi món</span></a></div>':'')+
+    '<button class="lout" type="button" data-act="lout">Đăng xuất</button></div>'}
 var NAV_ICON={quay:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h16v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M3 10l2-5h14l2 5"/><path d="M9 20v-5h6v5"/></svg>',
   sale:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1.1-4.6A8 8 0 1 1 21 12z"/></svg>',
   "cham-soc":'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.5-9-9a4.5 4.5 0 0 1 9-3 4.5 4.5 0 0 1 9 3c-2 4.5-9 9-9 9z"/></svg>',
@@ -1085,7 +1115,8 @@ document.addEventListener("click",function(ev){
   if(d.kh&&!d.act){openKH(d.kh);return}
   if(d.act==="addDK"){if(d.kh)formW(d.kh,"Quầy");else location.hash="quay";return}
   if(d.act==="newW"){formW(d.kh,MODE==="sale"?"Online":"Quầy");return}
-  if(d.act==="appSw"){openAppSwitch();return}
+  if(d.act==="appSw"){location.href="./";return}
+  if(d.act==="lout"){logout();return}
   if(d.sst){S.f.saleSt=d.sst;render();return}
   if(d.act==="chotWeb"){chotWeb();return}
   if(d.act==="henThu"){$("#saleX").innerHTML='<form class="form" id="fHen">'+fld("hNgay","Ngày giờ hẹn thử",inp("hNgay","","datetime-local"))+fld("hNoi","Ở đâu",sel("hNoi",["Tại tiệm","Tại văn phòng khách","Tại nhà khách"],"Tại tiệm"))+'<button class="btn full" type="submit">Lưu lịch hẹn</button></form>';return}
@@ -1126,7 +1157,7 @@ $("#reload").addEventListener("click",function(){loadAll()});
 
 var VIEWS=["tong-quan","nhap","kho","khach","giao","quay","sale","cham-soc","tuyen"];
 function route(){buildNav();var h=(location.hash||"").slice(1);
-  var tm=h.match(/^ts=([\d.,]+)$/);if(tm){var v=tm[1].split(",");var o={};TS_KEYS.forEach(function(k,i){if(v[i]!=null&&v[i]!=="")o[k]=+v[i]});store("of-thamso",o);history.replaceState(null,"","#tong-quan");h="tong-quan";setTimeout(function(){toast("Đã nạp thông số chi phí vào máy này")},300)}S.view=APPS[MODE].views.indexOf(h)>=0?h:APPS[MODE].views[0];closeSheet();render();window.scrollTo(0,0)}
+  var tm=h.match(/^ts=([\d.,]+)$/);if(tm){var v=tm[1].split(",");var o={};TS_KEYS.forEach(function(k,i){if(v[i]!=null&&v[i]!=="")o[k]=+v[i]});store("of-thamso",o);history.replaceState(null,"","#tong-quan");h="tong-quan";setTimeout(function(){toast("Đã nạp thông số chi phí vào máy này")},300)}S.view=APPS[MODE].views.indexOf(h)>=0?h:(LAUNCH&&(!h||h==="ung-dung")?"ung-dung":APPS[MODE].views[0]);document.body.classList.toggle("launching",S.view==="ung-dung");closeSheet();render();window.scrollTo(0,0)}
 window.addEventListener("hashchange",route);
 
 /* boot */

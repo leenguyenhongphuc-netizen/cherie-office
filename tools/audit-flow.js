@@ -21,6 +21,6 @@ const [,,BASE='http://localhost:8765/',OUT='.',LINE='classic']=process.argv;
     await p.waitForTimeout(350);const nx=await p.$('#qNext:not([hidden]):not([disabled])');if(nx)await nx.click();await p.waitForTimeout(300);
     if((await p.evaluate(()=>location.hash)).includes('ket-qua'))break}
   await p.waitForTimeout(800);await shot('ket-qua');await shot('ket-qua-full',1);
-  const g=await p.$('#res a[data-su=giu_tu]');if(g){await g.click();await p.waitForTimeout(500);await shot('dang-ky-1');
+  const gl=p.locator('a[data-su=giu_tu]:visible').first();const g=await gl.count();if(g){await gl.click();await p.waitForTimeout(500);await shot('dang-ky-1');
     for(let s=2;s<=4;s++){const nb=await p.$('#v-dang-ky button.pill:not([hidden]):not([disabled])');if(!nb)break;await nb.click();await p.waitForTimeout(400);await shot('dang-ky-'+s)}}
   console.log('Lỗi JS:',errs.length?errs:'không');await b.close()})();
