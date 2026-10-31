@@ -47,31 +47,28 @@ p{margin:0}
 .btn:active{transform:scale(.98)}
 .btn.line{background:transparent;color:var(--ink);border-color:var(--ink)}
 /* đầu trang + thanh đọc */
-.hd{position:fixed;top:0;left:0;right:0;z-index:30;padding-top:env(safe-area-inset-top,0px);transition:background-color .25s,border-color .25s;border-bottom:1px solid transparent}
+.hd{position:fixed;top:0;left:0;right:0;z-index:30;padding-top:env(safe-area-inset-top,0px);background:var(--paper);border-bottom:1px solid var(--rule)}
 .hd .in{display:flex;align-items:center;justify-content:space-between;min-height:58px;padding:0 20px;max-width:1080px;margin:0 auto}
-.mast{display:inline-block;padding:10px 0;font-family:var(--serif);font-size:19px;letter-spacing:.32em;text-decoration:none;color:#FFF;line-height:1}
+.mast{display:inline-block;padding:10px 0;font-family:var(--serif);font-size:19px;letter-spacing:.32em;text-decoration:none;color:var(--ink);line-height:1}
 .mast small{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.4em;margin-top:5px;opacity:.9}
-.hd .btn{min-height:44px;padding:0 18px;font-size:14px;background:#FFF;color:#1E1715;border-color:#FFF}
-.hd.solid{background:var(--paper);border-bottom-color:var(--rule)}
-.hd.solid .mast{color:var(--ink)}
-.hd.solid .btn{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.hd .btn{min-height:44px;padding:0 18px;font-size:14px}
 .prog{position:absolute;left:0;bottom:-1px;height:2px;background:var(--accent);width:0}
-/* bìa */
-.cover{position:relative;min-height:100svh;display:flex;align-items:flex-end;color:#FFF;background:#2A201C;overflow:hidden}
-.cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 18%}
-.cover::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,12,10,.55) 0%,rgba(18,12,10,0) 22%,rgba(18,12,10,0) 38%,rgba(18,12,10,.78) 70%,rgba(18,12,10,.92) 100%)}
-.cover .tx{position:relative;z-index:1;width:100%;max-width:1080px;margin:0 auto;padding:0 20px calc(28px + env(safe-area-inset-bottom,0px))}
-.cover .issue{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:.9;display:flex;gap:10px;align-items:center}
-.cover .issue i{width:24px;height:1px;background:#FFF;opacity:.7}
-.cover h1{font-size:clamp(44px,11vw,92px);margin-top:14px;color:#FFF}
-.cover h1 em{font-style:italic;color:#F3C2AE}
-.cover .deck{font-size:17px;line-height:1.55;margin-top:14px;max-width:30em;color:rgba(255,255,255,.88)}
-.cover .lines{list-style:none;padding:0;margin:18px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;border-top:1px solid rgba(255,255,255,.3);padding-top:14px}
-.cover .lines a{text-decoration:none;font-size:13.5px;line-height:1.35;display:block;min-height:44px}
-.cover .lines b{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:#F3C2AE;font-weight:500;margin-bottom:2px}
-.cover .cta{display:grid;grid-template-columns:1fr;gap:10px;margin-top:18px;max-width:440px}
-.cover .cta .btn{background:#FFF;color:#1E1715;border-color:#FFF}
-.cover .price{margin-top:12px;font-size:13.5px;color:rgba(255,255,255,.85)}
+/* bìa: chữ trên nền giấy, ảnh trong khung riêng (không chồng chữ lên ảnh) */
+.cover{padding:calc(76px + env(safe-area-inset-top,0px)) 0 8px}
+.cover .in{max-width:1080px;margin:0 auto;padding:0 20px;display:grid;gap:22px}
+.cover .issue{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);display:flex;gap:10px;align-items:center}
+.cover .issue i{width:24px;height:1px;background:var(--accent)}
+.cover h1{font-size:clamp(42px,11vw,72px);margin-top:12px}
+.cover h1 em{font-style:italic;color:var(--accent)}
+.cover .dek{font-size:17px;line-height:1.55;margin-top:12px;max-width:30em;color:var(--sub)}
+.cover .cta{display:grid;margin-top:18px;max-width:420px}
+.cover .price{margin-top:10px;font-size:14px;color:var(--sub)}
+.cover figure{margin:0;display:grid;gap:8px}
+.cover .fr{position:relative;aspect-ratio:4/5;max-height:62svh;width:100%;border-radius:6px;overflow:hidden;background:var(--img)}
+.cover .fr img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 12%}
+.cover figcaption{font-size:13px;color:var(--sub);display:flex;justify-content:space-between;gap:10px}
+.cover figcaption b{font:500 10.5px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+@media (min-width:860px){.cover .in{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);align-items:center;gap:48px}.cover .fr{max-height:78svh}}
 /* bảy chương: vuốt ngang, mỗi chương một cụm */
 .tabs{position:sticky;top:calc(58px + env(safe-area-inset-top,0px));z-index:20;background:var(--paper);border-bottom:1px solid var(--rule)}
 .tabs .in{display:flex;align-items:center;gap:6px;max-width:1080px;margin:0 auto;padding:0 12px 0 20px}
@@ -199,22 +196,16 @@ footer{padding:28px 20px calc(100px + env(safe-area-inset-bottom,0px));font-size
 <body>
 <header class="hd" id="hd"><div class="in"><a class="mast" href="/" aria-label="CHÉRIE Office, trang chủ">CHÉRIE<small>OFFICE</small></a><a class="btn js-chat" href="/#chan-doan-me">Trò chuyện</a></div><i class="prog" id="prog"></i></header>
 <main>
-<section class="cover">
-  <img id="coverImg" alt="Mẹ mặc đầm sơ mi cổ đức xếp ly màu đen đi làm" fetchpriority="high">
+<section class="cover"><div class="in">
   <div class="tx">
     <span class="issue">Số đặc biệt <i></i> Mẹ bầu &amp; Sau sinh</span>
     <h1>Chín tháng.<br>Ba size.<br><em>Một tủ đồ đi làm.</em></h1>
-    <p class="deck">Chuyện mặc gì đi làm khi bụng lớn mỗi tuần, và cách để mẹ không phải mua lại từ đầu.</p>
+    <p class="dek">Chuyện mặc gì đi làm khi bụng lớn mỗi tuần, và cách để mẹ không phải mua lại từ đầu.</p>
     <div class="cta"><a class="btn js-chat" href="/#chan-doan-me">Trò chuyện với stylist của mẹ</a></div>
     <p class="price">Từ 349.000đ/tuần · đổi size miễn phí</p>
-    <ul class="lines">
-      <li><a href="#c1" data-go="0"><b>01</b>Tuần 22, chiếc quần không cài được khuy</a></li>
-      <li><a href="#c2" data-go="1"><b>02</b>Những con số ít ai kể</a></li>
-      <li><a href="#c4" data-go="3"><b>04</b>Sáu chiếc đầm mặc suốt thai kỳ</a></li>
-      <li><a href="#c6" data-go="5"><b>06</b>Giá, nói thẳng</a></li>
-    </ul>
   </div>
-</section>
+  <figure><div class="fr"><img id="coverImg" alt="Mẹ mặc đầm sơ mi cổ đức xếp ly màu đen đi làm" fetchpriority="high"></div><figcaption><span>Đầm cổ đức xếp ly</span><b>IVY moda</b></figcaption></figure>
+</div></section>
 
 <article id="doc" aria-label="Bảy chương, vuốt ngang để đọc">
 <nav class="tabs" aria-label="Các chương"><div class="in"><div class="sc" id="tabs">
@@ -322,13 +313,13 @@ var ml=document.getElementById("moreLink");ml.href="/"+q+"#nhom-me-bau-sau-sinh"
 document.addEventListener("click",function(e){var a=e.target.closest(".js-chat");if(a)ga("bat_dau_tro_chuyen",{vi_tri:a.closest(".hd")?"dau_trang":a.closest(".sbar")?"thanh_duoi":a.closest(".pl")?"bang_gia":a.closest(".nx")?"cuoi_chuong":a.closest(".end")?"cuoi_trang":"bia"})});
 var D=window.OFFICE_DATA||{sp:[],anh:[]},img={};D.anh.forEach(function(a){(img[a.sp]=img[a.sp]||[]).push(a.src||a.th)});
 var esc=function(t){return String(t==null?"":t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})};
-var cv=(img["OF-ID-001"]||[])[0];if(cv)document.getElementById("coverImg").src=cv;
+var hi=function(u){return String(u||"").replace("/thumab/400/","/thumab/1400/")};var cv=hi((img["OF-ID-001"]||[])[0]);if(cv)document.getElementById("coverImg").src=cv;
 /* lookbook: một ảnh lớn, chạm ảnh nhỏ để đổi */
 var L=[["OF-ID-001","Cổ đức, ly xếp từ eo. Đi họp vẫn chỉn chu."],["OF-ID-006","Dáng suông thẳng, không chạm bụng."],["OF-ID-013","Chấm bi nhỏ, cổ V mở. Khoác blazer là thành đồ họp."],["OF-ID-014","Vạt đắp chéo, cột dây nới theo bụng."],["OF-ID-017","Hoa nhí, vải mềm, ngày nóng vẫn nhẹ."],["OF-MD-004","Nhún dưới ngực, tùng xoè, bụng lớn vẫn vừa."]];
 var by={};D.sp.forEach(function(s){by[s.id]=s});L=L.filter(function(x){return by[x[0]]&&img[x[0]]});
 var lk=document.getElementById("lk");
 lk.innerHTML='<a class="big" id="lkA" href="#"><img id="lkI" alt=""></a><div class="cap" id="lkC" aria-live="polite"></div><div class="th" role="group" aria-label="Chọn chiếc đầm">'+L.map(function(x,i){var s=by[x[0]];return '<button type="button" data-k="'+i+'" aria-label="'+esc(s.ten)+'"><img src="'+esc(img[x[0]][0])+'" alt="" loading="lazy"></button>'}).join("")+'</div>';
-function pick(i){var x=L[i];if(!x)return;var s=by[x[0]],im=document.getElementById("lkI");im.src=img[x[0]][0];im.alt=s.ten+", "+s.brand;document.getElementById("lkA").href="/"+q+"#sp-"+s.id.toLowerCase();
+function pick(i){var x=L[i];if(!x)return;var s=by[x[0]],im=document.getElementById("lkI");im.src=hi(img[x[0]][0]);im.alt=s.ten+", "+s.brand;document.getElementById("lkA").href="/"+q+"#sp-"+s.id.toLowerCase();
   document.getElementById("lkC").innerHTML='<b>'+String(i+1).padStart(2,"0")+'/'+String(L.length).padStart(2,"0")+' · '+esc(s.brand)+'</b><span>'+esc(s.ten)+'</span><em>'+esc(x[1])+'</em>';
   lk.querySelectorAll(".th button").forEach(function(b){b.setAttribute("aria-pressed",String(+b.dataset.k===i))})}
 lk.addEventListener("click",function(e){var b=e.target.closest(".th button");if(b){pick(+b.dataset.k);setH()}});pick(0);
@@ -338,7 +329,7 @@ function wk(i){wb.forEach(function(b,k){b.setAttribute("aria-selected",String(k=
 cal.addEventListener("click",function(e){var b=e.target.closest(".wks button");if(b){wk(+b.dataset.w);ga("xem_moc_thai_ky",{moc:b.textContent})}});wk(0);
 /* header trong suốt trên bìa, đặc khi cuộn; thanh dưới có nút trò chuyện sau bìa */
 var hd=document.getElementById("hd"),pr=document.getElementById("prog"),sb=document.getElementById("sbar"),cov=document.querySelector(".cover");
-function onS(){var y=window.scrollY;hd.classList.toggle("solid",y>cov.offsetHeight-70);sb.classList.toggle("on",y>cov.offsetHeight*0.5)}
+var cta=document.querySelector(".cover .cta");function onS(){sb.classList.toggle("on",cta.getBoundingClientRect().bottom<0)}
 addEventListener("scroll",onS,{passive:true});onS();
 /* bảy chương vuốt ngang: cao theo chương đang xem, có nút chuyển chương thay cho vuốt */
 var deck=document.getElementById("deck"),sl=[].slice.call(deck.children),tabs=[].slice.call(document.querySelectorAll("#tabs button")),ct=document.getElementById("ct"),doc=document.getElementById("doc"),cur=-1;

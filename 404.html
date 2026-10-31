@@ -701,7 +701,7 @@ footer .base{margin-top:36px;padding-top:18px;border-top:1px solid #3A3033;font-
 <p>Khi nàng làm trắc nghiệm hay xem tủ đồ, CHÉRIE Office ghi lại câu trả lời và các thao tác trên trang (xem món nào, dừng ở câu nào, bấm nút nào). Phần này lưu ẩn danh bằng một mã ngẫu nhiên trên trình duyệt, không có tên hay số điện thoại.</p>
 <p style="margin-top:12px">Tụi mình dùng nó để chọn tủ đồ hợp với nàng hơn, biết món nào cần mua thêm, câu hỏi nào khó hiểu, và giá gói nào hợp lý.</p>
 <p style="margin-top:12px">Tên và số Zalo chỉ được lưu khi nàng tự để lại và đồng ý, hoặc khi đăng ký gói. Tụi mình không bán hay chia sẻ dữ liệu cho bên ngoài, và không gửi tin nhắn tự động khi chưa có người của tiệm xem.</p>
-<p style="margin-top:12px">Dữ liệu ẩn danh được giữ tối đa 24 tháng. Muốn xem hoặc xoá dữ liệu của mình, nhắn Zalo 0377 159 189 hoặc email hello@cherie.io.vn.</p>
+<p style="margin-top:12px">Dữ liệu ẩn danh được giữ tối đa 24 tháng. Muốn xem hoặc xoá dữ liệu của mình, email hello@cherie.io.vn.</p>
 </div></main>
 
 <!-- ============ GÓI VÀ GIÁ ============ -->
@@ -773,7 +773,7 @@ footer .base{margin-top:36px;padding-top:18px;border-top:1px solid #3A3033;font-
       <div class="c"><a class="logo" href="#" style="align-items:flex-start"><span class="w" style="color:#F2ECEE">CHÉRIE</span><span class="s" style="color:#C9AE7E">OFFICE</span></a><p style="color:#B3A8AC;max-width:28em;margin-top:8px">Tủ đồ đi làm đổi mỗi tuần ở Đà Nẵng. Mỗi lần, một chiếc mới.</p></div>
       <div class="c"><span class="k">Các dòng</span><div id="footLines" style="display:grid;gap:9px"></div></div>
       <div class="c"><span class="k">Office</span><a href="#tu-do">Tủ đồ</a><a href="#goi-va-gia">Gói và giá</a><a href="#cach-hoat-dong">Cách hoạt động</a><a href="#chinh-sach">Dữ liệu của nàng</a></div>
-      <div class="c"><span class="k">Liên hệ</span><span class="num">Zalo 0377 159 189</span><span>hello@cherie.io.vn</span><a href="https://cherie.io.vn" target="_blank" rel="noopener">CHÉRIE Closet · thuê đầm</a></div>
+      <div class="c"><span class="k">Liên hệ</span><span>hello@cherie.io.vn</span><a href="https://cherie.io.vn" target="_blank" rel="noopener">CHÉRIE Closet · thuê đầm</a></div>
     </div>
     <div class="base">© 2026 CHÉRIE · Hộ kinh doanh tại Đà Nẵng</div>
   </div>
@@ -832,7 +832,7 @@ function makeTuImage(c){
       g.fillStyle=esp;g.font="600 22px "+B;g.fillText("Bộ "+(i+1)+(bo.length===10?(i<5?" · Tuần A":" · Tuần B"):""),x,y+ih+34);
       g.fillStyle=mut;g.font="400 19px "+B;wrapTxt(g,o.map(function(s){return s.ten}).join(" + "),x,y+ih+64,cw,26,2)});
     g.textAlign="center";g.fillStyle=esp;g.font="italic 400 28px "+D;g.fillText("Mỗi lần, một chiếc mới.",W/2,H-78);
-    g.fillStyle=mut;g.font="400 20px "+B;g.fillText("office.cherie.io.vn · Zalo 0377 159 189",W/2,H-42);
+    g.fillStyle=mut;g.font="400 20px "+B;g.fillText("office.cherie.io.vn",W/2,H-42);
     return new Promise(function(ok){cv.toBlob(function(b){ok(b)},"image/jpeg",0.9)})})}
 function saveTuImage(c){
   saveMsg("Đang tạo ảnh tủ đồ…");
@@ -936,7 +936,7 @@ function momMenu(open){var m=$("#momMenu"),b=$("#momDdb");if(!m||!b)return;if(op
   if(open){var r=b.getBoundingClientRect(),w=Math.min(300,innerWidth-24);m.style.width=w+"px";m.style.top=(r.bottom+6)+"px";m.style.left=Math.max(12,Math.min(innerWidth-w-12,r.right-w/2-10))+"px"}}
 function renderChrome(){
   $("#catNav").innerHTML='<a href="#tu-do" data-nav="tu-do">Tủ đồ</a>'+LINES.map(function(l){return l.mom?'<a href="#nhom-'+l.slug+'" data-nav="nhom-'+l.slug+'" class="mom">'+esc(l.k)+'</a><button type="button" class="ddb" id="momDdb" aria-expanded="false" aria-controls="momMenu" aria-label="Mục con của Mẹ bầu &amp; Sau sinh"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>':'<a href="#nhom-'+l.slug+'" data-nav="nhom-'+l.slug+'">'+esc(l.k)+'</a>'}).join("")+'<a href="#goi-va-gia" data-nav="goi-va-gia">Gói và giá</a>';
-  $("#drawerLinks").innerHTML='<a href="#">Trang chủ</a><a href="#tu-do">Tủ đồ</a>'+LINES.map(function(l){return '<a href="#nhom-'+l.slug+'"'+(l.mom?' class="mom"':'')+'>'+esc(l.k)+'</a>'+(l.mom?MOM_SUB.map(function(x){return '<a class="sub" href="'+x[0]+'">'+x[1]+'</a>'}).join(""):"")}).join("")+'<a href="#goi-va-gia">Gói và giá</a>'+'<a href="#cach-hoat-dong">Cách hoạt động</a><a href="#chinh-sach">Dữ liệu của nàng</a><div class="dcta"><a class="pill" href="#chon-nhom">Tìm tủ đồ của nàng</a><a class="pill ghost" href="https://zalo.me/0377159189" target="_blank" rel="noopener">Nhắn Zalo 0377 159 189</a></div>';drawerSaved();
+  $("#drawerLinks").innerHTML='<a href="#">Trang chủ</a><a href="#tu-do">Tủ đồ</a>'+LINES.map(function(l){return '<a href="#nhom-'+l.slug+'"'+(l.mom?' class="mom"':'')+'>'+esc(l.k)+'</a>'+(l.mom?MOM_SUB.map(function(x){return '<a class="sub" href="'+x[0]+'">'+x[1]+'</a>'}).join(""):"")}).join("")+'<a href="#goi-va-gia">Gói và giá</a>'+'<a href="#cach-hoat-dong">Cách hoạt động</a><a href="#chinh-sach">Dữ liệu của nàng</a><div class="dcta"><a class="pill" href="#chon-nhom">Tìm tủ đồ của nàng</a></div>';drawerSaved();
   $("#footLines").innerHTML=LINES.map(function(l){return '<a href="#nhom-'+l.slug+'">'+esc(l.k)+'</a>'}).join("");
   var words=["Giặt hấp hằng tuần","Giao văn phòng miễn phí","Đổi size trong 48 giờ","Tag đếm số lần mặc","Stylist chọn theo gu","Mỗi lần, một chiếc mới"];
   var one=words.map(function(w){return '<span>'+esc(w)+'</span><i>·</i>'}).join("");$("#marq").innerHTML=one+one;
@@ -970,7 +970,7 @@ function faq(l){
     ["Giao ở đâu?","Văn phòng khu trung tâm Đà Nẵng sáng thứ 2, miễn phí. Hoặc nhà riêng chiều chủ nhật, 35.000đ/tuần khu trung tâm."],
     ["Làm hư đồ thì sao?","Vết bẩn thường, sứt chỉ: tụi mình lo. Rách lớn hoặc mất: tính theo giá trị bồi thường ghi trên tag, trừ vào cọc."]];
   if(l.mom)base.unshift(["Bụng lớn nhanh quá thì sao?","Nhắn Zalo cho tụi mình. Size mới tới ở chuyến giao kế tiếp, không tính thêm tiền."],["Nghỉ sinh có phải trả tiền không?","Không. Mẹ trả đồ và tạm dừng gói. Khi đi làm lại, gói mở tiếp với tủ đồ sau sinh."]);
-  if(!l.monthly)base.splice(1,1,["Đặt thế nào?","Làm trắc nghiệm ngắn rồi gửi đăng ký, hoặc nhắn Zalo 0377 159 189 kèm ngày cần đồ."]);
+  if(!l.monthly)base.splice(1,1,["Đặt thế nào?","Làm trắc nghiệm ngắn rồi gửi đăng ký kèm ngày cần đồ. Stylist liên hệ lại trong ngày."]);
   return base}
 
 /* ---------- trắc nghiệm phong cách (5 dòng, không áp dụng Mẹ bầu & Sau sinh) ----------
@@ -1254,7 +1254,7 @@ function offerHtml(l,a){
   alt.push(['Thuê thử 1 set trước','Ngày quan trọng · từ 199.000đ/set','Mặc thử chất lượng đồ và cách tụi mình giặt hấp cho một buổi họp, phỏng vấn. Thấy ổn rồi mở gói tuần, trừ lại 199.000đ.','#nhom-ngay-quan-trong']);
   if(l.k!=="Áo dài"&&(a.nganh==="Ngân hàng, tài chính"||a.nganh==="Giáo viên, giảng viên"||a.nganh==="Cơ quan nhà nước"))alt.push(['Chỉ cần đồ thứ 2','Áo dài · 139.000đ/tuần · 1 bộ','Nơi làm mặc áo dài đầu tuần thì gói này nhẹ hơn nhiều.','#nhom-ao-dai']);
   if((a.doiSong||[]).indexOf("Hay đi công tác")>-1)alt.push(['Chỉ cần cho chuyến công tác','Travel · 690.000đ/chuyến 5 ngày','Trọn vali cho một chuyến, trả lại khi về.','#nhom-travel']);
-  alt.push(['Rủ đồng nghiệp cùng tòa nhà','Nhóm 3 người · giảm 10% mỗi người','Một tuyến giao chung nên tụi mình bớt được chi phí. Nhắn Zalo để giữ suất nhóm.','https://zalo.me/0377159189']);
+  alt.push(['Rủ đồng nghiệp cùng tòa nhà','Nhóm 3 người · giảm 10% mỗi người','Một tuyến giao chung nên tụi mình bớt được chi phí. Ghi tên đồng nghiệp khi đăng ký để giữ suất nhóm.','#dang-ky']);
   return '<div class="cta-box"><span class="k muted">Bước tiếp theo</span><h2>Giữ trọn tủ '+esc(l.k)+' này</h2><p class="muted">'+vnd(l.price)+' '+esc(l.unit)+(l.monthly?'. Trả trước 12 tuần, giảm 7%. Tuần đầu giao đúng các bộ bên trên.':'.')+'</p>'+
     '<div class="row"><a class="pill" href="#dang-ky" data-su="giu_tu">Giữ tủ này</a><button type="button" class="pill ghost" id="priceWorry" aria-expanded="false" aria-controls="altBox">Giá hơi cao với mình</button></div>'+
     '<div id="altBox" hidden><p style="margin-top:6px">Tụi mình hiểu. Nàng có thể bắt đầu nhẹ hơn:</p><div class="alts">'+alt.map(function(x){return '<a class="alt" href="'+x[3]+'"'+(x[4]?' data-pick="'+esc(x[4])+'"'+(x[5]?' data-goi="'+x[5]+'"':''):'')+(/^https/.test(x[3])?' target="_blank" rel="noopener"':'')+'><b>'+esc(x[0])+'</b><span class="k" style="color:var(--gold)">'+esc(x[1])+'</span><span class="muted">'+esc(x[2])+'</span></a>'}).join("")+'</div></div></div>'}
@@ -1474,7 +1474,7 @@ function openSaved(ma,xem){
     h+=bo.length?capsuleHtml(l,{bo:bo,N:boSize(l)===10&&bo.length===10?10:bo.length,mua:mua,muon:false,pk:[]}):'<p class="muted" style="margin-top:20px">Những món trong tủ này không còn trong kho. Nhắn stylist để chọn lại nhé.</p>';
     h+='<div class="cta-box"><span class="k muted">Bước tiếp theo</span><h2>Giữ tủ '+esc(l.k)+' này</h2><div class="row"><a class="pill" href="#dang-ky" data-su="giu_tu" data-pick="'+esc(l.k)+'">Giữ tủ này</a><a class="pill ghost" href="#chan-doan-'+(l.mom?"me":l.slug)+'">Làm lại trắc nghiệm</a></div></div>';
     $("#res").innerHTML=h})
-  .catch(function(e){$("#res").innerHTML='<h1>Chưa mở được tủ đồ</h1><p class="muted">'+esc(e.message||"Mạng chậm")+'. Thử tải lại trang, hoặc nhắn Zalo 0377 159 189 kèm mã '+esc(ma)+'.</p><p style="margin-top:16px"><a class="pill" href="'+ZALO+'" target="_blank" rel="noopener">Nhắn Zalo</a></p>'})}
+  .catch(function(e){$("#res").innerHTML='<h1>Chưa mở được tủ đồ</h1><p class="muted">'+esc(e.message||"Mạng chậm")+'. Thử tải lại trang sau ít phút. Mã tủ đồ của nàng: '+esc(ma)+'.</p><p style="margin-top:16px"><button type="button" class="pill" onclick="location.reload()">Tải lại trang</button></p>'})}
 function renderMomResult(r){
   var T=TYPES[r.type]||TYPES["Mềm mại"],a=r.a,plan=momPlan(a);
   var h='<div class="typecard" style="background:#8E432B"><span class="k" style="color:rgba(255,255,255,.75)">Lộ trình tủ đồ · Mẹ bầu &amp; Sau sinh</span><span class="fr-name">'+esc(T.fr)+'</span><h1>'+esc(a.giaiDoan==="Đang mang bầu"?"Tủ đồ đi cùng mẹ suốt thai kỳ":"Tủ đồ cho ngày mẹ quay lại công sở")+'</h1><p>Phong cách mẹ chọn: '+esc(T.ten.replace("Nàng","nàng").toLowerCase())+'. '+esc(T.mo.split(":")[0])+'.</p><div class="pal">'+T.pal.map(function(c){return '<i style="background:'+c+'"></i>'}).join("")+'</div></div>';
@@ -1501,7 +1501,7 @@ document.addEventListener("click",function(e){var rd=e.target.closest("[data-red
 function onSaveClick(e){var sv=e.target.closest("[data-save]");if(sv&&CUR){var k=sv.dataset.save,c=CUR,sk=function(v){post({fn:"webSuKien",vid:VID,maKQ:c.ma||"",su:"luu_tu",giaTri:v,trang:location.hash.slice(1,40)}).catch(function(){})};
     if(k==="anh"){saveTuImage(c);remember(c);sk("Ảnh")}
     else if(k==="link"){copyText(tuLink(c.ma,c.xem)).then(function(){saveMsg("Đã sao chép link. Dán vào Ghi chú hoặc gửi cho chính mình qua Zalo để mở lại.")},function(){saveMsg(tuLink(c.ma,c.xem))});remember(c);sk("Link")}
-    else if(k==="zalo"){var t="Chào CHÉRIE, mình vừa có tủ đồ mã "+c.ma+" (dòng "+c.dong+"). Nhờ stylist tư vấn giúp mình: "+tuLink(c.ma,c.xem);var w=window.open(ZALO,"_blank","noopener");copyText(t).then(function(){saveMsg("Đã chép sẵn lời nhắn kèm mã "+c.ma+". Mở Zalo rồi dán vào khung chat là xong.")},function(){saveMsg("Nhắn Zalo 0377 159 189 kèm mã "+c.ma+".")});remember(c);sk("Zalo")}
+    else if(k==="zalo"){var t="Chào CHÉRIE, mình vừa có tủ đồ mã "+c.ma+" (dòng "+c.dong+"). Nhờ stylist tư vấn giúp mình: "+tuLink(c.ma,c.xem);var w=window.open(ZALO,"_blank","noopener");copyText(t).then(function(){saveMsg("Đã chép sẵn lời nhắn kèm mã "+c.ma+". Mở Zalo rồi dán vào khung chat là xong.")},function(){saveMsg("Mở Zalo CHÉRIE rồi gửi kèm mã "+c.ma+".")});remember(c);sk("Zalo")}
     return true}
   if(e.target.closest("[data-su=giu_tu]")){suKien("giu_tu");if(CUR)ss("of-tu-chon",{ma:CUR.ma||"",xem:CUR.xem||"",dong:CUR.dong,bo:boStr(CUR.bo)})}}
 $("#sbar").addEventListener("click",function(e){if(!location.hash.match(/^#(ket-qua|tu-)/))return;if(e.target.closest("[data-save]")&&!$("#saveBar")){return}onSaveClick(e)});
@@ -1514,7 +1514,7 @@ function detail(id){track("xem_mon",id);
   $("#pd").innerHTML='<div><a class="backlink" href="#tu-do">← Quay lại tủ đồ</a><div class="gal">'+shots+'</div>'+(p.length>1?'<div class="galnav rnav" style="margin-top:10px"><button type="button" data-gal="-1" aria-label="Ảnh trước"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button><span class="small muted">'+Math.min(p.length,4)+' ảnh · lướt để xem</span><button type="button" data-gal="1" aria-label="Ảnh sau"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button></div>':'')+'</div><div class="pinfo"><span class="k muted">'+esc(s.brand||"CHÉRIE Office")+'</span><h1 style="font-size:32px">'+esc(s.ten)+'</h1><span class="muted">'+esc(s.mau||"")+'</span>'+
     '<div class="sizes"><span class="lb">Size có sẵn</span>'+["S","M","L","XL"].map(function(z){return '<span class="sz'+(have.indexOf(z)>-1?'':' off')+'">'+z+'</span>'}).join("")+'</div>'+
     '<div class="inplan"><span class="k" style="color:var(--gold)">Có trong gói '+esc(l.k)+'</span><span style="font-size:14px">Từ '+vnd(giaTu(l))+(l.monthly?'/tuần':' '+esc(l.unit))+'. Muốn có bộ này trong tủ, làm trắc nghiệm và thả tim nó, stylist sẽ ưu tiên.</span></div>'+
-    '<a class="pill block" href="'+qh+'">Muốn mặc bộ này? Để stylist chọn cho nàng</a><a class="pill ghost block" href="https://zalo.me/0377159189" target="_blank" rel="noopener">Hỏi stylist qua Zalo</a><a class="ul" href="#nhom-'+l.slug+'" style="justify-self:start">Xem dòng '+esc(l.k)+'</a>'+
+    '<a class="pill block" href="'+qh+'">Muốn mặc bộ này? Để stylist chọn cho nàng</a><a class="ul" href="#nhom-'+l.slug+'" style="justify-self:start">Xem dòng '+esc(l.k)+'</a>'+
     (p.length&&s.brand?'<p class="muted" style="font-size:13px">Ảnh mẫu của '+esc(s.brand)+'. Ảnh tụi mình tự chụp đang được cập nhật.</p>':'')+
     '<div class="dl">'+(s.brand?'<div><span>Thương hiệu</span><span>'+esc(s.brand)+'</span></div>':'')+'<div><span>Mã đồ</span><span class="num">'+esc(s.id)+'</span></div><div><span>Giặt</span><span>Giặt hấp tại CHÉRIE Care</span></div></div></div>'}
 
@@ -1561,7 +1561,7 @@ function submit(){
     ga("dang_ky_goi",{goi:c.ten,value:+c.tot||0,currency:"VND"});ss("of-dk-done",{ma:x.ma||"",ten:body.ten,zalo:body.zalo,goi:c.ten,tot:c.tot,coc:c.coc||0,giao:giaoText(),nha:picked("ship")==="Nhà riêng",pv:pvi,maKQ:(rr&&rr.maKQ)||(tc&&tc.ma)||"",xem:(rr&&rr.xem)||(tc&&tc.xem)||"",monthly:!!c.l.monthly});
     try{sessionStorage.removeItem("of-result")}catch(e){}
     next.disabled=false;next.textContent="Gửi đăng ký";location.hash="da-dang-ky";
-  }).catch(function(e){next.disabled=false;next.textContent="Gửi lại";$("#sent").innerHTML='<b>Chưa gửi được.</b><span class="muted">'+esc(e.message||"Mạng chậm")+'. Thử lại, hoặc nhắn Zalo 0377 159 189.</span>';$("#sent").hidden=false})}
+  }).catch(function(e){next.disabled=false;next.textContent="Gửi lại";$("#sent").innerHTML='<b>Chưa gửi được.</b><span class="muted">'+esc(e.message||"Mạng chậm")+'. Thông tin nàng nhập vẫn còn, bấm Gửi lại sau ít phút.</span>';$("#sent").hidden=false})}
 next.addEventListener("click",function(){if(step===4){submit();return}if(check(step))show(step+1)});
 back.addEventListener("click",function(){show(step-1)});
 form.addEventListener("change",function(ev){var e=$("#e"+step);if(e)e.hidden=true;if(ev.target.name==="line")goiOpts();if(ev.target.name==="ship")shipToggle();$("#dueWrap").hidden=(picked("line")!==MOM)});
@@ -1594,7 +1594,7 @@ document.addEventListener("click",function(e){var rb=e.target.closest("[data-rai
 function sbar(id){var b=$("#sbar"),h="",l=null;
   if(id==="nhom")l=bySlug(decodeURIComponent(location.hash.slice(6)))||null;
   if(id==="sp"){var it=DATA.sp.filter(function(x){return x.id===location.hash.slice(4).toUpperCase()})[0];l=it?(byKey(it.loai)||LINES[5]):null}
-  var z='<a class="z" href="https://zalo.me/0377159189" target="_blank" rel="noopener" aria-label="Nhắn Zalo cho stylist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1.1-4.6A8 8 0 1 1 21 12z"/></svg></a>';
+  var z='';if(0)z='<a class="z" href="https://zalo.me/0377159189" target="_blank" rel="noopener" aria-label="Nhắn Zalo cho stylist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1.1-4.6A8 8 0 1 1 21 12z"/></svg></a>';
   if(l)h='<div class="p">'+esc(l.k)+'<b>Từ '+vnd(giaTu(l))+(l.monthly?'/tuần':' '+esc(l.unit.split(" ")[0]))+'</b></div>'+z+'<a class="pill" href="'+(l.mom?"#chan-doan-me":"#chan-doan-"+l.slug)+'">Bắt đầu</a>';
   else if(id==="tu-do")h='<div class="p">Thích bộ nào?<b>Để stylist chọn cho nàng</b></div>'+z+'<a class="pill" href="#chon-nhom">Bắt đầu</a>';
   else if(id==="ket-qua")h=tuActs();
@@ -1602,7 +1602,7 @@ function sbar(id){var b=$("#sbar"),h="",l=null;
   b.innerHTML=h;document.body.classList.toggle("has-sbar",!!h)}
 function view(id){sbar(id);document.querySelectorAll(".view").forEach(function(v){v.hidden=v.id!=="v-"+id});var f=(id==="quiz"||id==="chat");document.querySelector("footer.site").hidden=f;document.body.classList.toggle("focus",f)}
 /* tự nhận bản website mới: trang mở lâu vẫn chuyển sang bản mới ở lần chuyển trang kế tiếp (không ngắt trắc nghiệm, đăng ký) */
-var VER="20261031171445",NEWV=false,VCHK=0;
+var VER="20261031222213",NEWV=false,VCHK=0;
 function chkVer(){if(VER==="dev"||Date.now()-VCHK<90000)return;VCHK=Date.now();try{fetch("ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=(t||"").trim();if(t&&t!==VER)NEWV=true}).catch(function(){})}catch(e){}}
 document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chkVer()});
 function route(){ga("page_view",{page_location:location.href,page_path:location.pathname+location.hash,page_title:document.title});
