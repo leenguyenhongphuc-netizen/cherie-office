@@ -53,69 +53,60 @@ p{margin:0}
 .mast small{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.4em;margin-top:5px;opacity:.9}
 .hd .btn{min-height:44px;padding:0 18px;font-size:14px}
 .prog{position:absolute;left:0;bottom:-1px;height:2px;background:var(--accent);width:0}
-/* bìa: chữ trên nền giấy, ảnh trong khung riêng (không chồng chữ lên ảnh) */
-.cover{padding:calc(76px + env(safe-area-inset-top,0px)) 0 8px}
-.cover .in{max-width:1080px;margin:0 auto;padding:0 20px;display:grid;gap:22px}
-.cover .issue{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);display:flex;gap:10px;align-items:center}
-.cover .issue i{width:24px;height:1px;background:var(--accent)}
-.cover h1{font-size:clamp(42px,11vw,72px);margin-top:12px}
-.cover h1 em{font-style:italic;color:var(--accent)}
-.cover .dek{font-size:17px;line-height:1.55;margin-top:12px;max-width:30em;color:var(--sub)}
-.cover .cta{display:grid;margin-top:18px;max-width:420px}
-.cover .price{margin-top:10px;font-size:14px;color:var(--sub)}
+/* bìa: chữ trên nền giấy, ảnh trong khung riêng */
+.cover{padding:calc(78px + env(safe-area-inset-top,0px)) 0 28px}
+.cover .in{max-width:1080px;margin:0 auto;padding:0 20px;display:grid;gap:24px}
+.cover .kick{font-size:14.5px;font-weight:600;color:var(--accent)}
+.cover h1{font-size:clamp(40px,10.6vw,72px);margin-top:10px;max-width:9.5em}
+.cover .dek{font-size:17px;line-height:1.55;margin-top:14px;max-width:32em;color:var(--sub)}
+.facts{list-style:none;margin:20px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);background:var(--paper2);border-radius:16px}
+.facts li{padding:14px 12px;font-size:13px;color:var(--sub);line-height:1.35}
+.facts li+li{border-left:1px solid var(--rule)}
+.facts b{display:block;font-family:var(--serif);font-weight:500;font-size:clamp(19px,5vw,24px);color:var(--ink);margin-bottom:2px;white-space:nowrap}
+.cover .cta{display:grid;gap:4px;margin-top:20px;max-width:420px}
+.cover .txt{display:flex;align-items:center;justify-content:center;min-height:44px;font-size:15px;color:var(--sub);text-underline-offset:3px}
 .cover figure{margin:0;display:grid;gap:8px}
-.cover .fr{position:relative;aspect-ratio:4/5;max-height:62svh;width:100%;border-radius:6px;overflow:hidden;background:var(--img)}
+.cover .fr{position:relative;aspect-ratio:4/5;max-height:70svh;width:100%;border-radius:16px;overflow:hidden;background:var(--img)}
 .cover .fr img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 12%}
 .cover figcaption{font-size:13px;color:var(--sub);display:flex;justify-content:space-between;gap:10px}
-.cover figcaption b{font:500 10.5px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
-@media (min-width:860px){.cover .in{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);align-items:center;gap:48px}.cover .fr{max-height:78svh}}
+.cover figcaption b{font-weight:600;color:var(--ink)}
+@media (min-width:860px){.nx{margin-top:28px}.cover .in{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);align-items:center;gap:56px}.cover .fr{max-height:80svh}}
 /* bảy chương: vuốt ngang, mỗi chương một cụm */
 .tabs{position:sticky;top:calc(58px + env(safe-area-inset-top,0px));z-index:20;background:var(--paper);border-bottom:1px solid var(--rule)}
 .tabs .in{display:flex;align-items:center;gap:6px;max-width:1080px;margin:0 auto;padding:0 12px 0 20px}
 .tabs .sc{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0}
 .tabs .sc::-webkit-scrollbar{display:none}
 .tabs button{flex:none;border:0;background:none;color:var(--sub);font:500 14px var(--sans);min-height:48px;padding:0 10px;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap}
-.tabs button b{font:500 11px var(--mono);letter-spacing:.08em;color:var(--accent);margin-right:5px}
 .tabs button[aria-current="true"]{color:var(--ink);border-bottom-color:var(--accent)}
-.tabs .ct{flex:none;font:500 12px var(--mono);letter-spacing:.1em;color:var(--sub);padding-left:8px;border-left:1px solid var(--rule)}
+.tabs .ct{flex:none;font:600 13px var(--sans);color:var(--sub);padding-left:8px;border-left:1px solid var(--rule)}
 @media (min-width:860px){.tabs .sc{justify-content:center}}
-.deck{display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain;
-  height:calc(100svh - 58px - 49px - 72px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));min-height:520px}
-@media (min-width:860px){.deck{height:min(calc(100svh - 58px - 49px),760px)}}
+.deck{display:flex;align-items:stretch;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+.deck.m{height:auto!important;align-items:flex-start}
 .deck::-webkit-scrollbar{display:none}
-.sl{flex:0 0 100%;scroll-snap-align:start;scroll-snap-stop:always;height:100%}
-.sl>.col{height:100%;display:flex;flex-direction:column}
-.sl .bd{flex:1;min-height:0;overflow-y:auto;padding-top:20px;padding-bottom:8px;scrollbar-width:none}
-.sl .bd::-webkit-scrollbar{display:none}
-.sl .bd.more{-webkit-mask-image:linear-gradient(#000 calc(100% - 44px),transparent);mask-image:linear-gradient(#000 calc(100% - 44px),transparent)}
-.ch .op{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 14px;align-items:end;margin-bottom:18px}
-.ch .num{font-family:var(--serif);font-style:italic;font-size:58px;line-height:.85;color:var(--accent);grid-row:span 2}
-.ch h2{font-size:clamp(28px,7.4vw,46px);grid-column:2}
-.ch .op p{grid-column:1/-1;font-size:16.5px;color:var(--sub);margin-top:8px}
-.sl .on .bd{animation:up .45s ease both}
-@keyframes up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-@media (prefers-reduced-motion:reduce){.sl .on .bd{animation:none}}
-.story p{font-size:17.5px;line-height:1.7;margin-top:12px}
-.story p:first-child{margin-top:0}
-.story .lead{font-family:var(--serif);font-style:italic;font-size:24px;color:var(--accent)}
-.pull{margin:20px 0;padding:16px 0;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);font-family:var(--serif);font-style:italic;font-size:clamp(26px,6.4vw,36px);line-height:1.2;text-align:center;text-wrap:balance}
-.note{font-size:13px;color:var(--sub);margin-top:14px;font-style:italic}
+.sl{flex:0 0 100%;scroll-snap-align:start;scroll-snap-stop:always;display:flex}
+.sl>.col{display:flex;flex-direction:column;width:100%;padding-top:24px}
+.ch .why{font-size:14px;font-weight:600;color:var(--accent)}
+.ch h2{font-size:clamp(28px,7.6vw,44px);margin-top:6px}
+.ch .lede{font-size:16.5px;line-height:1.6;color:var(--sub);margin-top:10px}
+.sl .on>*{animation:up .4s ease both}
+@keyframes up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.sl .on>*{animation:none}}
+.pull{margin:18px 0 0;padding:16px 18px;background:var(--paper2);border-radius:16px;font-family:var(--serif);font-size:20px;line-height:1.35}
 /* nút chuyển chương: thay cho vuốt */
-.nx{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px 0 14px;flex:none;border-top:1px solid var(--rule)}
+.nx{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:auto;padding:22px 0 26px}
 .nx button,.nx a{min-height:52px;border-radius:999px;border:1.5px solid var(--ink);background:transparent;color:var(--ink);font:600 14.5px var(--sans);cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0 12px;text-decoration:none;text-align:center;line-height:1.25}
 .nx .go{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 .nx .js-chat{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
 .nx>:only-child{grid-column:1/-1}
 /* con số */
-.nums{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--ink)}
-.nums div{padding:16px 12px 16px 0;border-bottom:1px solid var(--rule)}
-.nums div:nth-child(even){padding-left:14px;border-left:1px solid var(--rule)}
-.nums b{display:block;font-family:var(--serif);font-weight:500;font-size:clamp(32px,8.6vw,52px);line-height:1;color:var(--accent);white-space:nowrap}
-.nums span{display:block;margin-top:8px;font-size:14.5px;line-height:1.45}
-.nums a,.nums em{display:block;margin-top:6px;font-size:12px;color:var(--sub);font-style:normal}
+.nums{display:grid;margin-top:14px;border-top:1px solid var(--rule)}
+.nums div{display:grid;grid-template-columns:122px minmax(0,1fr);gap:12px;align-items:baseline;padding:12px 0;border-bottom:1px solid var(--rule)}
+.nums b{font-family:var(--serif);font-weight:500;font-size:24px;line-height:1.1;color:var(--accent);white-space:nowrap}
+.nums span{font-size:14.5px;line-height:1.45}
+.nums a{font-size:12.5px;color:var(--sub);margin-left:4px}
 .coda{margin-top:18px;font-family:var(--serif);font-size:21px;line-height:1.35;text-wrap:balance}
 /* lịch 40 tuần: chạm mốc để đổi */
-.wks{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--ink);border-bottom:1px solid var(--rule)}
+.wks{display:grid;grid-template-columns:repeat(5,1fr);margin-top:14px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
 .wks button{border:0;background:none;color:var(--sub);font:500 30px/1 var(--serif);padding:12px 0 10px;min-height:64px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
 .wks button small{display:block;font:500 10px var(--mono);letter-spacing:.14em;text-transform:uppercase;margin-bottom:5px}
 .wks button:last-child{font-size:22px}
@@ -124,42 +115,40 @@ p{margin:0}
 @media (min-width:860px){.wk{min-height:150px}}
 .wk h3{font-family:var(--serif);font-weight:500;font-size:24px;line-height:1.2}
 .wk p{margin-top:10px;font-size:15.5px;line-height:1.55}
-.wk p b{display:block;font:500 10.5px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:2px}
+.wk p b{display:block;font-size:13px;font-weight:600;color:var(--accent);margin-bottom:1px}
 .wk p.h{color:var(--sub)}
 .box{margin-top:16px;border:1px solid var(--warn);border-radius:16px;padding:14px 16px}
-.box b{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--warn);margin-bottom:6px}
+.box b{display:block;font-size:14px;font-weight:600;color:var(--warn);margin-bottom:4px}
 .box ul{margin:0;padding-left:18px;display:grid;gap:2px;font-size:14.5px}
-.box p{font-size:12px;color:var(--sub);margin-top:8px}
+.box p{font-size:13.5px;line-height:1.5}
 /* lookbook: một ảnh lớn, sáu ảnh nhỏ để chọn */
-.lk{display:grid;gap:12px}
-.lk .big{position:relative;aspect-ratio:4/5;max-height:34svh;width:100%;background:var(--img);overflow:hidden;border-radius:6px;display:block}
+.lk{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);grid-template-rows:auto 1fr;gap:12px;margin-top:16px}
+.lk .big{grid-row:span 2;position:relative;aspect-ratio:3/4;width:100%;background:var(--img);overflow:hidden;border-radius:16px;display:block}
 .lk .big img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 15%}
-.lk .cap{min-height:72px}
-.lk .cap b{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:500}
-.lk .cap span{display:block;font-weight:600;font-size:15.5px;line-height:1.35;margin-top:2px}
-.lk .cap em{display:block;color:var(--sub);font-style:italic;font-family:var(--serif);font-size:16px;margin-top:2px}
-.lk .th{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
-.lk .th button{padding:0;border:2px solid transparent;border-radius:6px;background:var(--img);aspect-ratio:3/4;overflow:hidden;cursor:pointer;min-height:44px}
+.lk .cap b{display:block;font-size:13px;color:var(--accent);font-weight:600}
+.lk .cap span{display:block;font-weight:600;font-size:15px;line-height:1.35;margin-top:2px}
+.lk .cap em{display:block;color:var(--sub);font-style:normal;font-size:14px;line-height:1.45;margin-top:4px}
+.lk .th{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;align-self:end}
+.lk .th button{padding:0;border:2px solid transparent;border-radius:10px;background:var(--img);aspect-ratio:3/4;overflow:hidden;cursor:pointer;min-height:44px}
 .lk .th button[aria-pressed="true"]{border-color:var(--accent)}
 .lk .th img{width:100%;height:100%;object-fit:cover;object-position:50% 15%}
-@media (min-width:860px){.lk{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start;column-gap:24px}.lk .big{grid-row:span 2;max-height:none}}
-.all{display:flex;align-items:center;justify-content:center;min-height:44px;margin-top:6px;font-weight:600;font-size:15px;color:var(--accent)}
+.all{display:flex;align-items:center;justify-content:center;min-height:48px;margin-top:12px;border-radius:999px;background:var(--paper2);font-weight:600;font-size:15px;color:var(--ink);text-decoration:none}
 /* hậu trường */
-.path{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink);counter-reset:p}
+.path{list-style:none;margin:14px 0 0;padding:0;border-top:1px solid var(--rule);counter-reset:p}
 .path li{display:grid;grid-template-columns:38px minmax(0,1fr);gap:12px;padding:12px 0;border-bottom:1px solid var(--rule);counter-increment:p}
-.path li::before{content:counter(p,decimal-leading-zero);font-family:var(--serif);font-style:italic;font-size:24px;line-height:1;color:var(--accent)}
+.path li::before{content:counter(p);width:30px;height:30px;border-radius:50%;background:var(--paper2);color:var(--accent);font-weight:600;font-size:14px;display:flex;align-items:center;justify-content:center}
 .path h3{font-family:var(--sans);font-weight:600;font-size:16px;line-height:1.35}
 .path p{margin-top:2px;font-size:14.5px;color:var(--sub);line-height:1.5}
 /* giá: hai gói cạnh nhau, nút thẳng hàng */
-.price2{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto 1fr auto;gap:0 10px}
-.pl{border:1px solid var(--ink);border-radius:16px;padding:16px 14px;display:grid;grid-template-rows:subgrid;grid-row:span 4;row-gap:8px}
-.pl .lbl{color:var(--sub);font-size:10.5px;letter-spacing:.12em}
+.price2{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto 1fr;gap:0 10px;margin-top:18px}
+.pl{border:1px solid var(--ink);border-radius:16px;padding:16px 14px;display:grid;grid-template-rows:subgrid;grid-row:span 3;row-gap:8px}
+.pl .lbl{font-family:var(--sans);text-transform:none;letter-spacing:0;font-size:13.5px;font-weight:600;color:var(--sub)}
 .pl.main{background:var(--paper2)}
 .pl .p{font-family:var(--serif);font-size:clamp(26px,7vw,40px);line-height:1}
 .pl .p small{display:block;font:500 13px var(--sans);color:var(--sub);margin-top:4px}
 .pl p{font-size:14px;line-height:1.5}
 .pl .btn{min-height:48px;padding:0 10px;font-size:14px;align-self:end}
-.vs{margin-top:18px;display:grid;gap:10px}
+.vs{margin-top:16px;display:grid;gap:10px}
 .vs .r{display:grid;gap:5px}
 .vs .r div{display:flex;justify-content:space-between;gap:12px;font-size:14.5px}
 .vs .r b{font-variant-numeric:tabular-nums;white-space:nowrap}
@@ -168,9 +157,10 @@ p{margin:0}
 .inc{list-style:none;margin:16px 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .inc li{background:var(--paper2);border-radius:12px;padding:9px 10px 9px 28px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13px;line-height:1.4;position:relative}
 .inc li::before{content:"";position:absolute;left:12px;top:15px;width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.pd{margin-top:14px;font-size:15.5px}.pd b{font-family:var(--serif);font-weight:500;font-size:22px;color:var(--accent)}
 .fine{margin-top:12px;font-size:13px;color:var(--sub);line-height:1.55}
 /* thư bạn đọc */
-.qa{border-top:1px solid var(--ink)}
+.qa{border-top:1px solid var(--rule);margin-top:12px}
 .qa details{border-bottom:1px solid var(--rule)}
 .qa summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) 24px;gap:12px;align-items:center;min-height:56px;padding:8px 0;font-family:var(--serif);font-style:italic;font-size:19px;line-height:1.3}
 .qa summary::-webkit-details-marker{display:none}
@@ -179,7 +169,7 @@ p{margin:0}
 .qa p{padding:0 0 14px;font-size:15.5px;line-height:1.6}
 /* kết */
 .end{margin-top:0;background:var(--accent);color:var(--on-accent);padding:44px 0 calc(56px + env(safe-area-inset-bottom,0px));text-align:center}
-.end h2{font-size:clamp(40px,10vw,72px);font-style:italic}
+.end h2{font-size:clamp(34px,8.6vw,60px)}
 .end p{margin:14px auto 0;padding:0 20px;max-width:26em;font-size:17px;opacity:.92}
 .end .cta{display:grid;gap:10px;max-width:420px;margin:24px auto 0;padding:0 20px}
 .end .btn{background:var(--on-accent);color:var(--accent);border-color:var(--on-accent)}
@@ -194,99 +184,108 @@ footer{padding:28px 20px calc(100px + env(safe-area-inset-bottom,0px));font-size
 </style>
 </head>
 <body>
-<header class="hd" id="hd"><div class="in"><a class="mast" href="/" aria-label="CHÉRIE Office, trang chủ">CHÉRIE<small>OFFICE</small></a><a class="btn js-chat" href="/#chan-doan-me">Trò chuyện</a></div><i class="prog" id="prog"></i></header>
+<header class="hd" id="hd"><div class="in"><a class="mast" href="/" aria-label="CHÉRIE Office, trang chủ">CHÉRIE<small>OFFICE</small></a><a class="btn line js-chat" href="/#chan-doan-me">Hỏi stylist</a></div><i class="prog" id="prog"></i></header>
 <main>
 <section class="cover"><div class="in">
   <div class="tx">
-    <span class="issue">Số đặc biệt <i></i> Mẹ bầu &amp; Sau sinh</span>
-    <h1>Chín tháng.<br>Ba size.<br><em>Một tủ đồ đi làm.</em></h1>
-    <p class="dek">Chuyện mặc gì đi làm khi bụng lớn mỗi tuần, và cách để mẹ không phải mua lại từ đầu.</p>
-    <div class="cta"><a class="btn js-chat" href="/#chan-doan-me">Trò chuyện với stylist của mẹ</a></div>
-    <p class="price">Từ 349.000đ/tuần · đổi size miễn phí</p>
+    <p class="kick">Cho mẹ bầu và sau sinh đi làm ở Đà Nẵng</p>
+    <h1>Đồ đi làm lớn theo bụng mẹ.</h1>
+    <p class="dek">Thuê theo tuần những bộ công sở từ thương hiệu Việt. Bụng lớn tới đâu, đổi size tới đó. Giặt hấp sẵn, giao tận văn phòng sáng thứ Hai.</p>
+    <ul class="facts"><li><b>349.000đ</b>mỗi tuần</li><li><b>Miễn phí</b>đổi size</li><li><b>0đ</b>khi nghỉ sinh</li></ul>
+    <div class="cta"><a class="btn" href="#doc" data-go="0">Xem 6 lý do mẹ nên thuê</a><a class="txt js-chat" href="/#chan-doan-me">Hoặc hỏi thẳng stylist</a></div>
   </div>
-  <figure><div class="fr"><img id="coverImg" alt="Mẹ mặc đầm sơ mi cổ đức xếp ly màu đen đi làm" fetchpriority="high"></div><figcaption><span>Đầm cổ đức xếp ly</span><b>IVY moda</b></figcaption></figure>
+  <figure><div class="fr"><img id="coverImg" alt="Mẹ mặc đầm sơ mi cổ đức xếp ly màu đen đi làm" fetchpriority="high"></div><figcaption><span>Đầm cổ đức xếp ly, mặc được tới tháng thứ 7</span><b>IVY moda</b></figcaption></figure>
 </div></section>
 
-<article id="doc" aria-label="Bảy chương, vuốt ngang để đọc">
-<nav class="tabs" aria-label="Các chương"><div class="in"><div class="sc" id="tabs">
-  <button type="button" data-i="0"><b>01</b>Tuần 22</button><button type="button" data-i="1"><b>02</b>Con số</button><button type="button" data-i="2"><b>03</b>40 tuần</button><button type="button" data-i="3"><b>04</b>Lookbook</button><button type="button" data-i="4"><b>05</b>Chăm đồ</button><button type="button" data-i="5"><b>06</b>Giá</button><button type="button" data-i="6"><b>07</b>Hỏi đáp</button>
-</div><span class="ct" id="ct" aria-live="polite">01/07</span></div></nav>
+<article id="doc" aria-label="Sáu lý do và hỏi đáp, vuốt ngang để đọc">
+<nav class="tabs" aria-label="Các lý do"><div class="in"><div class="sc" id="tabs">
+  <button type="button" data-i="0">Mua thì phí</button><button type="button" data-i="1">Lớn theo mẹ</button><button type="button" data-i="2">Đồ đẹp thật</button><button type="button" data-i="3">Sạch sẽ</button><button type="button" data-i="4">Tiết kiệm</button><button type="button" data-i="5">Nghỉ sinh</button><button type="button" data-i="6">Hỏi đáp</button>
+</div><span class="ct" id="ct" aria-live="polite">1/7</span></div></nav>
 <div class="deck" id="deck">
 
-<section class="sl ch" id="c1" aria-label="Chương 1 trên 7"><div class="col">
-  <div class="op"><span class="num" aria-hidden="true">01</span><span class="lbl">Câu chuyện</span><h2>Sáng thứ Hai, tuần 22.</h2></div>
-  <div class="story">
-    <p><span class="lead">Bảy giờ sáng.</span> Mẹ đứng trước tủ đồ, tay vẫn cầm cốc sữa ấm.</p>
-    <p>Chiếc quần tây quen thuộc không cài được khuy nữa. Chiếc đầm mua tháng trước giờ ôm sát bụng. Mẹ lại lấy chiếc váy suông cũ, lần thứ ba trong tuần.</p>
-  </div>
-  <p class="pull">Cơ thể đổi mỗi tuần. Tủ đồ thì đứng yên.</p>
-  <div class="story"><p>Mua mới thì sao? Mua cho tháng thứ năm, tới tháng thứ bảy đã chật. Chín tháng, ba lần đi sắm. Mỗi lần mặc vài tuần, rồi cất.</p></div>
-  <p class="note">Câu chuyện tụi mình kể lại từ những điều mẹ bầu đi làm hay gặp.</p>
-</div></section>
-
-<section class="sl ch" id="c2" aria-label="Chương 2 trên 7"><div class="col">
-  <div class="op"><span class="num" aria-hidden="true">02</span><span class="lbl">Con số</span><h2>Những con số ít ai kể.</h2></div>
+<section class="sl ch" aria-label="Lý do 1 trên 6"><div class="col">
+  <p class="why">Lý do 1</p>
+  <h2>Mua đồ bầu, vừa vài tuần là chật.</h2>
+  <p class="lede">Chiếc đầm mua tháng trước giờ đã ôm bụng. Mua cho tháng thứ năm, tới tháng thứ bảy lại phải mua tiếp.</p>
   <div class="nums">
-    <div><b>10–12,5kg</b><span>Phần lớn mẹ bầu tăng chừng này, nhiều nhất là sau tuần 20.</span><a href="https://www.nhs.uk/pregnancy/related-conditions/common-symptoms/weight-gain/" target="_blank" rel="noopener">Nguồn: NHS</a></div>
-    <div><b>3 size</b><span>Ba tháng đầu, ba tháng cuối, rồi sau sinh. Mỗi chặng một size.</span><em>Đồ vừa vài tuần là chật</em></div>
-    <div><b>1 xe rác</b><span>Lượng vải thế giới bỏ đi mỗi giây.</span><a href="https://fashionunited.uk/news/fashion/stella-mccartney-ellen-macarthur-team-up-to-tackle-textile-waste/2017112827001" target="_blank" rel="noopener">Nguồn: Ellen MacArthur Foundation</a></div>
-    <div><b>&lt;1%</b><span>Quần áo được tái chế thành quần áo mới.</span><a href="https://fashionunited.uk/news/fashion/stella-mccartney-ellen-macarthur-team-up-to-tackle-textile-waste/2017112827001" target="_blank" rel="noopener">Nguồn: Ellen MacArthur Foundation</a></div>
+    <div><b>10–12,5kg</b><span>Mức tăng cân thường gặp khi mang thai, nhiều nhất sau tuần 20. <a href="https://www.nhs.uk/pregnancy/related-conditions/common-symptoms/weight-gain/" target="_blank" rel="noopener">NHS</a></span></div>
+    <div><b>3 lần</b><span>Đổi size: ba tháng đầu, ba tháng cuối, rồi sau sinh.</span></div>
+    <div><b>1 xe rác</b><span>Lượng vải thế giới bỏ đi mỗi giây. <a href="https://fashionunited.uk/news/fashion/stella-mccartney-ellen-macarthur-team-up-to-tackle-textile-waste/2017112827001" target="_blank" rel="noopener">Ellen MacArthur Foundation</a></span></div>
+    <div><b>&lt;1%</b><span>Quần áo cũ được tái chế thành quần áo mới. <a href="https://fashionunited.uk/news/fashion/stella-mccartney-ellen-macarthur-team-up-to-tackle-textile-waste/2017112827001" target="_blank" rel="noopener">Ellen MacArthur Foundation</a></span></div>
   </div>
-  <p class="coda">Thuê theo tuần, mẹ mặc vừa từng chặng mà không phải mua rồi bỏ.</p>
+  <p class="pull">Thuê theo tuần, mẹ mặc vừa từng chặng mà không phải mua rồi bỏ.</p>
 </div></section>
 
-<section class="sl ch" id="c3" aria-label="Chương 3 trên 7"><div class="col">
-  <div class="op"><span class="num" aria-hidden="true">03</span><span class="lbl">Lịch 40 tuần</span><h2>Một tủ đồ biết lớn theo mẹ.</h2><p>Chạm từng mốc để xem stylist chuẩn bị gì cho mẹ.</p></div>
+<section class="sl ch" aria-label="Lý do 2 trên 6"><div class="col">
+  <p class="why">Lý do 2</p>
+  <h2>Tủ đồ đổi theo từng tuần thai.</h2>
+  <p class="lede">Stylist theo dõi ngày dự sinh của mẹ và nhắc trước khi cần lên size. Chạm từng mốc để xem.</p>
   <div class="cal" id="cal">
     <div class="wks" role="tablist" aria-label="Chọn mốc thai kỳ"><button type="button" role="tab" data-w="0"><small>Tuần</small>08</button><button type="button" role="tab" data-w="1"><small>Tuần</small>20</button><button type="button" role="tab" data-w="2"><small>Tuần</small>28</button><button type="button" role="tab" data-w="3"><small>Tuần</small>36</button><button type="button" role="tab" data-w="4"><small>Sau</small>sinh</button></div>
-    <div class="wk" role="tabpanel"><h3>Tủ đầu tiên</h3><p><b>Stylist</b>Size cũ, vải mềm không mùi, áo suông, chân váy lưng thun. Tránh vải bóng, cổ cao bí.</p><p class="h"><b>Sức khoẻ</b>Hay nghén thì ăn bữa nhỏ, để sẵn bánh quy khô và nước ở bàn làm việc.</p></div>
-    <div class="wk" role="tabpanel" hidden><h3>Lên một size</h3><p><b>Stylist</b>Mẹ không cần nhắn, tụi mình nhắc trước. Đầm suông, đầm đắp chéo, giày đế bằng.</p><p class="h"><b>Sức khoẻ</b>Đau lưng thì ngồi lưng thẳng có gối tựa, mỗi giờ đứng dậy đi lại.</p></div>
-    <div class="wk" role="tabpanel" hidden><h3>Tủ ba tháng cuối</h3><p><b>Stylist</b>Đầm chữ A, babydoll, vải thoáng. Không quần bó gấu, không giày quai siết.</p><p class="h"><b>Sức khoẻ</b>Chân hay phù thì tránh đứng lâu, gác chân khi ngồi, xoay cổ chân vài lần trong ngày.</p></div>
-    <div class="wk" role="tabpanel" hidden><h3>Tạm dừng, không tính tiền</h3><p><b>Stylist</b>Chuyến cuối trước ngày nghỉ, tụi mình lấy đồ về. Mẹ yên tâm nghỉ sinh.</p><p class="h"><b>Sức khoẻ</b>Chuẩn bị sẵn túi đi sinh từ khoảng tuần 36.</p></div>
-    <div class="wk" role="tabpanel" hidden><h3>Ngày đi làm lại</h3><p><b>Stylist</b>Áo mở khuy trước, đầm sơ mi, cạp chun êm. Gói mở tiếp, không đăng ký lại.</p><p class="h"><b>Quyền lợi</b>Nuôi con dưới 12 tháng, mẹ được nghỉ 60 phút mỗi ngày trong giờ làm, vẫn hưởng đủ lương.</p></div>
+    <div class="wk" role="tabpanel"><h3>Tủ đầu tiên</h3><p><b>Stylist</b>Size cũ, vải mềm không mùi, áo suông, chân váy lưng thun.</p><p class="h"><b>Sức khoẻ</b>Hay nghén thì ăn bữa nhỏ, để sẵn bánh quy khô ở bàn làm việc.</p></div>
+    <div class="wk" role="tabpanel" hidden><h3>Lên một size</h3><p><b>Stylist</b>Tụi mình nhắc trước. Đầm suông, đầm đắp chéo, giày đế bằng.</p><p class="h"><b>Sức khoẻ</b>Đau lưng thì ngồi có gối tựa, mỗi giờ đứng dậy đi lại.</p></div>
+    <div class="wk" role="tabpanel" hidden><h3>Tủ ba tháng cuối</h3><p><b>Stylist</b>Đầm chữ A, babydoll, vải thoáng. Không giày quai siết.</p><p class="h"><b>Sức khoẻ</b>Chân hay phù thì gác chân khi ngồi, xoay cổ chân vài lần trong ngày.</p></div>
+    <div class="wk" role="tabpanel" hidden><h3>Chuyến giao cuối</h3><p><b>Stylist</b>Trước ngày nghỉ, tụi mình lấy đồ về và tạm dừng gói.</p><p class="h"><b>Sức khoẻ</b>Chuẩn bị sẵn túi đi sinh từ khoảng tuần 36.</p></div>
+    <div class="wk" role="tabpanel" hidden><h3>Ngày đi làm lại</h3><p><b>Stylist</b>Áo mở khuy trước, đầm sơ mi để tiện cho con bú, hút sữa.</p><p class="h"><b>Quyền lợi</b>Nuôi con dưới 12 tháng được nghỉ 60 phút mỗi ngày, vẫn đủ lương.</p></div>
   </div>
-  <div class="box"><b>Gọi bác sĩ hoặc đến viện ngay nếu</b><ul><li>Mặt, tay hoặc chân phù lên đột ngột.</li><li>Đau đầu dữ dội, nhìn mờ hoặc thấy chớp sáng.</li><li>Đau nhiều ngay dưới xương sườn.</li></ul><p>Lời nhắc chung, không thay cho khám thai. Tham khảo: <a href="https://www.nhs.uk/pregnancy/related-conditions/common-symptoms/swollen-ankles-feet-and-fingers/" target="_blank" rel="noopener">NHS</a>, <a href="https://luatvietnam.vn/lao-dong-tien-luong/che-do-nuoi-con-nho-duoi-12-thang-562-28932-article.html" target="_blank" rel="noopener">Bộ luật Lao động 2019, Điều 137</a>.</p></div>
+  <div class="box"><b>Gọi bác sĩ hoặc đến viện ngay nếu</b><p>Phù mặt, tay, chân đột ngột; đau đầu dữ dội, nhìn mờ; đau nhiều dưới xương sườn. Lời nhắc chung, không thay khám thai. Nguồn: <a href="https://www.nhs.uk/pregnancy/related-conditions/common-symptoms/swollen-ankles-feet-and-fingers/" target="_blank" rel="noopener">NHS</a>, <a href="https://luatvietnam.vn/lao-dong-tien-luong/che-do-nuoi-con-nho-duoi-12-thang-562-28932-article.html" target="_blank" rel="noopener">BLLĐ 2019 Điều 137</a>.</p></div>
 </div></section>
 
-<section class="sl ch" id="c4" aria-label="Chương 4 trên 7"><div class="col">
-  <div class="op"><span class="num" aria-hidden="true">04</span><span class="lbl">Lookbook</span><h2>Sáu chiếc đầm, đi qua cả thai kỳ.</h2></div>
+<section class="sl ch" aria-label="Lý do 3 trên 6"><div class="col">
+  <p class="why">Lý do 3</p>
+  <h2>Đồ công sở thật, không thùng thình.</h2>
+  <p class="lede">Đầm, áo, quần công sở của IVY moda, MARC, JM Dress Design, PANTIO. Stylist chỉ chọn dáng suông, chữ A, đắp chéo: không chạm bụng, mặc được lâu.</p>
   <div class="lk" id="lk"></div>
-  <a class="all" href="/#nhom-me-bau-sau-sinh" id="moreLink">Xem cả tủ của mẹ · 127 món →</a>
+  <a class="all" href="/#nhom-me-bau-sau-sinh" id="moreLink">Xem cả 127 món mẹ mặc được</a>
 </div></section>
 
-<section class="sl ch" id="c5" aria-label="Chương 5 trên 7"><div class="col">
-  <div class="op"><span class="num" aria-hidden="true">05</span><span class="lbl">Tụi mình lo gì</span><h2>Mẹ chỉ việc mặc.</h2><p>Từ chọn đồ, giặt hấp tới giao tận nơi, tụi mình lo hết.</p></div>
+<section class="sl ch" aria-label="Lý do 4 trên 6"><div class="col">
+  <p class="why">Lý do 4</p>
+  <h2>Sạch như đồ mới mỗi lần mặc.</h2>
+  <p class="lede">Mẹ bầu da nhạy, mũi nhạy. Mỗi bộ đi qua xưởng CHÉRIE Care trước khi tới tay mẹ.</p>
   <ol class="path">
-    <li><div><h3>Stylist chọn đồ theo tuần thai</h3><p>Đồ công sở từ IVY moda, MARC, JM Dress Design, PANTIO. 127 món mặc được khi bầu và sau sinh.</p></div></li>
-    <li><div><h3>Giặt hấp sau mỗi lần mặc</h3><p>Ở xưởng CHÉRIE Care, không dùng hoá chất mạnh, đóng túi niêm phong.</p></div></li>
-    <li><div><h3>Giao tới văn phòng sáng thứ Hai</h3><p>Văn phòng khu trung tâm miễn phí. Nhà riêng từ 35.000đ/tuần.</p></div></li>
-    <li><div><h3>Sửa đồ, đổi size miễn phí</h3><p>Sút chỉ, rơi cúc hay bụng lớn thêm, tụi mình sửa hoặc đổi size ở chuyến sau.</p></div></li>
-    <li><div><h3>Tạm dừng khi mẹ nghỉ sinh</h3><p>Không tính tiền những tuần nghỉ. Đi làm lại, tủ sau sinh tới đúng sáng thứ Hai.</p></div></li>
+    <li><div><h3>Giặt hấp sau mỗi lần mặc</h3><p>Không dùng hoá chất mạnh, hấp phẳng từng nếp.</p></div></li>
+    <li><div><h3>Kiểm tra, sửa từng món</h3><p>Sút chỉ, rơi cúc được sửa trước khi giao. Món không đạt thì rút khỏi tủ.</p></div></li>
+    <li><div><h3>Đóng túi niêm phong</h3><p>Mẹ là người mở túi đầu tiên.</p></div></li>
+    <li><div><h3>Giao văn phòng sáng thứ Hai</h3><p>Khu trung tâm miễn phí, nhà riêng từ 35.000đ/tuần.</p></div></li>
   </ol>
 </div></section>
 
-<section class="sl ch" id="c6" aria-label="Chương 6 trên 7"><div class="col">
-  <div class="op"><span class="num" aria-hidden="true">06</span><span class="lbl">Bảng giá</span><h2>Giá, nói thẳng.</h2><p>Theo tuần, đã gồm giặt hấp. Trả trước 12 tuần giảm 7%.</p></div>
-  <div class="price2">
-    <div class="pl main"><span class="lbl">Gói 10 bộ</span><span class="p">389.000đ<small>mỗi tuần</small></span><p>Đổi tủ mỗi tuần. 2 ngày đầm, 3 ngày áo phối quần, chân váy.</p><a class="btn js-chat" href="/#chan-doan-me">Chọn 10 bộ</a></div>
-    <div class="pl"><span class="lbl">Gói 5 bộ</span><span class="p">349.000đ<small>mỗi tuần</small></span><p>Mặc lại mỗi tuần. Tối thứ Sáu lấy đi giặt, sáng thứ Hai giao lại.</p><a class="btn line js-chat" href="/#chan-doan-me">Chọn 5 bộ</a></div>
-  </div>
+<section class="sl ch" aria-label="Lý do 5 trên 6"><div class="col">
+  <p class="why">Lý do 5</p>
+  <h2>Rẻ bằng một phần tư tiền mua.</h2>
   <div class="vs">
     <div class="r"><div><span>Mua 10 chiếc đầm như trong tủ</span><b>17.428.940đ</b></div><div class="tr"><i style="width:100%"></i></div></div>
-    <div class="r me"><div><span>Thuê 12 tuần gói 10 bộ, đã giảm 7%</span><b>4.341.000đ</b></div><div class="tr"><i style="width:25%"></i></div></div>
+    <div class="r me"><div><span>Thuê 12 tuần gói 10 bộ</span><b>4.341.000đ</b></div><div class="tr"><i style="width:25%"></i></div></div>
   </div>
-  <ul class="inc"><li>Giặt hấp mỗi lần</li><li>Đổi size miễn phí</li><li>Giao văn phòng</li><li>Nghỉ sinh tạm dừng</li></ul>
-  <p class="fine">Giá niêm yết trung bình một chiếc đầm trong tủ mẹ: 1.742.894đ. Cọc 1.000.000đ, hoàn lại khi kết thúc gói.</p>
+  <p class="pd">Tính ra chỉ từ <b>69.800đ</b> cho một ngày mặc đồ mới, đã giặt hấp.</p>
+  <div class="price2">
+    <div class="pl main"><span class="lbl">Gói 10 bộ</span><span class="p">389.000đ<small>mỗi tuần</small></span><p>Đổi tủ mỗi tuần, 2 ngày đầm, 3 ngày áo phối quần, chân váy.</p></div>
+    <div class="pl"><span class="lbl">Gói 5 bộ</span><span class="p">349.000đ<small>mỗi tuần</small></span><p>Mặc lại mỗi tuần, tối thứ Sáu lấy giặt, sáng thứ Hai giao lại.</p></div>
+  </div>
+  <p class="fine">Đã gồm giặt hấp. Trả trước 12 tuần giảm 7%. Giá niêm yết trung bình một chiếc đầm trong tủ: 1.742.894đ. Cọc 1.000.000đ, hoàn lại khi kết thúc gói.</p>
 </div></section>
 
-<section class="sl ch" id="c7" aria-label="Chương 7 trên 7"><div class="col">
-  <div class="op"><span class="num" aria-hidden="true">07</span><span class="lbl">Mẹ hỏi, tụi mình đáp</span><h2>Những câu mẹ hay hỏi.</h2></div>
+<section class="sl ch" aria-label="Lý do 6 trên 6"><div class="col">
+  <p class="why">Lý do 6</p>
+  <h2>Nghỉ sinh không tốn đồng nào.</h2>
+  <p class="lede">Gói theo tuần nên mẹ chỉ trả cho những tuần đi làm.</p>
+  <ol class="path">
+    <li><div><h3>Tuần 34–36: chuyến giao cuối</h3><p>Tụi mình lấy đồ về, gói tạm dừng. Không phí giữ chỗ.</p></div></li>
+    <li><div><h3>Những tháng nghỉ sinh: 0đ</h3><p>Mẹ ở nhà với bé. Tụi mình chỉ hỏi thăm, không nhắc gói.</p></div></li>
+    <li><div><h3>Trước ngày đi làm lại: tủ sau sinh</h3><p>Mẹ gửi số đo mới, stylist chọn áo mở khuy, đầm sơ mi, cạp chun êm.</p></div></li>
+    <li><div><h3>Sáng thứ Hai đầu tiên: đồ tới văn phòng</h3><p>Gói mở tiếp, không đăng ký lại, không đóng cọc lại.</p></div></li>
+  </ol>
+</div></section>
+
+<section class="sl ch" aria-label="Hỏi đáp"><div class="col">
+  <p class="why">Còn băn khoăn?</p>
+  <h2>Những câu mẹ hay hỏi.</h2>
   <div class="qa">
     <details open><summary>Bụng lớn nhanh quá thì sao?</summary><p>Mẹ nhắn tụi mình. Size mới tới ở chuyến giao kế tiếp, không tính thêm tiền.</p></details>
-    <details open><summary>Nghỉ sinh có phải trả tiền không?</summary><p>Không. Mẹ trả đồ ở chuyến cuối và tạm dừng gói. Khi đi làm lại, gói mở tiếp với tủ đồ sau sinh.</p></details>
-    <details><summary>Đồ được giặt thế nào?</summary><p>Mỗi bộ được giặt hấp ở CHÉRIE Care sau mỗi lần mặc, không dùng hoá chất mạnh, đóng túi niêm phong trước khi giao.</p></details>
+    <details open><summary>Lỡ làm bẩn, làm hư đồ thì sao?</summary><p>Vết bẩn thường ngày, sút chỉ, rơi cúc nằm trong gói. Chỉ hư nặng hoặc mất đồ mới tính theo giá trị còn lại của món đó.</p></details>
+    <details><summary>Không vừa ý bộ nào thì sao?</summary><p>Mẹ báo stylist, tuần sau tụi mình đổi món khác theo gu của mẹ.</p></details>
     <details><summary>Đang cho con bú thì mặc gì?</summary><p>Áo mở khuy trước, áo khoá kéo, đầm sơ mi. Cho con bú hay hút sữa ở công ty đều tiện.</p></details>
-    <details><summary>Lỡ làm bẩn, làm hư đồ thì sao?</summary><p>Vết bẩn thường ngày, sút chỉ, rơi cúc nằm trong gói. Chỉ hư nặng hoặc mất đồ mới tính theo giá trị còn lại của món đó.</p></details>
     <details><summary>Giao ở đâu, khi nào?</summary><p>Văn phòng khu trung tâm Đà Nẵng giao sáng thứ Hai, miễn phí. Nhà riêng giao chiều Chủ nhật: 35.000đ/tuần ở khu trung tâm, 59.000đ/tuần ở khu mở rộng.</p></details>
   </div>
 </div></section>
@@ -295,9 +294,8 @@ footer{padding:28px 20px calc(100px + env(safe-area-inset-bottom,0px));font-size
 </article>
 
 <section class="end">
-  <span class="lbl" style="color:inherit;opacity:.85">Hết số đặc biệt</span>
-  <h2>Hẹn mẹ sáng thứ Hai.</h2>
-  <p>Kể tụi mình nghe về mẹ và bé. Stylist vẽ sẵn lộ trình tủ đồ theo từng tháng, kèm lời nhắc cho từng chặng.</p>
+  <h2>Kể stylist nghe về mẹ.</h2>
+  <p>Mẹ đang tuần thứ mấy, làm việc ở đâu, thích mặc gì. Stylist gợi ý tủ đồ cho từng chặng và báo giá cụ thể. Chưa cần đặt cọc.</p>
   <div class="cta"><a class="btn js-chat" href="/#chan-doan-me">Trò chuyện với stylist của mẹ</a></div>
 </section>
 </main>
@@ -320,7 +318,7 @@ var by={};D.sp.forEach(function(s){by[s.id]=s});L=L.filter(function(x){return by
 var lk=document.getElementById("lk");
 lk.innerHTML='<a class="big" id="lkA" href="#"><img id="lkI" alt=""></a><div class="cap" id="lkC" aria-live="polite"></div><div class="th" role="group" aria-label="Chọn chiếc đầm">'+L.map(function(x,i){var s=by[x[0]];return '<button type="button" data-k="'+i+'" aria-label="'+esc(s.ten)+'"><img src="'+esc(img[x[0]][0])+'" alt="" loading="lazy"></button>'}).join("")+'</div>';
 function pick(i){var x=L[i];if(!x)return;var s=by[x[0]],im=document.getElementById("lkI");im.src=hi(img[x[0]][0]);im.alt=s.ten+", "+s.brand;document.getElementById("lkA").href="/"+q+"#sp-"+s.id.toLowerCase();
-  document.getElementById("lkC").innerHTML='<b>'+String(i+1).padStart(2,"0")+'/'+String(L.length).padStart(2,"0")+' · '+esc(s.brand)+'</b><span>'+esc(s.ten)+'</span><em>'+esc(x[1])+'</em>';
+  document.getElementById("lkC").innerHTML='<b>'+esc(s.brand)+'</b><span>'+esc(s.ten)+'</span><em>'+esc(x[1])+'</em>';
   lk.querySelectorAll(".th button").forEach(function(b){b.setAttribute("aria-pressed",String(+b.dataset.k===i))})}
 lk.addEventListener("click",function(e){var b=e.target.closest(".th button");if(b){pick(+b.dataset.k);setH()}});pick(0);
 /* lịch: chạm mốc tuần */
@@ -329,16 +327,18 @@ function wk(i){wb.forEach(function(b,k){b.setAttribute("aria-selected",String(k=
 cal.addEventListener("click",function(e){var b=e.target.closest(".wks button");if(b){wk(+b.dataset.w);ga("xem_moc_thai_ky",{moc:b.textContent})}});wk(0);
 /* header trong suốt trên bìa, đặc khi cuộn; thanh dưới có nút trò chuyện sau bìa */
 var hd=document.getElementById("hd"),pr=document.getElementById("prog"),sb=document.getElementById("sbar"),cov=document.querySelector(".cover");
-var cta=document.querySelector(".cover .cta");function onS(){sb.classList.toggle("on",cta.getBoundingClientRect().bottom<0)}
+/* thanh trò chuyện chỉ hiện khi mẹ đã đọc tới lý do 3, hoặc tới cuối trang */
+var seen=0,endS=document.querySelector(".end");function onS(){sb.classList.toggle("on",!!seen||endS.getBoundingClientRect().top<innerHeight)}
 addEventListener("scroll",onS,{passive:true});onS();
 /* bảy chương vuốt ngang: cao theo chương đang xem, có nút chuyển chương thay cho vuốt */
 var deck=document.getElementById("deck"),sl=[].slice.call(deck.children),tabs=[].slice.call(document.querySelectorAll("#tabs button")),ct=document.getElementById("ct"),doc=document.getElementById("doc"),cur=-1;
 var NM=tabs.map(function(t){return t.lastChild.textContent});
-sl.forEach(function(s,i){var c=s.querySelector(".col"),bd=document.createElement("div");bd.className="bd";while(c.firstChild)bd.appendChild(c.firstChild);c.appendChild(bd);bd.addEventListener("scroll",setH,{passive:true});var n=document.createElement("div");n.className="nx";
-  n.innerHTML=(i>0?'<button type="button" data-step="-1">← '+NM[i-1]+'</button>':'')+(i<sl.length-1?'<button type="button" class="go" data-step="1">'+(i?'':'Đọc tiếp: ')+NM[i+1]+' →</button>':'<a class="js-chat" href="/'+q+'#chan-doan-me">Trò chuyện với stylist</a>');
+sl.forEach(function(s,i){var n=document.createElement("div");n.className="nx";
+  n.innerHTML=(i>0?'<button type="button" data-step="-1">← Trước</button>':'')+(i<sl.length-1?'<button type="button" class="go" data-step="1">'+(i<5?'Lý do '+(i+2):'Hỏi đáp')+' →</button>':'<a class="js-chat" href="/'+q+'#chan-doan-me">Trò chuyện với stylist</a>');
   s.querySelector(".col").appendChild(n)});
-function setH(){sl.forEach(function(s){var b=s.querySelector(".bd");b.classList.toggle("more",b.scrollHeight-b.scrollTop-b.clientHeight>6)})}
-function act(i){if(i===cur)return;cur=i;tabs.forEach(function(t,k){t.setAttribute("aria-current",String(k===i))});ct.textContent=String(i+1).padStart(2,"0")+"/07";
+/* khung cao bằng chương dài nhất: vuốt qua lại không nhảy, không cuộn lồng */
+function setH(){deck.classList.add("m");var m=0;sl.forEach(function(s){m=Math.max(m,s.offsetHeight)});deck.classList.remove("m");deck.style.height=m+"px"}
+function act(i){if(i===cur)return;cur=i;tabs.forEach(function(t,k){t.setAttribute("aria-current",String(k===i))});ct.textContent=(i+1)+"/7";if(i>=2)seen=1;onS();
   var t=tabs[i],sc=t.parentNode;sc.scrollTo({left:t.offsetLeft-sc.offsetLeft-sc.clientWidth/2+t.offsetWidth/2,behavior:"smooth"});
   sl.forEach(function(s,k){s.querySelector(".col").classList.toggle("on",k===i)});setH();pr.style.width=((i+1)*100/7)+"%";
   ga("xem_chuong",{chuong:i+1})}
